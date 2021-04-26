@@ -26,6 +26,12 @@ namespace MicroservicioHotel.AccessData.Configuration
             builder.HasMany<Habitacion>(c => c.Habitaciones)
                 .WithOne(h => h.Categoria)
                 .HasForeignKey(h => h.CategoriaId);
+
+            builder.HasData(
+                new Categoria { Nombre = "Individual", Descripcion = "Habitación para una persona" },
+                new Categoria { Nombre = "Matrimonial", Descripcion = "Habitación para dos personas" },
+                new Categoria { Nombre = "Suite", Descripcion = "Habitación para cuatro personas" }
+                );
         }
     }
 }
