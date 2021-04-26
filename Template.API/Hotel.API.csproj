@@ -10,11 +10,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Template.AccessData\Template.AccessData.csproj" />
-    <ProjectReference Include="..\Template.Application\Template.Application.csproj" />
+    <ProjectReference Include="..\Template.AccessData\Hotel.AccessData.csproj" />
+    <ProjectReference Include="..\Template.Application\Hotel.Application.csproj" />
   </ItemGroup>
 
 

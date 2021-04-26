@@ -9,7 +9,7 @@ using Template.AccessData;
 
 namespace Template.AccessData.Migrations
 {
-    [DbContext(typeof(BookingUnajDbContext))]
+    [DbContext(typeof(HotelDbContext))]
     [Migration("20210424222341_CreateDB")]
     partial class CreateDB
     {

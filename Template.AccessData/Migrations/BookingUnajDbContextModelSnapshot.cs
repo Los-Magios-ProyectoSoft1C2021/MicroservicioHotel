@@ -8,7 +8,7 @@ using Template.AccessData;
 
 namespace Template.AccessData.Migrations
 {
-    [DbContext(typeof(BookingUnajDbContext))]
+    [DbContext(typeof(HotelDbContext))]
     partial class BookingUnajDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

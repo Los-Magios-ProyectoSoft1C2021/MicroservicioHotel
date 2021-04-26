@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 namespace Template.AccessData
 {
-    public class BookingUnajDbContext : DbContext
+    public class HotelDbContext : DbContext
     {
-        public BookingUnajDbContext(DbContextOptions<BookingUnajDbContext> options) : base(options)
+        public HotelDbContext(DbContextOptions<HotelDbContext> options) : base(options)
         {
         }
 
