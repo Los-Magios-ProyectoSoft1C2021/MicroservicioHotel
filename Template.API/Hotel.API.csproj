@@ -13,8 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Template.AccessData\Template.AccessData.csproj" />
-    <ProjectReference Include="..\Template.Application\Template.Application.csproj" />
+    <ProjectReference Include="..\Template.AccessData\Hotel.AccessData.csproj" />
+    <ProjectReference Include="..\Template.Application\Hotel.Application.csproj" />
   </ItemGroup>
 
 
