@@ -6,7 +6,7 @@ using MicroservicioHotel.AccessData.Configuration;
 
 namespace MicroservicioHotel.AccessData
 {
-    public class BookingUnajDbContext : DbContext
+    public class HotelDbContext : DbContext
     {
         public DbSet<Hotel> Hoteles { get; set; }
         public DbSet<Habitacion> Habitaciones { get; set; }

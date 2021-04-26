@@ -34,7 +34,7 @@ namespace Template.API
             string connectionString = Configuration.GetSection("ConnectionString").Value;
 
             // Una vez que tenemos el string para conectarnos a la BD, se lo pasamos el método UseSqlServer()
-            services.AddDbContext<BookingUnajDbContext>(options => options.UseSqlServer(connectionString));
+            services.AddDbContext<HotelDbContext>(options => options.UseSqlServer(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
