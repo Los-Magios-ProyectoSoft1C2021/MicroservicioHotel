@@ -65,7 +65,7 @@ namespace MicroservicioHotel.AccessData.Configuration
 
             builder.HasMany<Habitacion>(h => h.Habitaciones)
                 .WithOne(ha => ha.Hotel)
-                .HasForeignKey(h => h.HabitacionId);
+                .HasForeignKey(h => h.HotelId);
         }
     }
 }

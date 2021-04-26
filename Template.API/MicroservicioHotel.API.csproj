@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Template.AccessData\MicroservicioHotel.AccessData.csproj" />
     <ProjectReference Include="..\Template.Application\MicroservicioHotel.Application.csproj" />
+    <ProjectReference Include="..\Template.Domain\MicroservicioHotel.Domain.csproj" />
   </ItemGroup>
 
 
