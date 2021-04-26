@@ -9,11 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-<<<<<<< HEAD:Template.Application/Hotel.Application.csproj
-    <ProjectReference Include="..\Template.Domain\Hotel.Domain.csproj" />
-=======
     <ProjectReference Include="..\Template.Domain\MicroservicioHotel.Domain.csproj" />
->>>>>>> 1419979cb9ac159c87e491450c25c417511aeb91:Template.Application/MicroservicioHotel.Application.csproj
   </ItemGroup>
 
 </Project>

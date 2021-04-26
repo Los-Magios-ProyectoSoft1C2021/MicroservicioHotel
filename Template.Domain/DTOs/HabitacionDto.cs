@@ -1,9 +1,9 @@
-﻿using System;
+﻿using MicroservicioHotel.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using Template.Domain.Entities;
 
-namespace Hotel.Domain.DTOs
+namespace MicroservicioHotel.Domain.DTOs
 {
     public class HabitacionDto
     {
@@ -21,8 +21,5 @@ namespace Hotel.Domain.DTOs
 
         // Relación con la tabla Categoria
         public Categoria Categoria { get; set; }
-
-        // Relación con la tabla Reservas
-        public List<Reserva> Reservas { get; set; }
     }
 }
