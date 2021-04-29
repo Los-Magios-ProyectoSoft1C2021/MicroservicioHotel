@@ -1,4 +1,11 @@
+using AutoMapper;
 using MicroservicioHotel.AccessData;
+using MicroservicioHotel.AccessData.Commands;
+using MicroservicioHotel.AccessData.Queries;
+using MicroservicioHotel.Application.Services;
+using MicroservicioHotel.Domain.Commands;
+using MicroservicioHotel.Domain.Mapper;
+using MicroservicioHotel.Domain.Queries;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,12 +36,31 @@ namespace Template.API
         {
             services.AddControllers();
 
+            services.AddSingleton(sp => sp.GetRequiredService<ILoggerFactory>().CreateLogger("DefaultLogger"));
+
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new HotelProfile());
+                mc.AddProfile(new HabitacionProfile());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
             // Configuration busca diferentes opciones en appsettings.json; en este caso, le pedimos
             // el valor de la clave ConnectionString
             string connectionString = Configuration.GetSection("ConnectionString").Value;
 
             // Una vez que tenemos el string para conectarnos a la BD, se lo pasamos el método UseSqlServer()
             services.AddDbContext<HotelDbContext>(options => options.UseSqlServer(connectionString));
+
+            services.AddTransient<IGenericsRepository, GenericsRepository>();
+
+            services.AddTransient<IHotelQuery, HotelQuery>();
+            services.AddTransient<IHabitacionQuery, HabitacionQuery>();
+
+            services.AddTransient<IHotelService, HotelService>();
+            services.AddTransient<IHabitacionService, HabitacionService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

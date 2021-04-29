@@ -22,10 +22,6 @@ namespace MicroservicioHotel.AccessData.Configuration
             builder.Property(fh => fh.Descripcion)
                 .IsRequired(true)
                 .HasMaxLength(128);
-
-            builder.HasOne(fh => fh.Hotel)
-                .WithMany(h => h.FotosHotel)
-                .HasForeignKey(fh => fh.HotelId);
         }
     }
 }

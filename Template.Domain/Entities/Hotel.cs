@@ -6,7 +6,7 @@ namespace MicroservicioHotel.Domain.Entities
 {
     public class Hotel
     {
-        public Guid HotelId { get; set; }
+        public int HotelId { get; set; }
         public string Nombre { get; set; }
         public decimal Longitud { get; set; }
         public decimal Latitud { get; set; }

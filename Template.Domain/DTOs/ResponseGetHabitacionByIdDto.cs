@@ -2,16 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MicroservicioHotel.Domain.Entities
+namespace MicroservicioHotel.Domain.DTOs
 {
-    public class Habitacion
+    public class ResponseGetHabitacionByIdDto
     {
         public int HabitacionId { get; set; }
         public int HotelId { get; set; }
-        public Guid CategoriaId { get; set; }
         public string Nombre { get; set; }
-
-        public Hotel Hotel { get; set; }
-        public Categoria Categoria { get; set; }
+        public string Categoria { get; set; }
     }
 }

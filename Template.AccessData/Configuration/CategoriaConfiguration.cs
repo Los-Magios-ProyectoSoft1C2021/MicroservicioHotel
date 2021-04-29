@@ -23,10 +23,6 @@ namespace MicroservicioHotel.AccessData.Configuration
                 .IsRequired(true)
                 .HasMaxLength(128);
 
-            builder.HasMany<Habitacion>(c => c.Habitaciones)
-                .WithOne(h => h.Categoria)
-                .HasForeignKey(h => h.CategoriaId);
-
             builder.HasData(
                 new Categoria { CategoriaId = Guid.NewGuid() ,Nombre = "Individual", Descripcion = "Habitación para una persona" },
                 new Categoria { CategoriaId = Guid.NewGuid(), Nombre = "Matrimonial", Descripcion = "Habitación para dos personas" },

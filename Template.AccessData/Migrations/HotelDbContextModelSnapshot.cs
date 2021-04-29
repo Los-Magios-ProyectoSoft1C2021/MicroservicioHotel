@@ -42,19 +42,19 @@ namespace MicroservicioHotel.AccessData.Migrations
                     b.HasData(
                         new
                         {
-                            CategoriaId = new Guid("31bd0d9a-2c95-482f-a0a4-fa02bb9ae890"),
+                            CategoriaId = new Guid("5a9d055b-2ade-4942-8d2c-d8499f51fe65"),
                             Descripcion = "Habitación para una persona",
                             Nombre = "Individual"
                         },
                         new
                         {
-                            CategoriaId = new Guid("dea6dadb-dbd4-4796-97dc-2b757f942960"),
+                            CategoriaId = new Guid("f3330cae-4dda-4d2c-b649-112e96e1479d"),
                             Descripcion = "Habitación para dos personas",
                             Nombre = "Matrimonial"
                         },
                         new
                         {
-                            CategoriaId = new Guid("286a6a30-0920-46f3-9a0a-b55dbf8b1e2c"),
+                            CategoriaId = new Guid("1cb0313d-6829-4249-810a-2456f3151fad"),
                             Descripcion = "Habitación para cuatro personas",
                             Nombre = "Suite"
                         });
@@ -74,6 +74,9 @@ namespace MicroservicioHotel.AccessData.Migrations
                     b.Property<Guid>("HotelId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int?>("HotelId1")
+                        .HasColumnType("int");
+
                     b.Property<string>("ImagenUrl")
                         .IsRequired()
                         .HasMaxLength(128)
@@ -81,7 +84,7 @@ namespace MicroservicioHotel.AccessData.Migrations
 
                     b.HasKey("FotoHotelId");
 
-                    b.HasIndex("HotelId");
+                    b.HasIndex("HotelId1");
 
                     b.ToTable("FotosHoteles");
                 });
@@ -96,8 +99,8 @@ namespace MicroservicioHotel.AccessData.Migrations
                     b.Property<Guid>("CategoriaId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("HotelId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("HotelId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -115,9 +118,10 @@ namespace MicroservicioHotel.AccessData.Migrations
 
             modelBuilder.Entity("MicroservicioHotel.Domain.Entities.Hotel", b =>
                 {
-                    b.Property<Guid>("HotelId")
+                    b.Property<int>("HotelId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Ciudad")
                         .IsRequired()
@@ -185,9 +189,7 @@ namespace MicroservicioHotel.AccessData.Migrations
                 {
                     b.HasOne("MicroservicioHotel.Domain.Entities.Hotel", "Hotel")
                         .WithMany("FotosHotel")
-                        .HasForeignKey("HotelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("HotelId1");
 
                     b.Navigation("Hotel");
                 });

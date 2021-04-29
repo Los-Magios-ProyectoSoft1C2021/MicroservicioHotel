@@ -24,7 +24,8 @@ namespace MicroservicioHotel.AccessData.Migrations
                 name: "Hoteles",
                 columns: table => new
                 {
-                    HotelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    HotelId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Longitud = table.Column<decimal>(type: "decimal(10,7)", precision: 10, scale: 7, nullable: false, defaultValue: 0m),
                     Latitud = table.Column<decimal>(type: "decimal(10,7)", precision: 10, scale: 7, nullable: false, defaultValue: 0m),
@@ -50,17 +51,18 @@ namespace MicroservicioHotel.AccessData.Migrations
                     FotoHotelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     HotelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ImagenUrl = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Descripcion = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false)
+                    Descripcion = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    HotelId1 = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_FotosHoteles", x => x.FotoHotelId);
                     table.ForeignKey(
-                        name: "FK_FotosHoteles_Hoteles_HotelId",
-                        column: x => x.HotelId,
+                        name: "FK_FotosHoteles_Hoteles_HotelId1",
+                        column: x => x.HotelId1,
                         principalTable: "Hoteles",
                         principalColumn: "HotelId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -69,7 +71,7 @@ namespace MicroservicioHotel.AccessData.Migrations
                 {
                     HabitacionId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    HotelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    HotelId = table.Column<int>(type: "int", nullable: false),
                     CategoriaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Nombre = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false)
                 },
@@ -93,22 +95,22 @@ namespace MicroservicioHotel.AccessData.Migrations
             migrationBuilder.InsertData(
                 table: "Categorias",
                 columns: new[] { "CategoriaId", "Descripcion", "Nombre" },
-                values: new object[] { new Guid("31bd0d9a-2c95-482f-a0a4-fa02bb9ae890"), "Habitación para una persona", "Individual" });
+                values: new object[] { new Guid("5a9d055b-2ade-4942-8d2c-d8499f51fe65"), "Habitación para una persona", "Individual" });
 
             migrationBuilder.InsertData(
                 table: "Categorias",
                 columns: new[] { "CategoriaId", "Descripcion", "Nombre" },
-                values: new object[] { new Guid("dea6dadb-dbd4-4796-97dc-2b757f942960"), "Habitación para dos personas", "Matrimonial" });
+                values: new object[] { new Guid("f3330cae-4dda-4d2c-b649-112e96e1479d"), "Habitación para dos personas", "Matrimonial" });
 
             migrationBuilder.InsertData(
                 table: "Categorias",
                 columns: new[] { "CategoriaId", "Descripcion", "Nombre" },
-                values: new object[] { new Guid("286a6a30-0920-46f3-9a0a-b55dbf8b1e2c"), "Habitación para cuatro personas", "Suite" });
+                values: new object[] { new Guid("1cb0313d-6829-4249-810a-2456f3151fad"), "Habitación para cuatro personas", "Suite" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_FotosHoteles_HotelId",
+                name: "IX_FotosHoteles_HotelId1",
                 table: "FotosHoteles",
-                column: "HotelId");
+                column: "HotelId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Habitaciones_CategoriaId",

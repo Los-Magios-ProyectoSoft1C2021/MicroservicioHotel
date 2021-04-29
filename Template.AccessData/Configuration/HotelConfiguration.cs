@@ -58,14 +58,6 @@ namespace MicroservicioHotel.AccessData.Configuration
             builder.Property(h => h.Correo)
                 .IsRequired(true)
                 .HasMaxLength(128);
-
-            builder.HasMany<FotoHotel>(h => h.FotosHotel)
-                .WithOne(fh => fh.Hotel)
-                .HasForeignKey(fh => fh.HotelId);
-
-            builder.HasMany<Habitacion>(h => h.Habitaciones)
-                .WithOne(ha => ha.Hotel)
-                .HasForeignKey(h => h.HotelId);
         }
     }
 }
