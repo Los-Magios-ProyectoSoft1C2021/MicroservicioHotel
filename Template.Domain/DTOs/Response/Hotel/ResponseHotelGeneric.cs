@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MicroservicioHotel.Domain.DTOs
+namespace MicroservicioHotel.Domain.DTOs.Response.Hotel
 {
-    public class ResponseGetAllHotelDto
+    public class ResponseHotelGeneric
     {
         public int HotelId { get; set; }
         public string Nombre { get; set; }

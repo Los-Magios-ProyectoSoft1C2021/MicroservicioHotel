@@ -1,4 +1,4 @@
-﻿using MicroservicioHotel.Domain.DTOs;
+﻿using MicroservicioHotel.Domain.DTOs.Response.Hotel;
 using MicroservicioHotel.Domain.Queries;
 using System;
 using System.Collections.Generic;
@@ -26,6 +26,27 @@ namespace MicroservicioHotel.AccessData.Queries
                 }).ToList();
 
             return hoteles;
+        }
+
+        private const int PAGE_SIZE = 20;
+        public List<ResponseGetAllHotelBy> GetAllBy(int page, int estrellas, string ciudad)
+        {
+            var query = _context.Hoteles;
+
+            if (estrellas > 0)
+                query.Where(h => h.Estrellas == estrellas);
+
+            if (ciudad != null)
+                query.Where(h => h.Ciudad == ciudad);
+
+            return query.Select(h => new ResponseGetAllHotelBy
+            {
+                HotelId = h.HotelId,
+                Nombre = h.Nombre
+            })
+                .Skip((PAGE_SIZE - 1) * page)
+                .Take(PAGE_SIZE)
+                .ToList();
         }
 
         public ResponseGetHotelByIdDto GetById(int id)

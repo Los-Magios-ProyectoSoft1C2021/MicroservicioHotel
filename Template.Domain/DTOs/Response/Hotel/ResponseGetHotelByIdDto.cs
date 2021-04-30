@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MicroservicioHotel.Domain.DTOs
+namespace MicroservicioHotel.Domain.DTOs.Response.Hotel
 {
-    public class ResponseGetHotelByIdDto
+    public class ResponseGetHotelByIdDto : ResponseHotelGeneric
     {
-        public int HotelId { get; set; }
-        public string Nombre { get; set; }
         public decimal Longitud { get; set; }
         public decimal Latitud { get; set; }
         public string Provincia { get; set; }

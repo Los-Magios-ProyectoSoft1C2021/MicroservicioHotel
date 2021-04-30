@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MicroservicioHotel.Domain.Commands;
 using MicroservicioHotel.Domain.DTOs;
+using MicroservicioHotel.Domain.DTOs.Response.Hotel;
 using MicroservicioHotel.Domain.Entities;
 using MicroservicioHotel.Domain.Queries;
 using System;
@@ -44,5 +45,9 @@ namespace MicroservicioHotel.Application.Services
             return _query.GetAll();
         }
 
+        public List<ResponseGetAllHotelBy> GetAllBy(int page, int estrellas, string ciudad)
+        {
+            return _query.GetAllBy(page, estrellas, ciudad);
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MicroservicioHotel.Domain.DTOs;
+using MicroservicioHotel.Domain.DTOs.Response.Hotel;
 using MicroservicioHotel.Domain.Entities;
 using System;
 using System.Collections.Generic;

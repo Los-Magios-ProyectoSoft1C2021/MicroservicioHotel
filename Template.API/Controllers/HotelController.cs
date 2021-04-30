@@ -1,5 +1,6 @@
 ﻿using MicroservicioHotel.Application.Services;
 using MicroservicioHotel.Domain.DTOs;
+using MicroservicioHotel.Domain.DTOs.Response.Hotel;
 using MicroservicioHotel.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -34,6 +35,16 @@ namespace MicroservicioHotel.API.Controllers
             return _hotelService.GetById(id);
         }
 
+        // GET: /api/[controller]/query
+        [HttpGet("filter")]
+        public List<ResponseGetAllHotelBy> GetHotelBy(
+            [FromQuery(Name = "page")] int page, 
+            [FromQuery(Name ="estrellas")] int estrellas, 
+            [FromQuery(Name ="ciudad")] string ciudad)
+        {
+            return _hotelService.GetAllBy(page, estrellas, ciudad);
+        }
+
         // POST: api/Hotel/
         [HttpPost]
         public IActionResult PostHotel(RequestCreateHotelDto hotel)
@@ -42,7 +53,7 @@ namespace MicroservicioHotel.API.Controllers
             return Created(uri: "api/Hotel/2", null);
         }
 
-        // PUT: api/Hotel/?id={id}
+        // PUT: api/Hotel/?ciudad={ciudad}&estrelllas={estrellas}
         [HttpPut]
         public void PutHotel([FromQuery(Name = "id")] int id, RequestUpdateHotelDto hotel)
         {

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MicroservicioHotel.Domain.Commands;
 using MicroservicioHotel.Domain.DTOs;
+using MicroservicioHotel.Domain.DTOs.Request.Habitacion;
 using MicroservicioHotel.Domain.Entities;
 using MicroservicioHotel.Domain.Queries;
 using System;
@@ -43,5 +44,9 @@ namespace MicroservicioHotel.Application.Services
             throw new NotImplementedException();
         }
 
+        public void Update(RequestUpdateHabitacionDto request)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
