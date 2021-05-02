@@ -3,15 +3,17 @@ using MicroservicioHotel.Domain.DTOs.Response.Hotel;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MicroservicioHotel.Application.Services
 {
     public interface IHotelService
     {
-        void Create(RequestCreateHotelDto request);
-        void Update(RequestUpdateHotelDto request);
-        List<ResponseGetAllHotelDto> GetAll();
-        List<ResponseGetAllHotelBy> GetAllBy(int page, int estrellas, string ciudad);
-        ResponseGetHotelByIdDto GetById(int id);
+        Task<ResponseCreateHotel> Create(RequestCreateHotelDto request);
+        Task<ResponseUpdateHotel> Update(RequestUpdateHotelDto request);
+        Task<List<ResponseGetAllHotelDto>> GetAll();
+        Task<List<ResponseGetAllHotelBy>> GetAllBy(int page, int estrellas, string ciudad);
+        Task<ResponseGetHotelByIdDto> GetById(int id);
+        Task<bool> CheckHotelExistsById(int id);
     }
 }

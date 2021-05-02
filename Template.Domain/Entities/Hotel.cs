@@ -8,8 +8,6 @@ namespace MicroservicioHotel.Domain.Entities
     {
         public int HotelId { get; set; }
         public string Nombre { get; set; }
-        public decimal Longitud { get; set; }
-        public decimal Latitud { get; set; }
         public string Provincia { get; set; }
         public string Ciudad { get; set; }
         public string Direccion { get; set; }
@@ -19,6 +17,8 @@ namespace MicroservicioHotel.Domain.Entities
         public int Estrellas { get; set; }
         public string Telefono { get; set; }
         public string Correo { get; set; }
+        public decimal Longitud { get; set; }
+        public decimal Latitud { get; set; }
 
         public List<Habitacion> Habitaciones { get; set; }
         public List<FotoHotel> FotosHotel { get; set; }

@@ -4,6 +4,7 @@ using MicroservicioHotel.Domain.DTOs.Response.Hotel;
 using MicroservicioHotel.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,41 +24,93 @@ namespace MicroservicioHotel.API.Controllers
         }
 
         [HttpGet]
-        public List<ResponseGetAllHotelDto> GetAllHoteles()
+        public async Task<ActionResult<List<ResponseGetAllHotelDto>>> GetAllHoteles()
         {
-            return _hotelService.GetAll();
+            try
+            {
+                var hoteles = await _hotelService.GetAll();
+                return Ok(hoteles);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, null);
+            }
         }
 
         // GET: api/Hotel/{id}
         [HttpGet("{id}")]
-        public ResponseGetHotelByIdDto GetHotelById(int id)
+        public async Task<ActionResult<ResponseGetHotelByIdDto>> GetHotelById(int id)
         {
-            return _hotelService.GetById(id);
+            try
+            {
+                var hotel = await _hotelService.GetById(id);
+                if (hotel == null)
+                    return NotFound();
+
+                return Ok(hotel);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, null);
+            }
         }
 
         // GET: /api/[controller]/query
         [HttpGet("filter")]
-        public List<ResponseGetAllHotelBy> GetHotelBy(
+        public async Task<ActionResult<List<ResponseGetAllHotelBy>>> GetHotelBy(
             [FromQuery(Name = "page")] int page, 
             [FromQuery(Name ="estrellas")] int estrellas, 
             [FromQuery(Name ="ciudad")] string ciudad)
         {
-            return _hotelService.GetAllBy(page, estrellas, ciudad);
+            try
+            {
+                var hoteles = await _hotelService.GetAllBy(page, estrellas, ciudad);
+                return Ok(hoteles);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, null);
+            }
         }
 
         // POST: api/Hotel/
         [HttpPost]
-        public IActionResult PostHotel(RequestCreateHotelDto hotel)
+        public async Task<ActionResult> PostHotel(RequestCreateHotelDto hotel)
         {
-            _hotelService.Create(hotel);
-            return Created(uri: "api/Hotel/2", null);
+            try
+            {
+                var createdHotel = await _hotelService.Create(hotel);
+                if (createdHotel == null)
+                    throw new Exception();
+
+                return Created(uri: $"api/Hotel/{createdHotel.HotelId}", createdHotel);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, null);
+            }
         }
 
-        // PUT: api/Hotel/?ciudad={ciudad}&estrelllas={estrellas}
+        // PUT: api/Hotel/
         [HttpPut]
-        public void PutHotel([FromQuery(Name = "id")] int id, RequestUpdateHotelDto hotel)
+        public async Task<ActionResult<ResponseUpdateHotel>> PutHotel([FromQuery(Name = "id")] int id, RequestUpdateHotelDto hotel)
         {
-            _hotelService.Update(hotel);
+            try
+            {
+                var exists = await _hotelService.CheckHotelExistsById(id);
+                if (!exists)
+                    return NotFound();
+
+                var updatedHotel = await _hotelService.Update(hotel);
+                if (updatedHotel == null)
+                    throw new Exception();
+
+                return StatusCode(204, updatedHotel); // 204: Recurso modificado
+            } 
+            catch (Exception)
+            {
+                return StatusCode(500, null);
+            }
         }
     }
 }

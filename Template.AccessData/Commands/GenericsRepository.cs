@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MicroservicioHotel.AccessData.Commands
 {
@@ -14,16 +15,22 @@ namespace MicroservicioHotel.AccessData.Commands
             _context = context;
         }
 
-        public void Add<T>(T entity) where T : class
+        public async Task Add<T>(T entity) where T : class
         {
             _context.Add<T>(entity);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void Update<T>(T entity) where T : class
+        public async Task Remove<T>(T entity) where T : class
+        {
+            _context.Remove<T>(entity);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task Update<T>(T entity) where T : class
         {
             _context.Update<T>(entity);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }

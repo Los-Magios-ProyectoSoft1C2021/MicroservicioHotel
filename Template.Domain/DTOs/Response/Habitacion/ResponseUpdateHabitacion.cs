@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MicroservicioHotel.Domain.DTOs.Response.Habitacion
 {
-    public class ResponseGetHabitacionByIdDto : ResponseHabitacionGeneric
+    public class ResponseUpdateHabitacion : ResponseHabitacionGeneric
     {
     }
 }

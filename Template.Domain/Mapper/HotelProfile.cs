@@ -23,6 +23,15 @@ namespace MicroservicioHotel.Domain.Mapper
 
             CreateMap<Hotel, ResponseGetHotelByIdDto>();
             CreateMap<ResponseGetHotelByIdDto, Hotel>();
+
+            CreateMap<Hotel, ResponseGetAllHotelBy>();
+            CreateMap<ResponseGetAllHotelBy, Hotel>();
+
+            CreateMap<Hotel, ResponseCreateHotel>();
+            CreateMap<ResponseCreateHotel, Hotel>();
+
+            CreateMap<Hotel, ResponseUpdateHotel>();
+            CreateMap<ResponseUpdateHotel, Hotel>();
         }
     }
 }

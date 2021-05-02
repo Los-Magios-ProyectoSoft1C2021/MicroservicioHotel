@@ -1,39 +1,83 @@
 ﻿using MicroservicioHotel.Application.Services;
-using MicroservicioHotel.Domain.DTOs;
+using MicroservicioHotel.Domain.DTOs.Request.Habitacion;
+using MicroservicioHotel.Domain.DTOs.Response.Habitacion;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Threading.Tasks;
 
 namespace MicroservicioHotel.API.Controllers
 {
+    [Route("api/Hotel")]
     [ApiController]
     public class HabitacionController : ControllerBase
     {
         private readonly IHabitacionService _habitacionService;
-        private readonly ILogger<HabitacionController> _logger;
+        private readonly IHotelService _hotelService;
 
-        public HabitacionController(IHabitacionService habitacionService, ILogger<HabitacionController> logger)
+        public HabitacionController(IHabitacionService habitacionService, IHotelService hotelService)
         {
             _habitacionService = habitacionService;
-            _logger = logger;
+            _hotelService = hotelService;
         }
 
-
-        [Route("/api/Hotel/{hotelId}/Habitacion/{habitacionId}")]
-        [HttpGet]
-        public ResponseGetHabitacionByIdDto GetById(int hotelId, int habitacionId)
+        [HttpGet("{hotelId}/Habitacion/{habitacionId}")]
+        public async Task<ActionResult<ResponseGetHabitacionByIdDto>> GetById(int hotelId, int habitacionId)
         {
-            _logger.LogInformation($"HabitacionController: GetById: HabitacionId = {habitacionId}");
-            return null;
-            //return _habitacionService.GetIdHabitacion(habitacionId);
+            try
+            {
+                var habitacion = await _habitacionService.GetHabitacionById(habitacionId, hotelId);
+                if (habitacion == null)
+                    return NotFound();
+
+                return Ok(habitacion);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, null);
+            }
         }
         
-        [Route("/api/Hotel/{hotelId}/Habitacion")]
-        [HttpPost]
-        public IActionResult PostHabitacion(RequestCreateHabitacionDto habitacion)
+        [HttpPost("{hotelId}/Habitacion")]
+        public async Task<ActionResult> PostHabitacion(int hotelId, RequestCreateHabitacionDto habitacion)
         {
-            _habitacionService.Create(habitacion);
-            return Created(uri: "api/Hotel/Habitacion/", null);
+            try
+            {
+                var exists = await _hotelService.CheckHotelExistsById(hotelId);
+                if (!exists)
+                    return BadRequest();
+
+                var createdHotel = await _habitacionService.Create(habitacion);
+                return Created(uri: $"api/Hotel/{createdHotel.HotelId}/Habitacion/{createdHotel.HabitacionId}", createdHotel);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, null);
+            }
+        }
+
+        [HttpPut("{hotelId}/Habitacion/{habitacionId}")]
+        public async Task<ActionResult> PutHabitacion(int hotelId, int habitacionId, RequestUpdateHabitacionDto habitacion)
+        {
+            try
+            {
+                var habitacionExists = await _habitacionService.CheckHabitacionExistById(habitacionId,  hotelId);
+                if (!habitacionExists)
+                    return NotFound();
+
+                await _habitacionService.Update(habitacion);
+
+                var updatedHabitacion = _habitacionService.GetHabitacionById(habitacionId, hotelId);
+                if (updatedHabitacion == null)
+                    return StatusCode(500, null);
+
+                return StatusCode(204, updatedHabitacion); // 204: Recurso modificado
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, null);
+            }
         }
     }
 }

@@ -2,15 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MicroservicioHotel.Domain.Entities
+namespace MicroservicioHotel.Domain.DTOs.Request.FotoHotel
 {
-    public class FotoHotel
+    public class RequestCreateFotoHotel
     {
-        public int FotoHotelId { get; set; }
         public int HotelId { get; set; }
         public string ImagenUrl { get; set; }
         public string Descripcion { get; set; }
-
-        public Hotel Hotel { get; set; }
     }
 }

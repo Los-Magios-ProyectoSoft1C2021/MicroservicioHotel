@@ -7,6 +7,7 @@ using MicroservicioHotel.Domain.Queries;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MicroservicioHotel.Application.Services
 {
@@ -23,31 +24,40 @@ namespace MicroservicioHotel.Application.Services
             _mapper = mapper;
         }
 
-        public void Create(RequestCreateHotelDto request)
+        public async Task<ResponseCreateHotel> Create(RequestCreateHotelDto request)
         {
             var h = _mapper.Map<Hotel>(request);
-            _repository.Add(h);
+            await _repository.Add(h);
+
+            return _mapper.Map<ResponseCreateHotel>(h);
         }
 
-        public void Update(RequestUpdateHotelDto hotel)
+        public async Task<ResponseUpdateHotel> Update(RequestUpdateHotelDto hotel)
         {
             var h = _mapper.Map<Hotel>(hotel);
-            _repository.Update(h);
+            await _repository.Update(h);
+
+            return _mapper.Map<ResponseUpdateHotel>(h);
         }
 
-        public ResponseGetHotelByIdDto GetById(int id)
+        public async Task<ResponseGetHotelByIdDto> GetById(int id)
         {
-            return _query.GetById(id);
+            return await _query.GetById(id);
         }
 
-        public List<ResponseGetAllHotelDto> GetAll()
+        public async Task<List<ResponseGetAllHotelDto>> GetAll()
         {
-            return _query.GetAll();
+            return await _query.GetAll();
         }
 
-        public List<ResponseGetAllHotelBy> GetAllBy(int page, int estrellas, string ciudad)
+        public async Task<List<ResponseGetAllHotelBy>> GetAllBy(int page, int estrellas, string ciudad)
         {
-            return _query.GetAllBy(page, estrellas, ciudad);
+            return await _query.GetAllBy(page, estrellas, ciudad);
+        }
+
+        public async Task<bool> CheckHotelExistsById(int id)
+        {
+            return await _query.CheckHotelExistsById(id);
         }
     }
 }

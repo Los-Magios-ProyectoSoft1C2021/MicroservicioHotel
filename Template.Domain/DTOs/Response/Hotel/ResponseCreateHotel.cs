@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MicroservicioHotel.Domain.DTOs.Response.Hotel
 {
-    public class ResponseGetHotelByIdDto : ResponseHotelGeneric
+    public class ResponseCreateHotel : ResponseHotelGeneric
     {
     }
 }
