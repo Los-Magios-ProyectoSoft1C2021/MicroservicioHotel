@@ -26,76 +26,46 @@ namespace MicroservicioHotel.API.Controllers
         [HttpGet("{hotelId}/Habitacion")]
         public async Task<ActionResult<List<ResponseGetAllHabitacion>>> GetAll(int hotelId)
         {
-            try
-            {
-                var habitaciones = await _habitacionService.GetAllHabitaciones(hotelId);
-                if (habitaciones.Count <= 0)
-                    return StatusCode(204, null);
+            var habitaciones = await _habitacionService.GetAllHabitaciones(hotelId);
+            if (habitaciones.Count <= 0)
+                return StatusCode(204, null);
 
-                return Ok(habitaciones);
-            }
-            catch (Exception)
-            {
-                return StatusCode(500, null);
-            }
+            return Ok(habitaciones);
         }
 
         [HttpGet("{hotelId}/Habitacion/{habitacionId}")]
         public async Task<ActionResult<ResponseGetHabitacionByIdDto>> GetById(int hotelId, int habitacionId)
         {
-            try
-            {
-                var habitacion = await _habitacionService.GetHabitacionById(habitacionId, hotelId);
-                if (habitacion == null)
-                    return NotFound();
+            var habitacion = await _habitacionService.GetHabitacionById(habitacionId, hotelId);
+            if (habitacion == null)
+                return NotFound();
 
-                return Ok(habitacion);
-            }
-            catch (Exception)
-            {
-                return StatusCode(500, null);
-            }
-
+            return Ok(habitacion);
         }
         
         [HttpPost("{hotelId}/Habitacion")]
         public async Task<ActionResult> PostHabitacion(int hotelId, RequestCreateHabitacionDto habitacion)
         {
-            try
-            {
-                var exists = await _hotelService.CheckHotelExistsById(hotelId);
-                if (!exists)
-                    return BadRequest();
+            var exists = await _hotelService.CheckHotelExistsById(hotelId);
+            if (!exists)
+                return BadRequest();
 
-                var createHabitacion = await _habitacionService.Create(habitacion);
-                return Created(uri: $"api/Hotel/{createHabitacion.HotelId}/Habitacion/{createHabitacion.HabitacionId}", createHabitacion);
-            }
-            catch (Exception)
-            {
-                return StatusCode(500, null);
-            }
-
+            var createHabitacion = await _habitacionService.Create(habitacion);
+            return Created(uri: $"api/Hotel/{createHabitacion.HotelId}/Habitacion/{createHabitacion.HabitacionId}", createHabitacion);
         }
 
         [HttpPut("{hotelId}/Habitacion/{habitacionId}")]
         public async Task<ActionResult> PutHabitacion(int hotelId, int habitacionId, RequestUpdateHabitacionDto habitacion)
         {
-            try
-            {
-                var habitacionExists = await _habitacionService.CheckHabitacionExistById(habitacionId, hotelId);
-                if (!habitacionExists)
-                    return StatusCode(204, null); // 204: Recurso no encontrado
+            var habitacionExists = await _habitacionService.CheckHabitacionExistById(habitacionId, hotelId);
+            if (!habitacionExists)
+                return StatusCode(204, null); // 204: Recurso no encontrado
 
-                var updatedHabitacion = await _habitacionService.Update(habitacionId, hotelId, habitacion);
-                if (updatedHabitacion == null)
-                    return StatusCode(500, null);
-
-                return Ok(updatedHabitacion);
-            }
-            catch (Exception)
-            {
+            var updatedHabitacion = await _habitacionService.Update(habitacionId, hotelId, habitacion);
+            if (updatedHabitacion == null)
                 return StatusCode(500, null);
-            }
+
+            return Ok(updatedHabitacion);
         }
     }
 }
