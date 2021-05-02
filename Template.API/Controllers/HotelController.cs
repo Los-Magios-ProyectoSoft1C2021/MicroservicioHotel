@@ -26,33 +26,19 @@ namespace MicroservicioHotel.API.Controllers
         [HttpGet]
         public async Task<ActionResult<List<ResponseGetAllHotelDto>>> GetAllHoteles()
         {
-            try
-            {
-                var hoteles = await _hotelService.GetAll();
-                return Ok(hoteles);
-            }
-            catch (Exception)
-            {
-                return StatusCode(500, null);
-            }
+            var hoteles = await _hotelService.GetAll();
+            return Ok(hoteles);
         }
 
         // GET: api/Hotel/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<ResponseGetHotelByIdDto>> GetHotelById(int id)
         {
-            try
-            {
-                var hotel = await _hotelService.GetById(id);
-                if (hotel == null)
-                    return NotFound();
+            var hotel = await _hotelService.GetById(id);
+            if (hotel == null)
+                return NotFound();
 
-                return Ok(hotel);
-            }
-            catch (Exception)
-            {
-                return StatusCode(500, null);
-            }
+            return Ok(hotel);
         }
 
         // GET: /api/[controller]/query
@@ -62,58 +48,37 @@ namespace MicroservicioHotel.API.Controllers
             [FromQuery(Name ="estrellas")] int estrellas, 
             [FromQuery(Name ="ciudad")] string ciudad)
         {
-            try
-            {
-                if (page == 0)
-                    page = 1;
+            if (page == 0)
+                page = 1;
 
-                var hoteles = await _hotelService.GetAllBy(page, estrellas, ciudad);
-                return Ok(hoteles);
-            }
-            catch (Exception)
-            {
-                return StatusCode(500, null);
-            }
+            var hoteles = await _hotelService.GetAllBy(page, estrellas, ciudad);
+            return Ok(hoteles);
         }
 
         // POST: api/Hotel/
         [HttpPost]
         public async Task<ActionResult> PostHotel(RequestCreateHotelDto hotel)
         {
-            try
-            {
-                var createdHotel = await _hotelService.Create(hotel);
-                if (createdHotel == null)
-                    throw new Exception();
+            var createdHotel = await _hotelService.Create(hotel);
+            if (createdHotel == null)
+                throw new Exception();
 
-                return Created(uri: $"api/Hotel/{createdHotel.HotelId}", createdHotel);
-            }
-            catch (Exception)
-            {
-                return StatusCode(500, null);
-            }
+            return Created(uri: $"api/Hotel/{createdHotel.HotelId}", createdHotel);
         }
 
         // PUT: api/Hotel/
         [HttpPut("{id}")]
         public async Task<ActionResult<ResponseUpdateHotel>> PutHotel(int id, RequestUpdateHotelDto hotel)
         {
-            try
-            {
-                var exists = await _hotelService.CheckHotelExistsById(id);
-                if (!exists)
-                    return StatusCode(204, null); // 204: Recurso no encontrado
+            var exists = await _hotelService.CheckHotelExistsById(id);
+            if (!exists)
+                return StatusCode(204, null); // 204: Recurso no encontrado
 
-                var updatedHotel = await _hotelService.Update(id, hotel);
-                if (updatedHotel == null)
-                    throw new Exception();
+            var updatedHotel = await _hotelService.Update(id, hotel);
+            if (updatedHotel == null)
+                throw new Exception();
 
-                return Ok(updatedHotel);
-            } 
-            catch (Exception)
-            {
-                return StatusCode(500, null);
-            }
+            return Ok(updatedHotel);
         }
     }
 }
