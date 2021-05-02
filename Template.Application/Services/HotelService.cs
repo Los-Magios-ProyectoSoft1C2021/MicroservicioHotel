@@ -61,5 +61,10 @@ namespace MicroservicioHotel.Application.Services
         {
             return await _query.CheckHotelExistsById(id);
         }
+
+        public async Task<int> GetHotelsCount()
+        {
+            return await _query.GetHotelsCount();
+        }
     }
 }

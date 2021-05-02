@@ -5,9 +5,11 @@ using MicroservicioHotel.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace MicroservicioHotel.API.Controllers
@@ -17,18 +19,22 @@ namespace MicroservicioHotel.API.Controllers
     public class HotelController : ControllerBase
     {
         private readonly IHotelService _hotelService;
+        private readonly IConfiguration _configuration;
 
-        public HotelController(IHotelService hotelService)
+        public HotelController(IHotelService hotelService, IConfiguration configuration)
         {
             _hotelService = hotelService;
+            _configuration = configuration;
         }
 
+        /*
         [HttpGet]
         public async Task<ActionResult<List<ResponseGetAllHotelDto>>> GetAllHoteles()
         {
             var hoteles = await _hotelService.GetAll();
             return Ok(hoteles);
         }
+        */
 
         // GET: api/Hotel/{id}
         [HttpGet("{id}")]
@@ -42,17 +48,56 @@ namespace MicroservicioHotel.API.Controllers
         }
 
         // GET: /api/[controller]/query
-        [HttpGet("filter")]
-        public async Task<ActionResult<List<ResponseGetAllHotelBy>>> GetHotelBy(
+        [HttpGet()]
+        public async Task<ActionResult<ResponseGetAllHotelsByPage>> GetHotelBy(
             [FromQuery(Name = "page")] int page, 
             [FromQuery(Name ="estrellas")] int estrellas, 
             [FromQuery(Name ="ciudad")] string ciudad)
         {
             if (page == 0)
                 page = 1;
+            else if (page < 0)
+                return BadRequest();
+
+            if (estrellas < 0 || estrellas > 5)
+                return BadRequest();
 
             var hoteles = await _hotelService.GetAllBy(page, estrellas, ciudad);
-            return Ok(hoteles);
+
+            int pageSize = int.Parse(_configuration.GetSection("PageSize").Value);
+            int hotelesCount = await _hotelService.GetHotelsCount();
+            int pageCount = (hotelesCount / pageSize) + 1;
+
+            var response = new ResponseGetAllHotelsByPage {
+                Data = hoteles,
+                ItemsCount = hoteles.Count,
+                PageCount = pageCount,
+                CurrentPage = page,
+                PreviousPage = CrearUriPaginacion(page - 1, estrellas, ciudad, pageCount),
+                NextPage = CrearUriPaginacion(page + 1, estrellas, ciudad, pageCount)
+            };
+
+            return Ok(response);
+        }
+
+        private string CrearUriPaginacion(int page, int estrellas, string ciudad, int pageCount)
+        {
+            if (page <= 0)
+                return null;
+
+            if (page > pageCount)
+                return null;
+
+            StringBuilder builder = new StringBuilder();
+            builder.Append($"/api/Hotel/?page={page}");
+
+            if (estrellas > 0)
+                builder.Append($"&estrellas={estrellas}");
+
+            if (ciudad != null)
+                builder.Append($"&ciudad={ciudad}");
+
+            return builder.ToString();
         }
 
         // POST: api/Hotel/

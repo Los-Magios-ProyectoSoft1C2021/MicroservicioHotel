@@ -12,5 +12,6 @@ namespace MicroservicioHotel.Domain.Queries
         Task<List<ResponseGetAllHotelBy>> GetAllBy(int page, int estrellas, string ciudad);
         Task<List<ResponseGetAllHotelDto>> GetAll();
         Task<bool> CheckHotelExistsById(int id);
+        Task<int> GetHotelsCount();
     }
 }

@@ -122,5 +122,10 @@ namespace MicroservicioHotel.AccessData.Queries
 
             return exists;
         }
+
+        public async Task<int> GetHotelsCount()
+        {
+            return await _context.Hotel.CountAsync();
+        }
     }
 }
