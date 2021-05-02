@@ -24,10 +24,12 @@ namespace MicroservicioHotel.Application.Services
             _mapper = mapper;
         }
 
-        public async Task<ResponseCreateFotoHotel> Add(RequestCreateFotoHotel request)
+        public async Task<ResponseCreateFotoHotel> Add(int hotelId, RequestCreateFotoHotel request)
         {
             var foto = _mapper.Map<FotoHotel>(request);
-            await _repository.Add(request);
+            foto.HotelId = hotelId;
+
+            await _repository.Add(foto);
 
             return _mapper.Map<ResponseCreateFotoHotel>(foto);
         }

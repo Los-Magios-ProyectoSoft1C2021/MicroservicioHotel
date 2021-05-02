@@ -42,6 +42,7 @@ namespace Template.API
             {
                 mc.AddProfile(new HotelProfile());
                 mc.AddProfile(new HabitacionProfile());
+                mc.AddProfile(new FotoHotelProfile());
             });
 
             IMapper mapper = mapperConfig.CreateMapper();
@@ -58,9 +59,11 @@ namespace Template.API
 
             services.AddTransient<IHotelQuery, HotelQuery>();
             services.AddTransient<IHabitacionQuery, HabitacionQuery>();
+            services.AddTransient<IFotoHotelQuery, FotoHotelQuery>();
 
             services.AddTransient<IHotelService, HotelService>();
             services.AddTransient<IHabitacionService, HabitacionService>();
+            services.AddTransient<IFotosService, FotosService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

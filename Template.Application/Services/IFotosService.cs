@@ -11,7 +11,7 @@ namespace MicroservicioHotel.Application.Services
     {
         Task<ResponseGetFotoHotelById> GetById(int fotoHotelId, int hotelId);
         Task<List<ResponseGetAllFotoHotel>> GetAll(int hotelId);
-        Task<ResponseCreateFotoHotel> Add(RequestCreateFotoHotel request);
+        Task<ResponseCreateFotoHotel> Add(int hotelId, RequestCreateFotoHotel request);
         Task Remove(int fotoHotelId, int hotelId);
         Task<bool> CheckFotoExistsById(int fotoHotelId, int hotelId);
     }
