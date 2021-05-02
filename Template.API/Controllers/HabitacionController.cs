@@ -80,15 +80,22 @@ namespace MicroservicioHotel.API.Controllers
         [HttpPut("{hotelId}/Habitacion/{habitacionId}")]
         public async Task<ActionResult> PutHabitacion(int hotelId, int habitacionId, RequestUpdateHabitacionDto habitacion)
         {
-            var habitacionExists = await _habitacionService.CheckHabitacionExistById(habitacionId, hotelId);
-            if (!habitacionExists)
-                return StatusCode(204, null); // 204: Recurso no encontrado
+            try
+            {
+                var habitacionExists = await _habitacionService.CheckHabitacionExistById(habitacionId, hotelId);
+                if (!habitacionExists)
+                    return StatusCode(204, null); // 204: Recurso no encontrado
 
-            var updatedHabitacion = await _habitacionService.Update(habitacionId, hotelId, habitacion);
-            if (updatedHabitacion == null)
+                var updatedHabitacion = await _habitacionService.Update(habitacionId, hotelId, habitacion);
+                if (updatedHabitacion == null)
+                    return StatusCode(500, null);
+
+                return Ok(updatedHabitacion);
+            }
+            catch (Exception)
+            {
                 return StatusCode(500, null);
-
-            return Ok(updatedHabitacion);
+            }
         }
     }
 }
