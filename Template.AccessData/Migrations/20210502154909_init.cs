@@ -8,7 +8,7 @@ namespace MicroservicioHotel.AccessData.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Categorias",
+                name: "Categoria",
                 columns: table => new
                 {
                     CategoriaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -17,18 +17,16 @@ namespace MicroservicioHotel.AccessData.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Categorias", x => x.CategoriaId);
+                    table.PrimaryKey("PK_Categoria", x => x.CategoriaId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Hoteles",
+                name: "Hotel",
                 columns: table => new
                 {
                     HotelId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Longitud = table.Column<decimal>(type: "decimal(10,7)", precision: 10, scale: 7, nullable: false, defaultValue: 0m),
-                    Latitud = table.Column<decimal>(type: "decimal(10,7)", precision: 10, scale: 7, nullable: false, defaultValue: 0m),
                     Provincia = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     Ciudad = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     Direccion = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
@@ -37,36 +35,38 @@ namespace MicroservicioHotel.AccessData.Migrations
                     CodigoPostal = table.Column<string>(type: "nvarchar(24)", maxLength: 24, nullable: false),
                     Estrellas = table.Column<int>(type: "int", nullable: false),
                     Telefono = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false),
-                    Correo = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false)
+                    Correo = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    Longitud = table.Column<decimal>(type: "decimal(10,7)", precision: 10, scale: 7, nullable: false, defaultValue: 0m),
+                    Latitud = table.Column<decimal>(type: "decimal(10,7)", precision: 10, scale: 7, nullable: false, defaultValue: 0m)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Hoteles", x => x.HotelId);
+                    table.PrimaryKey("PK_Hotel", x => x.HotelId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "FotosHoteles",
+                name: "FotoHotel",
                 columns: table => new
                 {
-                    FotoHotelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    HotelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FotoHotelId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    HotelId = table.Column<int>(type: "int", nullable: false),
                     ImagenUrl = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Descripcion = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    HotelId1 = table.Column<int>(type: "int", nullable: true)
+                    Descripcion = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FotosHoteles", x => x.FotoHotelId);
+                    table.PrimaryKey("PK_FotoHotel", x => x.FotoHotelId);
                     table.ForeignKey(
-                        name: "FK_FotosHoteles_Hoteles_HotelId1",
-                        column: x => x.HotelId1,
-                        principalTable: "Hoteles",
+                        name: "FK_FotoHotel_Hotel_HotelId",
+                        column: x => x.HotelId,
+                        principalTable: "Hotel",
                         principalColumn: "HotelId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Habitaciones",
+                name: "Habitacion",
                 columns: table => new
                 {
                     HabitacionId = table.Column<int>(type: "int", nullable: false)
@@ -77,65 +77,65 @@ namespace MicroservicioHotel.AccessData.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Habitaciones", x => x.HabitacionId);
+                    table.PrimaryKey("PK_Habitacion", x => x.HabitacionId);
                     table.ForeignKey(
-                        name: "FK_Habitaciones_Categorias_CategoriaId",
+                        name: "FK_Habitacion_Categoria_CategoriaId",
                         column: x => x.CategoriaId,
-                        principalTable: "Categorias",
+                        principalTable: "Categoria",
                         principalColumn: "CategoriaId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Habitaciones_Hoteles_HotelId",
+                        name: "FK_Habitacion_Hotel_HotelId",
                         column: x => x.HotelId,
-                        principalTable: "Hoteles",
+                        principalTable: "Hotel",
                         principalColumn: "HotelId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
-                table: "Categorias",
+                table: "Categoria",
                 columns: new[] { "CategoriaId", "Descripcion", "Nombre" },
-                values: new object[] { new Guid("5a9d055b-2ade-4942-8d2c-d8499f51fe65"), "Habitación para una persona", "Individual" });
+                values: new object[] { new Guid("f6f54ec9-4f23-4a2a-9621-fca2f8a96096"), "Habitación para una persona", "Individual" });
 
             migrationBuilder.InsertData(
-                table: "Categorias",
+                table: "Categoria",
                 columns: new[] { "CategoriaId", "Descripcion", "Nombre" },
-                values: new object[] { new Guid("f3330cae-4dda-4d2c-b649-112e96e1479d"), "Habitación para dos personas", "Matrimonial" });
+                values: new object[] { new Guid("5b9ad150-e421-4c25-acfb-ef415c344ad5"), "Habitación para dos personas", "Matrimonial" });
 
             migrationBuilder.InsertData(
-                table: "Categorias",
+                table: "Categoria",
                 columns: new[] { "CategoriaId", "Descripcion", "Nombre" },
-                values: new object[] { new Guid("1cb0313d-6829-4249-810a-2456f3151fad"), "Habitación para cuatro personas", "Suite" });
+                values: new object[] { new Guid("1f7f359e-a69a-4897-8bbe-9b45f05e79fd"), "Habitación para cuatro personas", "Suite" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_FotosHoteles_HotelId1",
-                table: "FotosHoteles",
-                column: "HotelId1");
+                name: "IX_FotoHotel_HotelId",
+                table: "FotoHotel",
+                column: "HotelId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Habitaciones_CategoriaId",
-                table: "Habitaciones",
+                name: "IX_Habitacion_CategoriaId",
+                table: "Habitacion",
                 column: "CategoriaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Habitaciones_HotelId",
-                table: "Habitaciones",
+                name: "IX_Habitacion_HotelId",
+                table: "Habitacion",
                 column: "HotelId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "FotosHoteles");
+                name: "FotoHotel");
 
             migrationBuilder.DropTable(
-                name: "Habitaciones");
+                name: "Habitacion");
 
             migrationBuilder.DropTable(
-                name: "Categorias");
+                name: "Categoria");
 
             migrationBuilder.DropTable(
-                name: "Hoteles");
+                name: "Hotel");
         }
     }
 }

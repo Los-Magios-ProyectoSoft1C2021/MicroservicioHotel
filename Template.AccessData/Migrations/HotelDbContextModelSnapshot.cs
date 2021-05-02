@@ -37,24 +37,24 @@ namespace MicroservicioHotel.AccessData.Migrations
 
                     b.HasKey("CategoriaId");
 
-                    b.ToTable("Categorias");
+                    b.ToTable("Categoria");
 
                     b.HasData(
                         new
                         {
-                            CategoriaId = new Guid("5a9d055b-2ade-4942-8d2c-d8499f51fe65"),
+                            CategoriaId = new Guid("f6f54ec9-4f23-4a2a-9621-fca2f8a96096"),
                             Descripcion = "Habitación para una persona",
                             Nombre = "Individual"
                         },
                         new
                         {
-                            CategoriaId = new Guid("f3330cae-4dda-4d2c-b649-112e96e1479d"),
+                            CategoriaId = new Guid("5b9ad150-e421-4c25-acfb-ef415c344ad5"),
                             Descripcion = "Habitación para dos personas",
                             Nombre = "Matrimonial"
                         },
                         new
                         {
-                            CategoriaId = new Guid("1cb0313d-6829-4249-810a-2456f3151fad"),
+                            CategoriaId = new Guid("1f7f359e-a69a-4897-8bbe-9b45f05e79fd"),
                             Descripcion = "Habitación para cuatro personas",
                             Nombre = "Suite"
                         });
@@ -62,19 +62,17 @@ namespace MicroservicioHotel.AccessData.Migrations
 
             modelBuilder.Entity("MicroservicioHotel.Domain.Entities.FotoHotel", b =>
                 {
-                    b.Property<Guid>("FotoHotelId")
+                    b.Property<int>("FotoHotelId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
-                    b.Property<Guid>("HotelId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int?>("HotelId1")
+                    b.Property<int>("HotelId")
                         .HasColumnType("int");
 
                     b.Property<string>("ImagenUrl")
@@ -84,9 +82,9 @@ namespace MicroservicioHotel.AccessData.Migrations
 
                     b.HasKey("FotoHotelId");
 
-                    b.HasIndex("HotelId1");
+                    b.HasIndex("HotelId");
 
-                    b.ToTable("FotosHoteles");
+                    b.ToTable("FotoHotel");
                 });
 
             modelBuilder.Entity("MicroservicioHotel.Domain.Entities.Habitacion", b =>
@@ -113,7 +111,7 @@ namespace MicroservicioHotel.AccessData.Migrations
 
                     b.HasIndex("HotelId");
 
-                    b.ToTable("Habitaciones");
+                    b.ToTable("Habitacion");
                 });
 
             modelBuilder.Entity("MicroservicioHotel.Domain.Entities.Hotel", b =>
@@ -182,14 +180,16 @@ namespace MicroservicioHotel.AccessData.Migrations
 
                     b.HasKey("HotelId");
 
-                    b.ToTable("Hoteles");
+                    b.ToTable("Hotel");
                 });
 
             modelBuilder.Entity("MicroservicioHotel.Domain.Entities.FotoHotel", b =>
                 {
                     b.HasOne("MicroservicioHotel.Domain.Entities.Hotel", "Hotel")
                         .WithMany("FotosHotel")
-                        .HasForeignKey("HotelId1");
+                        .HasForeignKey("HotelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Hotel");
                 });
