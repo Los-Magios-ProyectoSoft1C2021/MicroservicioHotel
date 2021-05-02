@@ -11,6 +11,11 @@ namespace MicroservicioHotel.Application.Services
     {
         private readonly ICategoriaQuery _query;
 
+        public CategoriaService(ICategoriaQuery query)
+        {
+            _query = query;
+        }
+
         public Task<List<ResponseGetAllCategoria>> GetAll()
         {
             return _query.GetAll();
