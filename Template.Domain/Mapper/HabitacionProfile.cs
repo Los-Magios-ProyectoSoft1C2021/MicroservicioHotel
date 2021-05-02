@@ -15,14 +15,23 @@ namespace MicroservicioHotel.Domain.Mapper
             CreateMap<Habitacion, RequestCreateHabitacionDto>();
             CreateMap<RequestCreateHabitacionDto, Habitacion>();
 
-            CreateMap<Habitacion, ResponseGetHabitacionByIdDto>();
+            CreateMap<Habitacion, ResponseGetHabitacionByIdDto>()
+                .ForMember(rh => rh.Categoria, m => m.MapFrom(h => h.Categoria.Nombre));
             CreateMap<ResponseGetHabitacionByIdDto, Habitacion>();
 
             CreateMap<Habitacion, RequestUpdateHabitacionDto>();
             CreateMap<RequestUpdateHabitacionDto, Habitacion>();
 
-            CreateMap<Habitacion, ResponseUpdateHabitacion>();
+            CreateMap<Habitacion, ResponseUpdateHabitacion>()
+                .ForMember(rh => rh.Categoria, m => m.MapFrom(h => h.Categoria.Nombre));
             CreateMap<ResponseUpdateHabitacion, Habitacion>();
+
+            CreateMap<Habitacion, ResponseCreateHabitacion>()
+                .ForMember(rh => rh.Categoria, m => m.MapFrom(h => h.Categoria.Nombre));
+            CreateMap<ResponseCreateHabitacion, Habitacion>();
+
+            CreateMap<ResponseGetHabitacionByIdDto, ResponseCreateHabitacion>();
+            CreateMap<ResponseCreateHabitacion, ResponseGetHabitacionByIdDto>();
         }
     }
 }

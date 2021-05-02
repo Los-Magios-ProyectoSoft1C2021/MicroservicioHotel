@@ -10,9 +10,9 @@ namespace MicroservicioHotel.Application.Services
     public interface IHabitacionService
     {
         Task<ResponseCreateHabitacion> Create(RequestCreateHabitacionDto request);
-        Task<ResponseUpdateHabitacion> Update(RequestUpdateHabitacionDto request);
+        Task<ResponseUpdateHabitacion> Update(int habitacionid, int hotelId, RequestUpdateHabitacionDto request);
         Task<ResponseGetHabitacionByIdDto> GetHabitacionById(int habitacionId, int hotelId);
-        Task<ResponseGetHabitacionByIdDto> GetAllHabitaciones(int hotelId);
+        Task<List<ResponseGetAllHabitacion>> GetAllHabitaciones(int hotelId);
         Task<bool> CheckHabitacionExistById(int habitacionId, int hotelId);
     }
 }

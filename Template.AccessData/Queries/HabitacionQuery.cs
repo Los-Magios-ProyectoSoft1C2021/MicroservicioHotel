@@ -18,16 +18,16 @@ namespace MicroservicioHotel.AccessData.Queries
             _context  = context;
         }
 
-        public async Task<List<ResponseGetHabitacionByIdDto>> GetAllHabitaciones(int hotelId)
+        public async Task<List<ResponseGetAllHabitacion>> GetAllHabitaciones(int hotelId)
         {
             var allhabitaciones = await _context.Habitacion
                 .Where(h => h.HotelId == hotelId)
-                .Select(m => new ResponseGetHabitacionByIdDto
+                .Select(m => new ResponseGetAllHabitacion
                 {
                     HabitacionId  = m.HabitacionId,
                     Nombre  = m.Nombre,
                     HotelId  = m.HotelId,
-                    Categoria  = m.Categoria.Descripcion,
+                    Categoria  = m.Categoria.Nombre,
                 }).ToListAsync();
 
             return allhabitaciones;
@@ -42,8 +42,7 @@ namespace MicroservicioHotel.AccessData.Queries
                     Nombre = a.Nombre,
                     HabitacionId = a.HabitacionId,
                     HotelId  = a.HotelId,
-                    Categoria = a.Categoria.Descripcion,
-
+                    Categoria = a.Categoria.Nombre
                 })
                 .FirstOrDefaultAsync();
 

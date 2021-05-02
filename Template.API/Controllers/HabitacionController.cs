@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MicroservicioHotel.API.Controllers
@@ -22,6 +23,23 @@ namespace MicroservicioHotel.API.Controllers
             _hotelService = hotelService;
         }
 
+        [HttpGet("{hotelId}/Habitacion")]
+        public async Task<ActionResult<List<ResponseGetAllHabitacion>>> GetAll(int hotelId)
+        {
+            try
+            {
+                var habitaciones = await _habitacionService.GetAllHabitaciones(hotelId);
+                if (habitaciones.Count <= 0)
+                    return StatusCode(204, null);
+
+                return Ok(habitaciones);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, null);
+            }
+        }
+
         [HttpGet("{hotelId}/Habitacion/{habitacionId}")]
         public async Task<ActionResult<ResponseGetHabitacionByIdDto>> GetById(int hotelId, int habitacionId)
         {
@@ -37,6 +55,7 @@ namespace MicroservicioHotel.API.Controllers
             {
                 return StatusCode(500, null);
             }
+
         }
         
         [HttpPost("{hotelId}/Habitacion")]
@@ -48,36 +67,28 @@ namespace MicroservicioHotel.API.Controllers
                 if (!exists)
                     return BadRequest();
 
-                var createdHotel = await _habitacionService.Create(habitacion);
-                return Created(uri: $"api/Hotel/{createdHotel.HotelId}/Habitacion/{createdHotel.HabitacionId}", createdHotel);
+                var createHabitacion = await _habitacionService.Create(habitacion);
+                return Created(uri: $"api/Hotel/{createHabitacion.HotelId}/Habitacion/{createHabitacion.HabitacionId}", createHabitacion);
             }
             catch (Exception)
             {
                 return StatusCode(500, null);
             }
+
         }
 
         [HttpPut("{hotelId}/Habitacion/{habitacionId}")]
         public async Task<ActionResult> PutHabitacion(int hotelId, int habitacionId, RequestUpdateHabitacionDto habitacion)
         {
-            try
-            {
-                var habitacionExists = await _habitacionService.CheckHabitacionExistById(habitacionId,  hotelId);
-                if (!habitacionExists)
-                    return NotFound();
+            var habitacionExists = await _habitacionService.CheckHabitacionExistById(habitacionId, hotelId);
+            if (!habitacionExists)
+                return StatusCode(204, null); // 204: Recurso no encontrado
 
-                await _habitacionService.Update(habitacion);
-
-                var updatedHabitacion = _habitacionService.GetHabitacionById(habitacionId, hotelId);
-                if (updatedHabitacion == null)
-                    return StatusCode(500, null);
-
-                return StatusCode(204, updatedHabitacion); // 204: Recurso modificado
-            }
-            catch (Exception)
-            {
+            var updatedHabitacion = await _habitacionService.Update(habitacionId, hotelId, habitacion);
+            if (updatedHabitacion == null)
                 return StatusCode(500, null);
-            }
+
+            return Ok(updatedHabitacion);
         }
     }
 }

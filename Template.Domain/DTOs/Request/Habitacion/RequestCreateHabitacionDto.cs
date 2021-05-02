@@ -6,10 +6,8 @@ namespace MicroservicioHotel.Domain.DTOs.Request.Habitacion
 {
     public class RequestCreateHabitacionDto
     {
-        public int HabitacionId { get; set; }
         public int HotelId { get; set; }
         public int CategoriaId { get; set; }
         public string Nombre { get; set; }
-
     }
 }

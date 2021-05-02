@@ -24,14 +24,14 @@ namespace MicroservicioHotel.Application.Services
             _mapper  = mapper; 
         }
 
-        public Task<ResponseGetHabitacionByIdDto> GetAllHabitaciones(int hotelId)
+        public async Task<List<ResponseGetAllHabitacion>> GetAllHabitaciones(int hotelId)
         {
-            throw new NotImplementedException();
+            return await _query.GetAllHabitaciones(hotelId);
         }
 
-        public Task<ResponseGetHabitacionByIdDto> GetHabitacionById(int habitacionId, int hotelId)
+        public async Task<ResponseGetHabitacionByIdDto> GetHabitacionById(int habitacionId, int hotelId)
         {
-            throw new NotImplementedException();
+            return await _query.GetHabitacionById(habitacionId, hotelId);
         }
 
         public async Task<ResponseCreateHabitacion> Create(RequestCreateHabitacionDto request)
@@ -39,12 +39,17 @@ namespace MicroservicioHotel.Application.Services
             var h =  _mapper.Map<Habitacion>(request);
             await _repository.Add(h);
 
-            return _mapper.Map<ResponseCreateHabitacion>(h);
+            var createdHabitacion = await _query.GetHabitacionById(h.HabitacionId, h.HotelId);
+
+            return _mapper.Map<ResponseCreateHabitacion>(createdHabitacion);
         }
 
-        public async Task<ResponseUpdateHabitacion> Update(RequestUpdateHabitacionDto request)
+        public async Task<ResponseUpdateHabitacion> Update(int habitacionId, int hotelId, RequestUpdateHabitacionDto request)
         {
             var h = _mapper.Map<Habitacion>(request);
+            h.HabitacionId = habitacionId;
+            h.HotelId = hotelId;
+
             await _repository.Update(h);
 
             return _mapper.Map<ResponseUpdateHabitacion>(h);

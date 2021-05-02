@@ -102,13 +102,13 @@ namespace MicroservicioHotel.API.Controllers
             {
                 var exists = await _hotelService.CheckHotelExistsById(id);
                 if (!exists)
-                    return StatusCode(204, null);
+                    return StatusCode(204, null); // 204: Recurso no encontrado
 
                 var updatedHotel = await _hotelService.Update(id, hotel);
                 if (updatedHotel == null)
                     throw new Exception();
 
-                return Ok(updatedHotel); // 204: Recurso modificado
+                return Ok(updatedHotel);
             } 
             catch (Exception)
             {
