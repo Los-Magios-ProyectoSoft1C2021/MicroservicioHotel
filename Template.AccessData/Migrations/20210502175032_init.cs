@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MicroservicioHotel.AccessData.Migrations
 {
@@ -11,7 +10,8 @@ namespace MicroservicioHotel.AccessData.Migrations
                 name: "Categoria",
                 columns: table => new
                 {
-                    CategoriaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CategoriaId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     Descripcion = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false)
                 },
@@ -72,7 +72,7 @@ namespace MicroservicioHotel.AccessData.Migrations
                     HabitacionId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     HotelId = table.Column<int>(type: "int", nullable: false),
-                    CategoriaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CategoriaId = table.Column<int>(type: "int", nullable: false),
                     Nombre = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false)
                 },
                 constraints: table =>
@@ -95,17 +95,17 @@ namespace MicroservicioHotel.AccessData.Migrations
             migrationBuilder.InsertData(
                 table: "Categoria",
                 columns: new[] { "CategoriaId", "Descripcion", "Nombre" },
-                values: new object[] { new Guid("f6f54ec9-4f23-4a2a-9621-fca2f8a96096"), "Habitación para una persona", "Individual" });
+                values: new object[] { 1, "Habitación para una persona", "Individual" });
 
             migrationBuilder.InsertData(
                 table: "Categoria",
                 columns: new[] { "CategoriaId", "Descripcion", "Nombre" },
-                values: new object[] { new Guid("5b9ad150-e421-4c25-acfb-ef415c344ad5"), "Habitación para dos personas", "Matrimonial" });
+                values: new object[] { 2, "Habitación para dos personas", "Matrimonial" });
 
             migrationBuilder.InsertData(
                 table: "Categoria",
                 columns: new[] { "CategoriaId", "Descripcion", "Nombre" },
-                values: new object[] { new Guid("1f7f359e-a69a-4897-8bbe-9b45f05e79fd"), "Habitación para cuatro personas", "Suite" });
+                values: new object[] { 3, "Habitación para cuatro personas", "Suite" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_FotoHotel_HotelId",

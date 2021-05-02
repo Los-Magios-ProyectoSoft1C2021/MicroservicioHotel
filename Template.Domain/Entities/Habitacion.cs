@@ -8,7 +8,7 @@ namespace MicroservicioHotel.Domain.Entities
     {
         public int HabitacionId { get; set; }
         public int HotelId { get; set; }
-        public Guid CategoriaId { get; set; }
+        public int CategoriaId { get; set; }
         public string Nombre { get; set; }
 
         public Hotel Hotel { get; set; }
