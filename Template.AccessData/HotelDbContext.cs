@@ -8,10 +8,10 @@ namespace MicroservicioHotel.AccessData
 {
     public class HotelDbContext : DbContext
     {
-        public DbSet<Hotel> Hoteles { get; set; }
-        public DbSet<Habitacion> Habitaciones { get; set; }
-        public DbSet<Categoria> Categorias { get; set; }
-        public DbSet<FotoHotel> FotosHoteles { get; set; }
+        public DbSet<Hotel> Hotel { get; set; }
+        public DbSet<Habitacion> Habitacion { get; set; }
+        public DbSet<Categoria> Categoria { get; set; }
+        public DbSet<FotoHotel> FotoHotel { get; set; }
 
         public HotelDbContext(DbContextOptions<HotelDbContext> options) : base(options)
         {

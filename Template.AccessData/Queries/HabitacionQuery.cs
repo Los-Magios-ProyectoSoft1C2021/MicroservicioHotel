@@ -20,7 +20,7 @@ namespace MicroservicioHotel.AccessData.Queries
 
         public async Task<List<ResponseGetHabitacionByIdDto>> GetAllHabitaciones(int hotelId)
         {
-            var allhabitaciones = await _context.Habitaciones
+            var allhabitaciones = await _context.Habitacion
                 .Where(h => h.HotelId == hotelId)
                 .Select(m => new ResponseGetHabitacionByIdDto
                 {
@@ -35,7 +35,7 @@ namespace MicroservicioHotel.AccessData.Queries
 
         public async Task<ResponseGetHabitacionByIdDto> GetHabitacionById(int habitacionId, int hotelId)
         {
-            var habitacion = await _context.Habitaciones
+            var habitacion = await _context.Habitacion
                 .Where(h => h.HabitacionId == habitacionId && h.HotelId == hotelId)
                 .Select(a => new ResponseGetHabitacionByIdDto
                 {
@@ -52,7 +52,7 @@ namespace MicroservicioHotel.AccessData.Queries
         
         public async Task<bool> CheckHabitacionExistById(int habitacionId, int hotelId)
         {
-            var exists = await _context.Habitaciones
+            var exists = await _context.Habitacion
                 .AnyAsync(h => h.HabitacionId == habitacionId && h.HotelId == hotelId);
 
             return exists;

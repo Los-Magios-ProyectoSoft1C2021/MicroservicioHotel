@@ -20,7 +20,7 @@ namespace MicroservicioHotel.AccessData.Queries
 
         public async Task<bool> CheckFotoHotelExistsById(int fotoHotelId, int hotelId)
         {
-            var exists = await _context.FotosHoteles
+            var exists = await _context.FotoHotel
                 .AnyAsync(fh => fh.FotoHotelId == fotoHotelId && fh.HotelId == hotelId);
 
             return exists;
@@ -28,7 +28,7 @@ namespace MicroservicioHotel.AccessData.Queries
 
         public async Task<List<ResponseGetAllFotoHotel>> GetAll(int hotelId)
         {
-            var fotos = await _context.FotosHoteles
+            var fotos = await _context.FotoHotel
                 .Where(fh => fh.HotelId == hotelId)
                 .Select(fh => new ResponseGetAllFotoHotel
                 {
@@ -44,7 +44,7 @@ namespace MicroservicioHotel.AccessData.Queries
 
         public async Task<ResponseGetFotoHotelById> GetById(int fotoHotelId, int hotelId)
         {
-            var foto = await _context.FotosHoteles
+            var foto = await _context.FotoHotel
                 .Where(fh => fh.FotoHotelId == fotoHotelId && fh.HotelId == hotelId)
                 .Select(fh => new ResponseGetFotoHotelById
                 { 

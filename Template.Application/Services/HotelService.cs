@@ -32,9 +32,11 @@ namespace MicroservicioHotel.Application.Services
             return _mapper.Map<ResponseCreateHotel>(h);
         }
 
-        public async Task<ResponseUpdateHotel> Update(RequestUpdateHotelDto hotel)
+        public async Task<ResponseUpdateHotel> Update(int id, RequestUpdateHotelDto hotel)
         {
             var h = _mapper.Map<Hotel>(hotel);
+            h.HotelId = id;
+
             await _repository.Update(h);
 
             return _mapper.Map<ResponseUpdateHotel>(h);

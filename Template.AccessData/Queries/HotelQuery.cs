@@ -23,7 +23,7 @@ namespace MicroservicioHotel.AccessData.Queries
 
         public async Task<List<ResponseGetAllHotelDto>> GetAll()
         {
-            var hoteles = await _context.Hoteles
+            var hoteles = await _context.Hotel
                 .Select(h => new ResponseGetAllHotelDto
                 {
                     HotelId = h.HotelId,
@@ -51,7 +51,7 @@ namespace MicroservicioHotel.AccessData.Queries
 
         public async Task<List<ResponseGetAllHotelBy>> GetAllBy(int page, int estrellas, string ciudad)
         {
-            var query = _context.Hoteles;
+            var query = _context.Hotel;
 
             if (estrellas > 0)
                 query.Where(h => h.Estrellas == estrellas);
@@ -87,7 +87,7 @@ namespace MicroservicioHotel.AccessData.Queries
 
         public async Task<ResponseGetHotelByIdDto> GetById(int id)
         {
-            var hotel = await _context.Hoteles
+            var hotel = await _context.Hotel
                 .Select(h => new ResponseGetHotelByIdDto()
                 { 
                     HotelId = id,
@@ -117,7 +117,7 @@ namespace MicroservicioHotel.AccessData.Queries
 
         public async Task<bool> CheckHotelExistsById(int id)
         {
-            var exists = await _context.Hoteles
+            var exists = await _context.Hotel
                 .AnyAsync(h => h.HotelId == id);
 
             return exists;

@@ -64,6 +64,9 @@ namespace MicroservicioHotel.API.Controllers
         {
             try
             {
+                if (page == 0)
+                    page = 1;
+
                 var hoteles = await _hotelService.GetAllBy(page, estrellas, ciudad);
                 return Ok(hoteles);
             }
@@ -92,20 +95,20 @@ namespace MicroservicioHotel.API.Controllers
         }
 
         // PUT: api/Hotel/
-        [HttpPut]
-        public async Task<ActionResult<ResponseUpdateHotel>> PutHotel([FromQuery(Name = "id")] int id, RequestUpdateHotelDto hotel)
+        [HttpPut("{id}")]
+        public async Task<ActionResult<ResponseUpdateHotel>> PutHotel(int id, RequestUpdateHotelDto hotel)
         {
             try
             {
                 var exists = await _hotelService.CheckHotelExistsById(id);
                 if (!exists)
-                    return NotFound();
+                    return StatusCode(204, null);
 
-                var updatedHotel = await _hotelService.Update(hotel);
+                var updatedHotel = await _hotelService.Update(id, hotel);
                 if (updatedHotel == null)
                     throw new Exception();
 
-                return StatusCode(204, updatedHotel); // 204: Recurso modificado
+                return Ok(updatedHotel); // 204: Recurso modificado
             } 
             catch (Exception)
             {
