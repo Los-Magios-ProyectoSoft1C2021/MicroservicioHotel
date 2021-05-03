@@ -36,7 +36,9 @@ namespace Template.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services
+                .AddControllers()
+                .AddNewtonsoftJson();;
 
             services.AddSingleton(sp => sp.GetRequiredService<ILoggerFactory>().CreateLogger("DefaultLogger"));
 
@@ -46,6 +48,7 @@ namespace Template.API
                 mc.AddProfile(new HabitacionProfile());
                 mc.AddProfile(new FotoHotelProfile());
                 mc.AddProfile(new CategoriaProfile());
+                mc.AddProfile(new JsonPatchDocumentProfile());
             });
 
             IMapper mapper = mapperConfig.CreateMapper();
@@ -84,7 +87,6 @@ namespace Template.API
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 options.IncludeXmlComments(xmlPath);
             });
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

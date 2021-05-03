@@ -3,6 +3,7 @@ using MicroservicioHotel.Domain.DTOs.Request;
 using MicroservicioHotel.Domain.DTOs.Response;
 using MicroservicioHotel.Domain.Entities;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -14,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace MicroservicioHotel.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/hotel")]
     [ApiController]
     public class HotelController : ControllerBase
     {
@@ -43,7 +44,7 @@ namespace MicroservicioHotel.API.Controllers
         /// <returns>Retorna un hotel.</returns>
         /// <response code="200">Retorna la información del hotel</response>
         /// <response code="404">Si no se encuentra el hotel</response>  
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<ActionResult<ResponseHotelDto>> GetHotelById(int id)
         {
             var hotel = await _hotelService.GetById(id);
@@ -103,7 +104,7 @@ namespace MicroservicioHotel.API.Controllers
                 return null;
 
             StringBuilder builder = new StringBuilder();
-            builder.Append($"/api/Hotel/?page={page}");
+            builder.Append($"/api/hotel/?page={page}");
 
             if (estrellas > 0)
                 builder.Append($"&estrellas={estrellas}");
@@ -144,7 +145,7 @@ namespace MicroservicioHotel.API.Controllers
             if (createdHotel == null)
                 throw new Exception();
 
-            return Created(uri: $"api/Hotel/{createdHotel.HotelId}", createdHotel);
+            return Created(uri: $"api/hotel/{createdHotel.HotelId}", createdHotel);
         }
 
         /// <summary>
@@ -172,7 +173,7 @@ namespace MicroservicioHotel.API.Controllers
         /// <returns>El hotel modificado.</returns>
         /// <response code="200">Retorna la información del hotel modificado</response>
         /// <response code="204">Si no se encuentra el hotel a modificar</response>  
-        [HttpPut("{id}")]
+        [HttpPut("{id:int}")]
         public async Task<ActionResult<ResponseHotelDto>> PutHotel(int id, RequestHotelDto hotel)
         {
             var exists = await _hotelService.CheckHotelExistsById(id);
@@ -184,6 +185,35 @@ namespace MicroservicioHotel.API.Controllers
                 throw new Exception();
 
             return Ok(updatedHotel);
+        }
+
+        /// <summary>
+        /// Modifica los datos de un hotel ya existente.
+        /// </summary>
+        /// <remarks>
+        /// Ejemplo de body:
+        ///     [
+        ///         {
+        ///             "value": "Hotel Primavera",
+        ///             "path": "/Nombre"
+        ///             "op": "replace"
+        ///         }
+        ///     ]
+        /// </remarks>
+        /// <param name="id">La ID del hotel que se quiere modificar.</param>
+        /// <param name="entityPatchDto">Body que contiene todas las operaciones de transformación que se le van a aplicar al hotel.</param>
+        /// <returns>Retorna el hotel modificado.</returns>
+        /// <response code="200">Retorna la información del hotel modificado</response>
+        /// <response code="204">Si no se encuentra el hotel a modificar</response>  
+        [HttpPatch("{id:int}")]
+        public async Task<ActionResult<ResponseHotelDto>> PatchHotel(int id, [FromBody] JsonPatchDocument<RequestHotelDto> entityPatchDto)
+        {
+            var exists = await _hotelService.CheckHotelExistsById(id);
+            if (!exists)
+                return NotFound();
+
+            var newHotel = await _hotelService.Patch(id, entityPatchDto);
+            return Ok(newHotel);
         }
 
     }

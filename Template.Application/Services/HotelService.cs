@@ -4,6 +4,7 @@ using MicroservicioHotel.Domain.DTOs.Request;
 using MicroservicioHotel.Domain.DTOs.Response;
 using MicroservicioHotel.Domain.Entities;
 using MicroservicioHotel.Domain.Queries;
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -42,6 +43,19 @@ namespace MicroservicioHotel.Application.Services
             return _mapper.Map<ResponseHotelDto>(h);
         }
 
+        public async Task<ResponseHotelDto> Patch(int id, JsonPatchDocument<RequestHotelDto> entityPatchDto)
+        {
+            var oldHotel = await _query.GetById(id);
+            var entityPatch = _mapper.Map<JsonPatchDocument<Hotel>>(entityPatchDto);
+
+            var modifiedHotel = _mapper.Map<Hotel>(oldHotel);
+            entityPatch.ApplyTo(modifiedHotel);
+            modifiedHotel.HotelId = id;
+
+            await _repository.Update(modifiedHotel);
+            return _mapper.Map<ResponseHotelDto>(modifiedHotel);
+        }
+
         public async Task<ResponseHotelDto> GetById(int id)
         {
             return await _query.GetById(id);
@@ -66,5 +80,6 @@ namespace MicroservicioHotel.Application.Services
         {
             return await _query.GetHotelsCount();
         }
+
     }
 }

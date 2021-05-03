@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MicroservicioHotel.API.Controllers
 {
-    [Route("api/Hotel/Habitacion/Categorias")]
+    [Route("api/hotel/categorias")]
     public class CategoriaController : ControllerBase
     {
         private readonly ICategoriaService _categoriaService;

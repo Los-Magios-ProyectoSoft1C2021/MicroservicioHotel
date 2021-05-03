@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MicroservicioHotel.API.Controllers
 {
-    [Route("api/Hotel")]
+    [Route("api/hotel")]
     [ApiController]
     public class HabitacionController : ControllerBase
     {
@@ -30,7 +30,7 @@ namespace MicroservicioHotel.API.Controllers
         /// <returns>Retorna todas las habitaciones de un hotel.</returns>
         /// /// <response code="200">Retorna la información de las habitaciónes</response>
         /// <response code="204">Si no se encuentran habitaciones en dicho hotel</response>  
-        [HttpGet("{hotelId}/Habitacion")]
+        [HttpGet("{hotelId:int}/habitacion")]
         public async Task<ActionResult<List<ResponseHabitacionDto>>> GetAll(int hotelId)
         {
             var habitaciones = await _habitacionService.GetAllHabitaciones(hotelId);
@@ -48,7 +48,7 @@ namespace MicroservicioHotel.API.Controllers
         /// <returns>Retorna las habitaciones por Id.</returns>
         /// <response code="200">Retorna la información de la habitación</response>
         /// <response code="404">Si no se encuentra la habitacion correspondiente a dicho hotel</response>  
-        [HttpGet("{hotelId}/Habitacion/{habitacionId}")]
+        [HttpGet("{hotelId:int}/habitacion/{habitacionId:int}")]
         public async Task<ActionResult<ResponseHabitacionDto>> GetById(int hotelId, int habitacionId)
         {
             var habitacion = await _habitacionService.GetHabitacionById(habitacionId, hotelId);
@@ -74,7 +74,7 @@ namespace MicroservicioHotel.API.Controllers
         /// <returns>Carga una habitacion al servidor.</returns>
         /// <response code="201">Retorna la creacion de la habitacion</response>
         /// <response code="400">Si no se encuentra la habitacion</response>  
-        [HttpPost("{hotelId}/Habitacion")]
+        [HttpPost("{hotelId:int}/habitacion")]
         public async Task<ActionResult> PostHabitacion(int hotelId, RequestHabitacionDto habitacion)
         {
             var exists = await _hotelService.CheckHotelExistsById(hotelId);
@@ -82,7 +82,7 @@ namespace MicroservicioHotel.API.Controllers
                 return BadRequest();
 
             var createHabitacion = await _habitacionService.Create(habitacion);
-            return Created(uri: $"api/Hotel/{createHabitacion.HotelId}/Habitacion/{createHabitacion.HabitacionId}", createHabitacion);
+            return Created(uri: $"api/hotel/{createHabitacion.HotelId}/habitacion/{createHabitacion.HabitacionId}", createHabitacion);
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace MicroservicioHotel.API.Controllers
         /// <returns>Carga una habitacion al servidor.</returns>
         /// <response code="200">Retorna la información de la habitacion modificada</response>
         /// <response code="204">Si no se encuentra la habitacion a modificar</response> 
-        [HttpPut("{hotelId}/Habitacion/{habitacionId}")]
+        [HttpPut("{hotelId:int}/habitacion/{habitacionId:int}")]
         public async Task<ActionResult> PutHabitacion(int hotelId, int habitacionId, RequestHabitacionDto habitacion)
         {
             var habitacionExists = await _habitacionService.CheckHabitacionExistById(habitacionId, hotelId);

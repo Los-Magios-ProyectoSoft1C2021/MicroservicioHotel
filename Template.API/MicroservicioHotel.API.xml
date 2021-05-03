@@ -171,5 +171,25 @@
             <response code="200">Retorna la información del hotel modificado</response>
             <response code="204">Si no se encuentra el hotel a modificar</response>  
         </member>
+        <member name="M:MicroservicioHotel.API.Controllers.HotelController.PatchHotel(System.Int32,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{MicroservicioHotel.Domain.DTOs.Request.RequestHotelDto})">
+            <summary>
+            Modifica los datos de un hotel ya existente.
+            </summary>
+            <remarks>
+            Ejemplo de body:
+                [
+                    {
+                        "value": "Hotel Primavera",
+                        "path": "/Nombre"
+                        "op": "replace"
+                    }
+                ]
+            </remarks>
+            <param name="id">La ID del hotel que se quiere modificar.</param>
+            <param name="entityPatchDto">Body que contiene todas las operaciones de transformación que se le van a aplicar al hotel.</param>
+            <returns>Retorna el hotel modificado.</returns>
+            <response code="200">Retorna la información del hotel modificado</response>
+            <response code="204">Si no se encuentra el hotel a modificar</response>  
+        </member>
     </members>
 </doc>
