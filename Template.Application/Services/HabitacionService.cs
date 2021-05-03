@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MicroservicioHotel.Domain.Commands;
-using MicroservicioHotel.Domain.DTOs.Request.Habitacion;
-using MicroservicioHotel.Domain.DTOs.Response.Habitacion;
+using MicroservicioHotel.Domain.DTOs.Request;
+using MicroservicioHotel.Domain.DTOs.Response;
 using MicroservicioHotel.Domain.Entities;
 using MicroservicioHotel.Domain.Queries;
 using System;
@@ -24,27 +24,27 @@ namespace MicroservicioHotel.Application.Services
             _mapper  = mapper; 
         }
 
-        public async Task<List<ResponseGetAllHabitacion>> GetAllHabitaciones(int hotelId)
+        public async Task<List<ResponseHabitacionDto>> GetAllHabitaciones(int hotelId)
         {
             return await _query.GetAllHabitaciones(hotelId);
         }
 
-        public async Task<ResponseGetHabitacionByIdDto> GetHabitacionById(int habitacionId, int hotelId)
+        public async Task<ResponseHabitacionDto> GetHabitacionById(int habitacionId, int hotelId)
         {
             return await _query.GetHabitacionById(habitacionId, hotelId);
         }
 
-        public async Task<ResponseCreateHabitacion> Create(RequestCreateHabitacionDto request)
+        public async Task<ResponseHabitacionDto> Create(RequestHabitacionDto request)
         {
             var h =  _mapper.Map<Habitacion>(request);
             await _repository.Add(h);
 
             var createdHabitacion = await _query.GetHabitacionById(h.HabitacionId, h.HotelId);
 
-            return _mapper.Map<ResponseCreateHabitacion>(createdHabitacion);
+            return _mapper.Map<ResponseHabitacionDto>(createdHabitacion);
         }
 
-        public async Task<ResponseUpdateHabitacion> Update(int habitacionId, int hotelId, RequestUpdateHabitacionDto request)
+        public async Task<ResponseHabitacionDto> Update(int habitacionId, int hotelId, RequestHabitacionDto request)
         {
             var h = _mapper.Map<Habitacion>(request);
             h.HabitacionId = habitacionId;
@@ -52,7 +52,7 @@ namespace MicroservicioHotel.Application.Services
 
             await _repository.Update(h);
 
-            return _mapper.Map<ResponseUpdateHabitacion>(h);
+            return _mapper.Map<ResponseHabitacionDto>(h);
         }
 
         public async Task<bool> CheckHabitacionExistById(int habitacionId, int hotelId)

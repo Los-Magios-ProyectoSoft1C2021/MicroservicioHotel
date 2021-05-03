@@ -1,6 +1,6 @@
 ﻿using MicroservicioHotel.Application.Services;
-using MicroservicioHotel.Domain.DTOs.Request.Habitacion;
-using MicroservicioHotel.Domain.DTOs.Response.Habitacion;
+using MicroservicioHotel.Domain.DTOs.Request;
+using MicroservicioHotel.Domain.DTOs.Response;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -24,7 +24,7 @@ namespace MicroservicioHotel.API.Controllers
         }
 
         [HttpGet("{hotelId}/Habitacion")]
-        public async Task<ActionResult<List<ResponseGetAllHabitacion>>> GetAll(int hotelId)
+        public async Task<ActionResult<List<ResponseHabitacionDto>>> GetAll(int hotelId)
         {
             var habitaciones = await _habitacionService.GetAllHabitaciones(hotelId);
             if (habitaciones.Count <= 0)
@@ -34,7 +34,7 @@ namespace MicroservicioHotel.API.Controllers
         }
 
         [HttpGet("{hotelId}/Habitacion/{habitacionId}")]
-        public async Task<ActionResult<ResponseGetHabitacionByIdDto>> GetById(int hotelId, int habitacionId)
+        public async Task<ActionResult<ResponseHabitacionDto>> GetById(int hotelId, int habitacionId)
         {
             var habitacion = await _habitacionService.GetHabitacionById(habitacionId, hotelId);
             if (habitacion == null)
@@ -44,7 +44,7 @@ namespace MicroservicioHotel.API.Controllers
         }
         
         [HttpPost("{hotelId}/Habitacion")]
-        public async Task<ActionResult> PostHabitacion(int hotelId, RequestCreateHabitacionDto habitacion)
+        public async Task<ActionResult> PostHabitacion(int hotelId, RequestHabitacionDto habitacion)
         {
             var exists = await _hotelService.CheckHotelExistsById(hotelId);
             if (!exists)
@@ -55,7 +55,7 @@ namespace MicroservicioHotel.API.Controllers
         }
 
         [HttpPut("{hotelId}/Habitacion/{habitacionId}")]
-        public async Task<ActionResult> PutHabitacion(int hotelId, int habitacionId, RequestUpdateHabitacionDto habitacion)
+        public async Task<ActionResult> PutHabitacion(int hotelId, int habitacionId, RequestHabitacionDto habitacion)
         {
             var habitacionExists = await _habitacionService.CheckHabitacionExistById(habitacionId, hotelId);
             if (!habitacionExists)

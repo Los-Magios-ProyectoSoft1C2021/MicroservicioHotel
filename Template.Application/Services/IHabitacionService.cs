@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using MicroservicioHotel.Domain.DTOs.Request.Habitacion;
-using MicroservicioHotel.Domain.DTOs.Response.Habitacion;
+using MicroservicioHotel.Domain.DTOs.Request;
+using MicroservicioHotel.Domain.DTOs.Response;
 
 namespace MicroservicioHotel.Application.Services
 {
     public interface IHabitacionService
     {
-        Task<ResponseCreateHabitacion> Create(RequestCreateHabitacionDto request);
-        Task<ResponseUpdateHabitacion> Update(int habitacionid, int hotelId, RequestUpdateHabitacionDto request);
-        Task<ResponseGetHabitacionByIdDto> GetHabitacionById(int habitacionId, int hotelId);
-        Task<List<ResponseGetAllHabitacion>> GetAllHabitaciones(int hotelId);
+        Task<ResponseHabitacionDto> Create(RequestHabitacionDto request);
+        Task<ResponseHabitacionDto> Update(int habitacionid, int hotelId, RequestHabitacionDto request);
+        Task<ResponseHabitacionDto> GetHabitacionById(int habitacionId, int hotelId);
+        Task<List<ResponseHabitacionDto>> GetAllHabitaciones(int hotelId);
         Task<bool> CheckHabitacionExistById(int habitacionId, int hotelId);
     }
 }

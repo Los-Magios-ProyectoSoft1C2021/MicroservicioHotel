@@ -1,4 +1,4 @@
-﻿using MicroservicioHotel.Domain.DTOs.Response.Categoria;
+﻿using MicroservicioHotel.Domain.DTOs.Response;
 using MicroservicioHotel.Domain.Queries;
 using System;
 using System.Collections.Generic;
@@ -16,7 +16,7 @@ namespace MicroservicioHotel.Application.Services
             _query = query;
         }
 
-        public Task<List<ResponseGetAllCategoria>> GetAll()
+        public Task<List<ResponseCategoriaDto>> GetAll()
         {
             return _query.GetAll();
         }

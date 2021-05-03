@@ -1,4 +1,4 @@
-﻿using MicroservicioHotel.Domain.DTOs.Response.Hotel;
+﻿using MicroservicioHotel.Domain.DTOs.Response;
 using MicroservicioHotel.Domain.Queries;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -21,10 +21,10 @@ namespace MicroservicioHotel.AccessData.Queries
             _pageSize = int.Parse(configuration.GetSection("PageSize").Value);
         }
 
-        public async Task<List<ResponseGetAllHotelDto>> GetAll()
+        public async Task<List<ResponseHotelDto>> GetAll()
         {
             var hoteles = await _context.Hotel
-                .Select(h => new ResponseGetAllHotelDto
+                .Select(h => new ResponseHotelDto
                 {
                     HotelId = h.HotelId,
                     Nombre = h.Nombre,
@@ -39,7 +39,7 @@ namespace MicroservicioHotel.AccessData.Queries
                     Correo= h.Correo,
                     Latitud = h.Latitud,
                     Longitud =  h.Longitud,
-                    Fotos = h.FotosHotel.Select(fh => new ResponseHotelGenericFotoHotel
+                    Fotos = h.FotosHotel.Select(fh => new ResponseHabitacionCategoriaDto
                     {
                         ImagenUrl = fh.ImagenUrl,
                         Descripcion = fh.Descripcion
@@ -49,7 +49,7 @@ namespace MicroservicioHotel.AccessData.Queries
             return hoteles;
         }
 
-        public async Task<List<ResponseGetAllHotelBy>> GetAllBy(int page, int estrellas, string ciudad)
+        public async Task<List<ResponseHotelDto>> GetAllBy(int page, int estrellas, string ciudad)
         {
             var query = _context.Hotel;
 
@@ -59,7 +59,7 @@ namespace MicroservicioHotel.AccessData.Queries
             if (ciudad != null)
                 query.Where(h => h.Ciudad == ciudad);
 
-            return await query.Select(h => new ResponseGetAllHotelBy
+            return await query.Select(h => new ResponseHotelDto
             {
                 HotelId = h.HotelId,
                 Nombre = h.Nombre,
@@ -74,7 +74,7 @@ namespace MicroservicioHotel.AccessData.Queries
                 Correo = h.Correo,
                 Latitud = h.Latitud,
                 Longitud = h.Longitud,
-                Fotos = h.FotosHotel.Select(fh => new ResponseHotelGenericFotoHotel
+                Fotos = h.FotosHotel.Select(fh => new ResponseHabitacionCategoriaDto
                 {
                     ImagenUrl = fh.ImagenUrl,
                     Descripcion = fh.Descripcion
@@ -85,10 +85,10 @@ namespace MicroservicioHotel.AccessData.Queries
                 .ToListAsync();
         }
 
-        public async Task<ResponseGetHotelByIdDto> GetById(int id)
+        public async Task<ResponseHotelDto> GetById(int id)
         {
             var hotel = await _context.Hotel
-                .Select(h => new ResponseGetHotelByIdDto()
+                .Select(h => new ResponseHotelDto()
                 { 
                     HotelId = id,
                     Nombre = h.Nombre,
@@ -103,7 +103,7 @@ namespace MicroservicioHotel.AccessData.Queries
                     Correo = h.Correo,
                     Latitud = h.Latitud,
                     Longitud = h.Longitud,
-                    Fotos = h.FotosHotel.Select(fh => new ResponseHotelGenericFotoHotel
+                    Fotos = h.FotosHotel.Select(fh => new ResponseHabitacionCategoriaDto
                     {
                         ImagenUrl = fh.ImagenUrl,
                         Descripcion = fh.Descripcion

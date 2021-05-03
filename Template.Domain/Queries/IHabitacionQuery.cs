@@ -1,4 +1,4 @@
-﻿using MicroservicioHotel.Domain.DTOs.Response.Habitacion;
+﻿using MicroservicioHotel.Domain.DTOs.Response;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,8 +9,8 @@ namespace MicroservicioHotel.Domain.Queries
     public interface IHabitacionQuery
     {
         //Consultas.....
-        Task<List<ResponseGetAllHabitacion>> GetAllHabitaciones(int hotelId);
-        Task<ResponseGetHabitacionByIdDto> GetHabitacionById(int habitacionId, int hotelId);
+        Task<List<ResponseHabitacionDto>> GetAllHabitaciones(int hotelId);
+        Task<ResponseHabitacionDto> GetHabitacionById(int habitacionId, int hotelId);
         Task<bool> CheckHabitacionExistById(int habitacionId, int hotelId);
     }
 }

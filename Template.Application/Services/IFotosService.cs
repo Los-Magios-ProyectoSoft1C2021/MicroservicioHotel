@@ -1,5 +1,5 @@
-﻿using MicroservicioHotel.Domain.DTOs.Request.FotoHotel;
-using MicroservicioHotel.Domain.DTOs.Response.FotoHotel;
+﻿using MicroservicioHotel.Domain.DTOs.Request;
+using MicroservicioHotel.Domain.DTOs.Response;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,9 +9,9 @@ namespace MicroservicioHotel.Application.Services
 {
     public interface IFotosService
     {
-        Task<ResponseGetFotoHotelById> GetById(int fotoHotelId, int hotelId);
-        Task<List<ResponseGetAllFotoHotel>> GetAll(int hotelId);
-        Task<ResponseCreateFotoHotel> Add(int hotelId, RequestCreateFotoHotel request);
+        Task<ResponseFotoHotelDto> GetById(int fotoHotelId, int hotelId);
+        Task<List<ResponseFotoHotelDto>> GetAll(int hotelId);
+        Task<ResponseFotoHotelDto> Add(int hotelId, RequestFotoHotelDto request);
         Task Remove(int fotoHotelId, int hotelId);
         Task<bool> CheckFotoExistsById(int fotoHotelId, int hotelId);
     }

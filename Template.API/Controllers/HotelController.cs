@@ -1,6 +1,6 @@
 ﻿using MicroservicioHotel.Application.Services;
-using MicroservicioHotel.Domain.DTOs;
-using MicroservicioHotel.Domain.DTOs.Response.Hotel;
+using MicroservicioHotel.Domain.DTOs.Request;
+using MicroservicioHotel.Domain.DTOs.Response;
 using MicroservicioHotel.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -38,7 +38,7 @@ namespace MicroservicioHotel.API.Controllers
 
         // GET: api/Hotel/{id}
         [HttpGet("{id}")]
-        public async Task<ActionResult<ResponseGetHotelByIdDto>> GetHotelById(int id)
+        public async Task<ActionResult<ResponseHotelDto>> GetHotelById(int id)
         {
             var hotel = await _hotelService.GetById(id);
             if (hotel == null)
@@ -48,8 +48,8 @@ namespace MicroservicioHotel.API.Controllers
         }
 
         // GET: /api/[controller]/query
-        [HttpGet()]
-        public async Task<ActionResult<ResponseGetAllHotelsByPage>> GetHotelBy(
+        [HttpGet]
+        public async Task<ActionResult<ResponsePageHotels>> GetHotelBy(
             [FromQuery(Name = "page")] int page, 
             [FromQuery(Name ="estrellas")] int estrellas, 
             [FromQuery(Name ="ciudad")] string ciudad)
@@ -68,7 +68,7 @@ namespace MicroservicioHotel.API.Controllers
             int hotelesCount = await _hotelService.GetHotelsCount();
             int pageCount = (hotelesCount / pageSize) + 1;
 
-            var response = new ResponseGetAllHotelsByPage {
+            var response = new ResponsePageHotels {
                 Data = hoteles,
                 ItemsCount = hoteles.Count,
                 PageCount = pageCount,
@@ -102,7 +102,7 @@ namespace MicroservicioHotel.API.Controllers
 
         // POST: api/Hotel/
         [HttpPost]
-        public async Task<ActionResult> PostHotel(RequestCreateHotelDto hotel)
+        public async Task<ActionResult> PostHotel(RequestHotelDto hotel)
         {
             var createdHotel = await _hotelService.Create(hotel);
             if (createdHotel == null)
@@ -113,7 +113,7 @@ namespace MicroservicioHotel.API.Controllers
 
         // PUT: api/Hotel/
         [HttpPut("{id}")]
-        public async Task<ActionResult<ResponseUpdateHotel>> PutHotel(int id, RequestUpdateHotelDto hotel)
+        public async Task<ActionResult<ResponseHotelDto>> PutHotel(int id, RequestHotelDto hotel)
         {
             var exists = await _hotelService.CheckHotelExistsById(id);
             if (!exists)

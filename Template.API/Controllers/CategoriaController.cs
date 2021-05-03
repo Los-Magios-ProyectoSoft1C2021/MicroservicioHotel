@@ -1,5 +1,5 @@
 ﻿using MicroservicioHotel.Application.Services;
-using MicroservicioHotel.Domain.DTOs.Response.Categoria;
+using MicroservicioHotel.Domain.DTOs.Response;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -19,7 +19,7 @@ namespace MicroservicioHotel.API.Controllers
         }
 
         [HttpGet]
-        public async Task<List<ResponseGetAllCategoria>> GetAll()
+        public async Task<List<ResponseCategoriaDto>> GetAll()
         {
             var categorias = await _categoriaService.GetAll();
             return categorias;

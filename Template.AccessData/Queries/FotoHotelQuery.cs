@@ -1,4 +1,4 @@
-﻿using MicroservicioHotel.Domain.DTOs.Response.FotoHotel;
+﻿using MicroservicioHotel.Domain.DTOs.Response;
 using MicroservicioHotel.Domain.Queries;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -26,11 +26,11 @@ namespace MicroservicioHotel.AccessData.Queries
             return exists;
         }
 
-        public async Task<List<ResponseGetAllFotoHotel>> GetAll(int hotelId)
+        public async Task<List<ResponseFotoHotelDto>> GetAll(int hotelId)
         {
             var fotos = await _context.FotoHotel
                 .Where(fh => fh.HotelId == hotelId)
-                .Select(fh => new ResponseGetAllFotoHotel
+                .Select(fh => new ResponseFotoHotelDto
                 {
                     FotoHotelId = fh.FotoHotelId,
                     HotelId = fh.HotelId,
@@ -42,11 +42,11 @@ namespace MicroservicioHotel.AccessData.Queries
             return fotos;
         }
 
-        public async Task<ResponseGetFotoHotelById> GetById(int fotoHotelId, int hotelId)
+        public async Task<ResponseFotoHotelDto> GetById(int fotoHotelId, int hotelId)
         {
             var foto = await _context.FotoHotel
                 .Where(fh => fh.FotoHotelId == fotoHotelId && fh.HotelId == hotelId)
-                .Select(fh => new ResponseGetFotoHotelById
+                .Select(fh => new ResponseFotoHotelDto
                 { 
                     FotoHotelId = fh.FotoHotelId,
                     HotelId = fh.HotelId,

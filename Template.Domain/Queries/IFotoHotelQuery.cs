@@ -1,4 +1,4 @@
-﻿using MicroservicioHotel.Domain.DTOs.Response.FotoHotel;
+﻿using MicroservicioHotel.Domain.DTOs.Response;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,8 +8,8 @@ namespace MicroservicioHotel.Domain.Queries
 {
     public interface IFotoHotelQuery
     {
-        Task<List<ResponseGetAllFotoHotel>> GetAll(int hotelId);
-        Task<ResponseGetFotoHotelById> GetById(int fotoHotelId, int hotelId);
+        Task<List<ResponseFotoHotelDto>> GetAll(int hotelId);
+        Task<ResponseFotoHotelDto> GetById(int fotoHotelId, int hotelId);
         Task<bool> CheckFotoHotelExistsById(int fotoHotelId, int hotelId);
     }
 }

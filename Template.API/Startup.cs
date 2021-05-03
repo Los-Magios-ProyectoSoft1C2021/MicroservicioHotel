@@ -67,11 +67,30 @@ namespace Template.API
             services.AddTransient<IHabitacionService, HabitacionService>();
             services.AddTransient<IFotosService, FotosService>();
             services.AddTransient<ICategoriaService, CategoriaService>();
+
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1",
+                    new Microsoft.OpenApi.Models.OpenApiInfo
+                    {
+                        Title = "Hotel API",
+                        Description = "Swagger para Hotel API de Booking UNAJ",
+                        Version = "v1"
+                    });
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSwagger();
+
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Hotel API");
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -87,6 +106,8 @@ namespace Template.API
             {
                 endpoints.MapControllers();
             });
+
+            
         }
     }
 }

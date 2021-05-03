@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MicroservicioHotel.Domain.Commands;
-using MicroservicioHotel.Domain.DTOs;
-using MicroservicioHotel.Domain.DTOs.Response.Hotel;
+using MicroservicioHotel.Domain.DTOs.Request;
+using MicroservicioHotel.Domain.DTOs.Response;
 using MicroservicioHotel.Domain.Entities;
 using MicroservicioHotel.Domain.Queries;
 using System;
@@ -24,35 +24,35 @@ namespace MicroservicioHotel.Application.Services
             _mapper = mapper;
         }
 
-        public async Task<ResponseCreateHotel> Create(RequestCreateHotelDto request)
+        public async Task<ResponseHotelDto> Create(RequestHotelDto request)
         {
             var h = _mapper.Map<Hotel>(request);
             await _repository.Add(h);
 
-            return _mapper.Map<ResponseCreateHotel>(h);
+            return _mapper.Map<ResponseHotelDto>(h);
         }
 
-        public async Task<ResponseUpdateHotel> Update(int id, RequestUpdateHotelDto hotel)
+        public async Task<ResponseHotelDto> Update(int id, RequestHotelDto hotel)
         {
             var h = _mapper.Map<Hotel>(hotel);
             h.HotelId = id;
 
             await _repository.Update(h);
 
-            return _mapper.Map<ResponseUpdateHotel>(h);
+            return _mapper.Map<ResponseHotelDto>(h);
         }
 
-        public async Task<ResponseGetHotelByIdDto> GetById(int id)
+        public async Task<ResponseHotelDto> GetById(int id)
         {
             return await _query.GetById(id);
         }
 
-        public async Task<List<ResponseGetAllHotelDto>> GetAll()
+        public async Task<List<ResponseHotelDto>> GetAll()
         {
             return await _query.GetAll();
         }
 
-        public async Task<List<ResponseGetAllHotelBy>> GetAllBy(int page, int estrellas, string ciudad)
+        public async Task<List<ResponseHotelDto>> GetAllBy(int page, int estrellas, string ciudad)
         {
             return await _query.GetAllBy(page, estrellas, ciudad);
         }

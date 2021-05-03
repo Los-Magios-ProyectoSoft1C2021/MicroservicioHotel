@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using MicroservicioHotel.Domain.DTOs.Request.FotoHotel;
-using MicroservicioHotel.Domain.DTOs.Response.FotoHotel;
+using MicroservicioHotel.Domain.DTOs.Request;
+using MicroservicioHotel.Domain.DTOs.Response;
 using MicroservicioHotel.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -11,15 +11,12 @@ namespace MicroservicioHotel.Domain.Mapper
     public class FotoHotelProfile : Profile
     {
         public FotoHotelProfile()
-        {
-            CreateMap<FotoHotel, ResponseCreateFotoHotel>();
-            CreateMap<ResponseCreateFotoHotel, FotoHotel>();    
+        {  
+            CreateMap<FotoHotel, ResponseFotoHotelDto>();
+            CreateMap<ResponseFotoHotelDto, FotoHotel>();
 
-            CreateMap<FotoHotel, ResponseGetAllFotoHotel>();
-            CreateMap<ResponseGetAllFotoHotel, FotoHotel>();
-
-            CreateMap<FotoHotel, RequestCreateFotoHotel>();
-            CreateMap<RequestCreateFotoHotel, FotoHotel>();
+            CreateMap<FotoHotel, RequestFotoHotelDto>();
+            CreateMap<RequestFotoHotelDto, FotoHotel>();
         }
        
     }

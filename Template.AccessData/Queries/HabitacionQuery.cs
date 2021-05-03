@@ -1,11 +1,11 @@
 ﻿using MicroservicioHotel.Domain.Queries;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Collections;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using MicroservicioHotel.Domain.DTOs.Response.Habitacion;
+using MicroservicioHotel.Domain.DTOs.Response;
 
 namespace MicroservicioHotel.AccessData.Queries
 {
@@ -18,31 +18,43 @@ namespace MicroservicioHotel.AccessData.Queries
             _context  = context;
         }
 
-        public async Task<List<ResponseGetAllHabitacion>> GetAllHabitaciones(int hotelId)
+        public async Task<List<ResponseHabitacionDto>> GetAllHabitaciones(int hotelId)
         {
             var allhabitaciones = await _context.Habitacion
                 .Where(h => h.HotelId == hotelId)
-                .Select(m => new ResponseGetAllHabitacion
+                .Include(h => h.Categoria)
+                .Select(h => new ResponseHabitacionDto
                 {
-                    HabitacionId  = m.HabitacionId,
-                    Nombre  = m.Nombre,
-                    HotelId  = m.HotelId,
-                    Categoria  = m.Categoria.Nombre,
+                    HabitacionId  = h.HabitacionId,
+                    Nombre  = h.Nombre,
+                    HotelId  = h.HotelId,
+                    Categoria = new ResponseCategoriaDto
+                    {
+                        CategoriaId = h.CategoriaId,
+                        Nombre = h.Categoria.Nombre,
+                        Descripcion = h.Categoria.Descripcion
+                    }
                 }).ToListAsync();
 
             return allhabitaciones;
         }
 
-        public async Task<ResponseGetHabitacionByIdDto> GetHabitacionById(int habitacionId, int hotelId)
+        public async Task<ResponseHabitacionDto> GetHabitacionById(int habitacionId, int hotelId)
         {
             var habitacion = await _context.Habitacion
-                .Where(h => h.HabitacionId == habitacionId && h.HotelId == hotelId)
-                .Select(a => new ResponseGetHabitacionByIdDto
+                .Where(h => h.HotelId == hotelId)
+                .Include(h => h.Categoria)
+                .Select(h => new ResponseHabitacionDto
                 {
-                    Nombre = a.Nombre,
-                    HabitacionId = a.HabitacionId,
-                    HotelId  = a.HotelId,
-                    Categoria = a.Categoria.Nombre
+                    Nombre = h.Nombre,
+                    HabitacionId = h.HabitacionId,
+                    HotelId  = h.HotelId,
+                    Categoria = new ResponseCategoriaDto
+                    {
+                        CategoriaId = h.CategoriaId,
+                        Nombre = h.Categoria.Nombre,
+                        Descripcion = h.Categoria.Descripcion
+                    }
                 })
                 .FirstOrDefaultAsync();
 

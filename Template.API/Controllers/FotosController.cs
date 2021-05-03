@@ -1,9 +1,7 @@
 ﻿using MicroservicioHotel.Application.Services;
 using MicroservicioHotel.Domain.DTOs;
-using MicroservicioHotel.Domain.DTOs.Request.FotoHotel;
-using MicroservicioHotel.Domain.DTOs.Request.Habitacion;
-using MicroservicioHotel.Domain.DTOs.Response.FotoHotel;
-using MicroservicioHotel.Domain.DTOs.Response.Habitacion;
+using MicroservicioHotel.Domain.DTOs.Request;
+using MicroservicioHotel.Domain.DTOs.Response;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -26,14 +24,14 @@ namespace MicroservicioHotel.API.Controllers
         }
 
         [HttpGet("{hotelId}/Fotos")]
-        public async Task<ActionResult<ResponseGetAllFotoHotel>> GetAllFotos(int hotelId)
+        public async Task<ActionResult<ResponseFotoHotelDto>> GetAllFotos(int hotelId)
         {
             var fotos = await _fotosService.GetAll(hotelId);
             return Ok(fotos);
         }
 
         [HttpGet("{hotelId}/Fotos/{fotoHotelId}")]
-        public async Task<ActionResult<ResponseGetFotoHotelById>> GetFotoById(int fotoHotelId, int hotelId)
+        public async Task<ActionResult<ResponseFotoHotelDto>> GetFotoById(int fotoHotelId, int hotelId)
         {
             var foto = await _fotosService.GetById(fotoHotelId, hotelId);
             if (foto == null)
@@ -43,7 +41,7 @@ namespace MicroservicioHotel.API.Controllers
         }
 
         [HttpPost("{hotelId}/Fotos")]
-        public async Task<ActionResult<ResponseCreateFotoHotel>> PostFoto(int hotelId, RequestCreateFotoHotel request)
+        public async Task<ActionResult<ResponseFotoHotelDto>> PostFoto(int hotelId, RequestFotoHotelDto request)
         {
             var exists = await _hotelService.CheckHotelExistsById(hotelId);
             if (!exists)

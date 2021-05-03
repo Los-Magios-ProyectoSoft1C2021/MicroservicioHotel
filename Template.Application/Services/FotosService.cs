@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MicroservicioHotel.Domain.Commands;
-using MicroservicioHotel.Domain.DTOs.Request.FotoHotel;
-using MicroservicioHotel.Domain.DTOs.Response.FotoHotel;
+using MicroservicioHotel.Domain.DTOs.Request;
+using MicroservicioHotel.Domain.DTOs.Response;
 using MicroservicioHotel.Domain.Entities;
 using MicroservicioHotel.Domain.Queries;
 using System;
@@ -24,14 +24,14 @@ namespace MicroservicioHotel.Application.Services
             _mapper = mapper;
         }
 
-        public async Task<ResponseCreateFotoHotel> Add(int hotelId, RequestCreateFotoHotel request)
+        public async Task<ResponseFotoHotelDto> Add(int hotelId, RequestFotoHotelDto request)
         {
             var foto = _mapper.Map<FotoHotel>(request);
             foto.HotelId = hotelId;
 
             await _repository.Add(foto);
 
-            return _mapper.Map<ResponseCreateFotoHotel>(foto);
+            return _mapper.Map<ResponseFotoHotelDto>(foto);
         }
 
         public async Task<bool> CheckFotoExistsById(int fotoHotelId, int hotelId)
@@ -39,12 +39,12 @@ namespace MicroservicioHotel.Application.Services
             return await _query.CheckFotoHotelExistsById(fotoHotelId, hotelId);
         }
 
-        public async Task<List<ResponseGetAllFotoHotel>> GetAll(int hotelId)
+        public async Task<List<ResponseFotoHotelDto>> GetAll(int hotelId)
         {
             return await _query.GetAll(hotelId);
         }
 
-        public async Task<ResponseGetFotoHotelById> GetById(int fotoHotelId, int hotelId)
+        public async Task<ResponseFotoHotelDto> GetById(int fotoHotelId, int hotelId)
         {
             return await _query.GetById(fotoHotelId, hotelId);
         }

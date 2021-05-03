@@ -1,4 +1,4 @@
-﻿using MicroservicioHotel.Domain.DTOs.Response.Categoria;
+﻿using MicroservicioHotel.Domain.DTOs.Response;
 using MicroservicioHotel.Domain.Queries;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -18,10 +18,10 @@ namespace MicroservicioHotel.AccessData.Queries
             _context = context;
         }
 
-        public async Task<List<ResponseGetAllCategoria>> GetAll()
+        public async Task<List<ResponseCategoriaDto>> GetAll()
         {
             var categorias = await _context.Categoria
-                .Select(c => new ResponseGetAllCategoria
+                .Select(c => new ResponseCategoriaDto
                 { 
                     CategoriaId = c.CategoriaId,
                     Nombre = c.Nombre,

@@ -1,4 +1,4 @@
-﻿using MicroservicioHotel.Domain.DTOs.Response.Categoria;
+﻿using MicroservicioHotel.Domain.DTOs.Response;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,6 +8,6 @@ namespace MicroservicioHotel.Domain.Queries
 {
     public interface ICategoriaQuery
     {
-        Task<List<ResponseGetAllCategoria>> GetAll();
+        Task<List<ResponseCategoriaDto>> GetAll();
     }
 }

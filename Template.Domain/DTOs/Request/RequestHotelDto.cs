@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MicroservicioHotel.Domain.DTOs.Response.Hotel
+namespace MicroservicioHotel.Domain.DTOs.Request
 {
-    public class ResponseHotelGeneric
+    public class RequestHotelDto
+
     {
-        public int HotelId { get; set; }
         public string Nombre { get; set; }
+        public decimal Longitud { get; set; }
+        public decimal Latitud { get; set; }
         public string Provincia { get; set; }
         public string Ciudad { get; set; }
         public string Direccion { get; set; }
@@ -17,15 +19,5 @@ namespace MicroservicioHotel.Domain.DTOs.Response.Hotel
         public int Estrellas { get; set; }
         public string Telefono { get; set; }
         public string Correo { get; set; }
-        public decimal Longitud { get; set; }
-        public decimal Latitud { get; set; }
-
-        public List<ResponseHotelGenericFotoHotel> Fotos { get; set; }
-    }
-
-    public class ResponseHotelGenericFotoHotel
-    {
-        public string ImagenUrl { get; set; }
-        public string Descripcion { get; set; }
     }
 }

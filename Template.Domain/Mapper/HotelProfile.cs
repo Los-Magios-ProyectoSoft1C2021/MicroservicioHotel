@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using MicroservicioHotel.Domain.DTOs;
-using MicroservicioHotel.Domain.DTOs.Response.Hotel;
+using MicroservicioHotel.Domain.DTOs.Request;
+using MicroservicioHotel.Domain.DTOs.Response;
 using MicroservicioHotel.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -12,26 +12,11 @@ namespace MicroservicioHotel.Domain.Mapper
     {
         public HotelProfile()
         {
-            CreateMap<Hotel, RequestCreateHotelDto>();
-            CreateMap<RequestCreateHotelDto, Hotel>();
+            CreateMap<Hotel, RequestHotelDto>();
+            CreateMap<RequestHotelDto, Hotel>();
 
-            CreateMap<Hotel, RequestUpdateHotelDto>();
-            CreateMap<RequestUpdateHotelDto, Hotel>();
-
-            CreateMap<Hotel, ResponseGetAllHotelDto>();
-            CreateMap<ResponseGetAllHotelDto, Hotel>();
-
-            CreateMap<Hotel, ResponseGetHotelByIdDto>();
-            CreateMap<ResponseGetHotelByIdDto, Hotel>();
-
-            CreateMap<Hotel, ResponseGetAllHotelBy>();
-            CreateMap<ResponseGetAllHotelBy, Hotel>();
-
-            CreateMap<Hotel, ResponseCreateHotel>();
-            CreateMap<ResponseCreateHotel, Hotel>();
-
-            CreateMap<Hotel, ResponseUpdateHotel>();
-            CreateMap<ResponseUpdateHotel, Hotel>();
+            CreateMap<ResponseHotelDto, Hotel>();
+            CreateMap<Hotel, ResponseHotelDto>();
         }
     }
 }

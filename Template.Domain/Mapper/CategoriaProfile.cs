@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using MicroservicioHotel.Domain.DTOs.Response.Categoria;
+using MicroservicioHotel.Domain.DTOs.Response;
 using MicroservicioHotel.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -11,8 +11,8 @@ namespace MicroservicioHotel.Domain.Mapper
     {
         public CategoriaProfile()
         {
-            CreateMap<Categoria, ResponseGetAllCategoria>();
-            CreateMap<ResponseGetAllCategoria, Categoria>();
+            CreateMap<Categoria, ResponseCategoriaDto>();
+            CreateMap<ResponseCategoriaDto, Categoria>();
         }
     }
 }

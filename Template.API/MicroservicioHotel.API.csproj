@@ -4,6 +4,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>A:\Documents\UNAJ\Proyecto Software\Proyecto\MicroservicioHotel\Template.API\MicroservicioHotel.API.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="Controllers\NewFile.txt" />
   </ItemGroup>
