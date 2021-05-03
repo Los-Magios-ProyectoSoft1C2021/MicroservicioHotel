@@ -23,6 +23,13 @@ namespace MicroservicioHotel.API.Controllers
             _hotelService = hotelService;
         }
 
+        /// <summary>
+        /// Retorna todas las habitaciones de un hotel.
+        /// </summary>
+        /// <param name="hotelId">La id de del hotel</param>
+        /// <returns>Retorna todas las habitaciones de un hotel.</returns>
+        /// /// <response code="200">Retorna la información de las habitaciónes</response>
+        /// <response code="204">Si no se encuentran habitaciones en dicho hotel</response>  
         [HttpGet("{hotelId}/Habitacion")]
         public async Task<ActionResult<List<ResponseHabitacionDto>>> GetAll(int hotelId)
         {
@@ -33,6 +40,14 @@ namespace MicroservicioHotel.API.Controllers
             return Ok(habitaciones);
         }
 
+        /// <summary>
+        /// Retorna las habitaciones por Id.
+        /// </summary>
+        /// <param name="hotelId">la id del hotel.</param>
+        /// <param name="habitacionId">la id de la foto.</param>
+        /// <returns>Retorna las habitaciones por Id.</returns>
+        /// <response code="200">Retorna la información de la habitación</response>
+        /// <response code="404">Si no se encuentra la habitacion correspondiente a dicho hotel</response>  
         [HttpGet("{hotelId}/Habitacion/{habitacionId}")]
         public async Task<ActionResult<ResponseHabitacionDto>> GetById(int hotelId, int habitacionId)
         {
@@ -42,7 +57,23 @@ namespace MicroservicioHotel.API.Controllers
 
             return Ok(habitacion);
         }
-        
+
+        /// <summary>
+        /// Carga una habitacion al servidor.
+        /// </summary>
+        /// <remarks>
+        /// Ejemplo de body:
+        ///   {
+        ///     "HotelId": 1,
+        ///     "CategoriaId": 1,
+        ///     "Nombre": "A1"
+        ///   }
+        /// </remarks>
+        /// <param name="hotelId">la id del hotel.</param>
+        /// <param name="habitacion">Body que contiene la informacion de la habitacion.</param>
+        /// <returns>Carga una habitacion al servidor.</returns>
+        /// <response code="201">Retorna la creacion de la habitacion</response>
+        /// <response code="400">Si no se encuentra la habitacion</response>  
         [HttpPost("{hotelId}/Habitacion")]
         public async Task<ActionResult> PostHabitacion(int hotelId, RequestHabitacionDto habitacion)
         {
@@ -54,6 +85,20 @@ namespace MicroservicioHotel.API.Controllers
             return Created(uri: $"api/Hotel/{createHabitacion.HotelId}/Habitacion/{createHabitacion.HabitacionId}", createHabitacion);
         }
 
+        /// <summary>
+        /// Actualiza la habitacion.
+        /// </summary>
+        /// Ejemplo de body:
+        ///   {
+        ///     "CategoriaId": 2,
+        ///     "Nombre": "B1"
+        ///   }
+        /// <param name="hotelId">la id del hotel.</param>
+        /// <param name="habitacionId">la id de la habitacion.</param>
+        /// <param name="habitacion">Body que contiene la informacion de la habitacion</param>
+        /// <returns>Carga una habitacion al servidor.</returns>
+        /// <response code="200">Retorna la información de la habitacion modificada</response>
+        /// <response code="204">Si no se encuentra la habitacion a modificar</response> 
         [HttpPut("{hotelId}/Habitacion/{habitacionId}")]
         public async Task<ActionResult> PutHabitacion(int hotelId, int habitacionId, RequestHabitacionDto habitacion)
         {
@@ -63,7 +108,7 @@ namespace MicroservicioHotel.API.Controllers
 
             var updatedHabitacion = await _habitacionService.Update(habitacionId, hotelId, habitacion);
             if (updatedHabitacion == null)
-                return StatusCode(500, null);
+                throw new Exception();
 
             return Ok(updatedHabitacion);
         }

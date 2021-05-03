@@ -36,7 +36,13 @@ namespace MicroservicioHotel.API.Controllers
         }
         */
 
-        // GET: api/Hotel/{id}
+        /// <summary>
+        /// Retorna la información de un hotel según su ID.
+        /// </summary>
+        /// <param name="id">La ID del hotel.</param>
+        /// <returns>Retorna un hotel.</returns>
+        /// <response code="200">Retorna la información del hotel</response>
+        /// <response code="404">Si no se encuentra el hotel</response>  
         [HttpGet("{id}")]
         public async Task<ActionResult<ResponseHotelDto>> GetHotelById(int id)
         {
@@ -47,7 +53,15 @@ namespace MicroservicioHotel.API.Controllers
             return Ok(hotel);
         }
 
-        // GET: /api/[controller]/query
+        /// <summary>
+        /// Retorna una página de hoteles según el número de página, estrellas y ciudad.
+        /// </summary>
+        /// <param name="page">Número de página.</param>
+        /// <param name="estrellas">Estrellas del hotel.</param>
+        /// <param name="ciudad">Ciudad en donde está ubicado el hotel.</param>
+        /// <returns>Retorna un conjunto de hoteles.</returns>
+        /// <response code="200">Retorna la información de los hoteles</response>
+        /// <response code="400">Si no se encuentra el hotel</response>  
         [HttpGet]
         public async Task<ActionResult<ResponsePageHotels>> GetHotelBy(
             [FromQuery(Name = "page")] int page, 
@@ -100,7 +114,29 @@ namespace MicroservicioHotel.API.Controllers
             return builder.ToString();
         }
 
-        // POST: api/Hotel/
+        /// <summary>
+        /// Crea un nuevo hotel.
+        /// </summary>
+        /// <remarks>
+        /// Ejemplo de body:
+        ///   {
+        ///     "nombre": "Hotel Manuel Belgrano"
+        ///     "Longitud": 2.123132,
+        ///     "Latitud": 1.123123,
+        ///     "Provincia": "Buenos Aires",
+        ///     "Ciudad": "Quilmes",
+        ///     "Direccion": "Lavalle",
+        ///     "DireccionNum": "123",
+        ///     "DireccionObservaciones": "",
+        ///     "CodigoPostal": "123",
+        ///     "Estrellas": 4,
+        ///     "Telefono": "1126453245",
+        ///     "Correo": "hotellavalle@hotmail.com" 
+        ///   }
+        /// </remarks>
+        /// <param name="hotel">Body que contiene los datos del hotel a crear.</param>
+        /// <returns>El hotel creado.</returns>
+        /// <response code="201">Retorna la información del hotel creado</response>
         [HttpPost]
         public async Task<ActionResult> PostHotel(RequestHotelDto hotel)
         {
@@ -111,7 +147,31 @@ namespace MicroservicioHotel.API.Controllers
             return Created(uri: $"api/Hotel/{createdHotel.HotelId}", createdHotel);
         }
 
-        // PUT: api/Hotel/
+        /// <summary>
+        /// Modifica los datos de un hotel ya existente.
+        /// </summary>
+        /// <remarks>
+        /// Ejemplo de body:
+        ///   {
+        ///     "nombre": "Hotel San Martín"
+        ///     "Longitud": 2.123132,
+        ///     "Latitud": 1.123123,
+        ///     "Provincia": "Buenos Aires",
+        ///     "Ciudad": "Quilmes",
+        ///     "Direccion": "San Martín",
+        ///     "DireccionNum": "123",
+        ///     "DireccionObservaciones": "",
+        ///     "CodigoPostal": "123",
+        ///     "Estrellas": 4,
+        ///     "Telefono": "1126453245",
+        ///     "Correo": "hotellavalle@hotmail.com" 
+        ///   }
+        /// </remarks>
+        /// <param name="id">El ID del hotel a modificar.</param>
+        /// <param name="hotel">Body que contiene los datos del hotel a modificar.</param>
+        /// <returns>El hotel modificado.</returns>
+        /// <response code="200">Retorna la información del hotel modificado</response>
+        /// <response code="204">Si no se encuentra el hotel a modificar</response>  
         [HttpPut("{id}")]
         public async Task<ActionResult<ResponseHotelDto>> PutHotel(int id, RequestHotelDto hotel)
         {
@@ -125,5 +185,6 @@ namespace MicroservicioHotel.API.Controllers
 
             return Ok(updatedHotel);
         }
+
     }
 }

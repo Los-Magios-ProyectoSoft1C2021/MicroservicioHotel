@@ -4,5 +4,172 @@
         <name>MicroservicioHotel.API</name>
     </assembly>
     <members>
+        <member name="M:MicroservicioHotel.API.Controllers.CategoriaController.GetAll">
+            <summary>
+            Retorna todas las categorías de habitaciones disponibles.
+            </summary>
+            <returns>Todas las categorías de habitaciones.</returns>
+            <response code="200">Retorna todas las categorías</response> 
+        </member>
+        <member name="M:MicroservicioHotel.API.Controllers.FotosHotelController.GetAllFotos(System.Int32)">
+            <summary>
+            Retorna todas las fotos de un hotel.
+            </summary>
+            <param name="hotelId">La ID del hotel.</param>
+            <returns>Retorna todas las fotos de un hotel.</returns>
+            <response code="200">Retorna todas las fotos del hotel</response>
+        </member>
+        <member name="M:MicroservicioHotel.API.Controllers.FotosHotelController.GetFotoById(System.Int32,System.Int32)">
+            <summary>
+            Retorna la información de una única foto.
+            </summary>
+            <param name="fotoHotelId">La ID de la foto.</param>
+            <param name="hotelId">La ID del hotel a la que pertenece la foto.</param>
+            <returns>Retorna la información de la foto.</returns>
+            <response code="200">Retorna la información de la foto</response>
+            <response code="404">Si no se encuentra la foto</response>   
+        </member>
+        <member name="M:MicroservicioHotel.API.Controllers.FotosHotelController.PostFoto(System.Int32,MicroservicioHotel.Domain.DTOs.Request.RequestFotoHotelDto)">
+            <summary>
+            Sube una nueva foto al servidor.
+            </summary>
+            <remarks>
+            Ejemplo de body:
+              {
+                "imagenUrl": "http://www.example.com/imagen.png"
+                "decripcion": "Foto de la habitación"
+              }
+            </remarks>
+            <param name="hotelId">La ID del hotel a la que se le quiere cargar la foto.</param>
+            <param name="request">Body que contiene la información de la foto.</param>
+            <returns>Sube una nueva foto al servidor.</returns>
+            <response code="200">Retorna la información de la foto subida</response>
+            <response code="400">Si no se encuentra el hotel al que se le quiere cargar la foto</response>  
+        </member>
+        <member name="M:MicroservicioHotel.API.Controllers.HabitacionController.GetAll(System.Int32)">
+            <summary>
+            Retorna todas las habitaciones de un hotel.
+            </summary>
+            <param name="hotelId">La id de del hotel</param>
+            <returns>Retorna todas las habitaciones de un hotel.</returns>
+            /// <response code="200">Retorna la información de las habitaciónes</response>
+            <response code="204">Si no se encuentran habitaciones en dicho hotel</response>  
+        </member>
+        <member name="M:MicroservicioHotel.API.Controllers.HabitacionController.GetById(System.Int32,System.Int32)">
+            <summary>
+            Retorna las habitaciones por Id.
+            </summary>
+            <param name="hotelId">la id del hotel.</param>
+            <param name="habitacionId">la id de la foto.</param>
+            <returns>Retorna las habitaciones por Id.</returns>
+            <response code="200">Retorna la información de la habitación</response>
+            <response code="404">Si no se encuentra la habitacion correspondiente a dicho hotel</response>  
+        </member>
+        <member name="M:MicroservicioHotel.API.Controllers.HabitacionController.PostHabitacion(System.Int32,MicroservicioHotel.Domain.DTOs.Request.RequestHabitacionDto)">
+            <summary>
+            Carga una habitacion al servidor.
+            </summary>
+            <remarks>
+            Ejemplo de body:
+              {
+                "HotelId": 1,
+                "CategoriaId": 1,
+                "Nombre": "A1"
+              }
+            </remarks>
+            <param name="hotelId">la id del hotel.</param>
+            <param name="habitacion">Body que contiene la informacion de la habitacion.</param>
+            <returns>Carga una habitacion al servidor.</returns>
+            <response code="201">Retorna la creacion de la habitacion</response>
+            <response code="400">Si no se encuentra la habitacion</response>  
+        </member>
+        <member name="M:MicroservicioHotel.API.Controllers.HabitacionController.PutHabitacion(System.Int32,System.Int32,MicroservicioHotel.Domain.DTOs.Request.RequestHabitacionDto)">
+            <summary>
+            Actualiza la habitacion.
+            </summary>
+            Ejemplo de body:
+              {
+                "CategoriaId": 2,
+                "Nombre": "B1"
+              }
+            <param name="hotelId">la id del hotel.</param>
+            <param name="habitacionId">la id de la habitacion.</param>
+            <param name="habitacion">Body que contiene la informacion de la habitacion</param>
+            <returns>Carga una habitacion al servidor.</returns>
+            <response code="200">Retorna la información de la habitacion modificada</response>
+            <response code="204">Si no se encuentra la habitacion a modificar</response> 
+        </member>
+        <member name="M:MicroservicioHotel.API.Controllers.HotelController.GetHotelById(System.Int32)">
+            <summary>
+            Retorna la información de un hotel según su ID.
+            </summary>
+            <param name="id">La ID del hotel.</param>
+            <returns>Retorna un hotel.</returns>
+            <response code="200">Retorna la información del hotel</response>
+            <response code="404">Si no se encuentra el hotel</response>  
+        </member>
+        <member name="M:MicroservicioHotel.API.Controllers.HotelController.GetHotelBy(System.Int32,System.Int32,System.String)">
+            <summary>
+            Retorna una página de hoteles según el número de página, estrellas y ciudad.
+            </summary>
+            <param name="page">Número de página.</param>
+            <param name="estrellas">Estrellas del hotel.</param>
+            <param name="ciudad">Ciudad en donde está ubicado el hotel.</param>
+            <returns>Retorna un conjunto de hoteles.</returns>
+            <response code="200">Retorna la información de los hoteles</response>
+            <response code="400">Si no se encuentra el hotel</response>  
+        </member>
+        <member name="M:MicroservicioHotel.API.Controllers.HotelController.PostHotel(MicroservicioHotel.Domain.DTOs.Request.RequestHotelDto)">
+            <summary>
+            Crea un nuevo hotel.
+            </summary>
+            <remarks>
+            Ejemplo de body:
+              {
+                "nombre": "Hotel Manuel Belgrano"
+                "Longitud": 2.123132,
+                "Latitud": 1.123123,
+                "Provincia": "Buenos Aires",
+                "Ciudad": "Quilmes",
+                "Direccion": "Lavalle",
+                "DireccionNum": "123",
+                "DireccionObservaciones": "",
+                "CodigoPostal": "123",
+                "Estrellas": 4,
+                "Telefono": "1126453245",
+                "Correo": "hotellavalle@hotmail.com" 
+              }
+            </remarks>
+            <param name="hotel">Body que contiene los datos del hotel a crear.</param>
+            <returns>El hotel creado.</returns>
+            <response code="201">Retorna la información del hotel creado</response>
+        </member>
+        <member name="M:MicroservicioHotel.API.Controllers.HotelController.PutHotel(System.Int32,MicroservicioHotel.Domain.DTOs.Request.RequestHotelDto)">
+            <summary>
+            Modifica los datos de un hotel ya existente.
+            </summary>
+            <remarks>
+            Ejemplo de body:
+              {
+                "nombre": "Hotel San Martín"
+                "Longitud": 2.123132,
+                "Latitud": 1.123123,
+                "Provincia": "Buenos Aires",
+                "Ciudad": "Quilmes",
+                "Direccion": "San Martín",
+                "DireccionNum": "123",
+                "DireccionObservaciones": "",
+                "CodigoPostal": "123",
+                "Estrellas": 4,
+                "Telefono": "1126453245",
+                "Correo": "hotellavalle@hotmail.com" 
+              }
+            </remarks>
+            <param name="id">El ID del hotel a modificar.</param>
+            <param name="hotel">Body que contiene los datos del hotel a modificar.</param>
+            <returns>El hotel modificado.</returns>
+            <response code="200">Retorna la información del hotel modificado</response>
+            <response code="204">Si no se encuentra el hotel a modificar</response>  
+        </member>
     </members>
 </doc>
