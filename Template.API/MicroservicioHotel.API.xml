@@ -46,11 +46,12 @@
             <response code="200">Retorna la información de la foto subida</response>
             <response code="400">Si no se encuentra el hotel al que se le quiere cargar la foto</response>  
         </member>
-        <member name="M:MicroservicioHotel.API.Controllers.HabitacionController.GetAll(System.Int32)">
+        <member name="M:MicroservicioHotel.API.Controllers.HabitacionController.GetAll(System.Int32,System.Int32)">
             <summary>
             Retorna todas las habitaciones de un hotel.
             </summary>
-            <param name="hotelId">La id de del hotel</param>
+            <param name="hotelId">La ID de del hotel</param>
+            <param name="categoriaId">La ID de la categoría de la habitación</param>
             <returns>Retorna todas las habitaciones de un hotel.</returns>
             /// <response code="200">Retorna la información de las habitaciónes</response>
             <response code="204">Si no se encuentran habitaciones en dicho hotel</response>  

@@ -18,11 +18,12 @@ namespace MicroservicioHotel.AccessData.Queries
             _context  = context;
         }
 
-        public async Task<List<ResponseHabitacionDto>> GetAllHabitaciones(int hotelId)
+        public async Task<List<ResponseHabitacionDto>> GetAllHabitaciones(int hotelId, int categoriaId)
         {
-            var allhabitaciones = await _context.Habitacion
-                .Where(h => h.HotelId == hotelId)
+            var habitaciones = await _context.Habitacion
                 .Include(h => h.Categoria)
+                .Where(h => (categoriaId > 0) ? h.CategoriaId == categoriaId : true)
+                .Where(h => h.HotelId == hotelId)
                 .Select(h => new ResponseHabitacionDto
                 {
                     HabitacionId  = h.HabitacionId,
@@ -34,15 +35,17 @@ namespace MicroservicioHotel.AccessData.Queries
                         Nombre = h.Categoria.Nombre,
                         Descripcion = h.Categoria.Descripcion
                     }
-                }).ToListAsync();
+                })
+                .ToListAsync();
 
-            return allhabitaciones;
+            return habitaciones;
+                
         }
 
         public async Task<ResponseHabitacionDto> GetHabitacionById(int habitacionId, int hotelId)
         {
             var habitacion = await _context.Habitacion
-                .Where(h => h.HotelId == hotelId)
+                .Where(h => h.HotelId == hotelId && h.HabitacionId == habitacionId)
                 .Include(h => h.Categoria)
                 .Select(h => new ResponseHabitacionDto
                 {

@@ -26,14 +26,20 @@ namespace MicroservicioHotel.API.Controllers
         /// <summary>
         /// Retorna todas las habitaciones de un hotel.
         /// </summary>
-        /// <param name="hotelId">La id de del hotel</param>
+        /// <param name="hotelId">La ID de del hotel</param>
+        /// <param name="categoriaId">La ID de la categoría de la habitación</param>
         /// <returns>Retorna todas las habitaciones de un hotel.</returns>
         /// /// <response code="200">Retorna la información de las habitaciónes</response>
         /// <response code="204">Si no se encuentran habitaciones en dicho hotel</response>  
-        [HttpGet("{hotelId:int}/habitacion")]
-        public async Task<ActionResult<List<ResponseHabitacionDto>>> GetAll(int hotelId)
+        [HttpGet("{hotelId:int}/habitacion/")]
+        public async Task<ActionResult<List<ResponseHabitacionDto>>> GetAll(
+            [FromQuery(Name = "categoria")] int categoriaId, 
+            int hotelId)
         {
-            var habitaciones = await _habitacionService.GetAllHabitaciones(hotelId);
+            if (categoriaId < 0 || categoriaId > 3)
+                return BadRequest();
+
+            var habitaciones = await _habitacionService.GetAllHabitaciones(hotelId, categoriaId);
             if (habitaciones.Count <= 0)
                 return StatusCode(204, null);
 
@@ -81,7 +87,7 @@ namespace MicroservicioHotel.API.Controllers
             if (!exists)
                 return BadRequest();
 
-            var createHabitacion = await _habitacionService.Create(habitacion);
+            var createHabitacion = await _habitacionService.Create(hotelId, habitacion);
             return Created(uri: $"api/hotel/{createHabitacion.HotelId}/habitacion/{createHabitacion.HabitacionId}", createHabitacion);
         }
 

@@ -51,38 +51,35 @@ namespace MicroservicioHotel.AccessData.Queries
 
         public async Task<List<ResponseHotelDto>> GetAllBy(int page, int estrellas, string ciudad)
         {
-            var query = _context.Hotel;
-
-            if (estrellas > 0)
-                query.Where(h => h.Estrellas == estrellas);
-
-            if (ciudad != null)
-                query.Where(h => h.Ciudad == ciudad);
-
-            return await query.Select(h => new ResponseHotelDto
-            {
-                HotelId = h.HotelId,
-                Nombre = h.Nombre,
-                Provincia = h.Provincia,
-                Ciudad = h.Ciudad,
-                Direccion = h.Direccion,
-                DireccionNum = h.DireccionNum,
-                DireccionObservaciones = h.DireccionObservaciones,
-                CodigoPostal = h.CodigoPostal,
-                Estrellas = h.Estrellas,
-                Telefono = h.Telefono,
-                Correo = h.Correo,
-                Latitud = h.Latitud,
-                Longitud = h.Longitud,
-                Fotos = h.FotosHotel.Select(fh => new ResponseHabitacionCategoriaDto
+            var hoteles = await _context.Hotel
+                .Where(h =>(estrellas > 0) ? h.Estrellas == estrellas : true)
+                .Where(h => (ciudad != null) ? h.Ciudad == ciudad : true)
+                .Select(h => new ResponseHotelDto
                 {
-                    ImagenUrl = fh.ImagenUrl,
-                    Descripcion = fh.Descripcion
-                }).ToList()
-            })
+                    HotelId = h.HotelId,
+                    Nombre = h.Nombre,
+                    Provincia = h.Provincia,
+                    Ciudad = h.Ciudad,
+                    Direccion = h.Direccion,
+                    DireccionNum = h.DireccionNum,
+                    DireccionObservaciones = h.DireccionObservaciones,
+                    CodigoPostal = h.CodigoPostal,
+                    Estrellas = h.Estrellas,
+                    Telefono = h.Telefono,
+                    Correo = h.Correo,
+                    Latitud = h.Latitud,
+                    Longitud = h.Longitud,
+                    Fotos = h.FotosHotel.Select(fh => new ResponseHabitacionCategoriaDto
+                    {
+                        ImagenUrl = fh.ImagenUrl,
+                        Descripcion = fh.Descripcion
+                    }).ToList()
+                })
                 .Skip((page - 1) * _pageSize)
                 .Take(_pageSize)
                 .ToListAsync();
+
+            return hoteles;
         }
 
         public async Task<ResponseHotelDto> GetById(int id)

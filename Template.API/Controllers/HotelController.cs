@@ -66,8 +66,8 @@ namespace MicroservicioHotel.API.Controllers
         [HttpGet]
         public async Task<ActionResult<ResponsePageHotels>> GetHotelBy(
             [FromQuery(Name = "page")] int page, 
-            [FromQuery(Name ="estrellas")] int estrellas, 
-            [FromQuery(Name ="ciudad")] string ciudad)
+            [FromQuery(Name = "estrellas")] int estrellas, 
+            [FromQuery(Name = "ciudad")] string ciudad)
         {
             if (page == 0)
                 page = 1;

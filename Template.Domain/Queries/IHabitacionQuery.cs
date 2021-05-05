@@ -9,7 +9,7 @@ namespace MicroservicioHotel.Domain.Queries
     public interface IHabitacionQuery
     {
         //Consultas.....
-        Task<List<ResponseHabitacionDto>> GetAllHabitaciones(int hotelId);
+        Task<List<ResponseHabitacionDto>> GetAllHabitaciones(int hotelId, int categoriaId);
         Task<ResponseHabitacionDto> GetHabitacionById(int habitacionId, int hotelId);
         Task<bool> CheckHabitacionExistById(int habitacionId, int hotelId);
     }
