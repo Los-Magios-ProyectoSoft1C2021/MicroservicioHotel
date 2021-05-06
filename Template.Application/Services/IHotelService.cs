@@ -13,8 +13,8 @@ namespace MicroservicioHotel.Application.Services
         Task<ResponseHotelDto> Create(RequestHotelDto request);
         Task<ResponseHotelDto> Update(int id, RequestHotelDto request);
         Task<ResponseHotelDto> Patch(int id, JsonPatchDocument<RequestHotelDto> entityPatchDto);
-        Task<List<ResponseHotelDto>> GetAll();
-        Task<List<ResponseHotelDto>> GetAllBy(int page, int estrellas, string ciudad);
+        Task<List<ResponseHotelSimpleDto>> GetAll();
+        Task<List<ResponseHotelSimpleDto>> GetAllBy(int page, int estrellas, string ciudad);
         Task<ResponseHotelDto> GetById(int id);
         Task<bool> CheckHotelExistsById(int id);
         Task<int> GetHotelsCount();

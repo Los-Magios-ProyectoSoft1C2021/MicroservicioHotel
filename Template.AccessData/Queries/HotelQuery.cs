@@ -21,10 +21,10 @@ namespace MicroservicioHotel.AccessData.Queries
             _pageSize = int.Parse(configuration.GetSection("PageSize").Value);
         }
 
-        public async Task<List<ResponseHotelDto>> GetAll()
+        public async Task<List<ResponseHotelSimpleDto>> GetAll()
         {
             var hoteles = await _context.Hotel
-                .Select(h => new ResponseHotelDto
+                .Select(h => new ResponseHotelSimpleDto
                 {
                     HotelId = h.HotelId,
                     Nombre = h.Nombre,
@@ -32,15 +32,10 @@ namespace MicroservicioHotel.AccessData.Queries
                     Ciudad = h.Ciudad,
                     Direccion = h.Direccion,
                     DireccionNum = h.DireccionNum,
-                    DireccionObservaciones= h.DireccionObservaciones,
-                    CodigoPostal= h.CodigoPostal,
                     Estrellas= h.Estrellas,
-                    Telefono=h.Telefono,
-                    Correo= h.Correo,
-                    Latitud = h.Latitud,
-                    Longitud =  h.Longitud,
-                    Fotos = h.FotosHotel.Select(fh => new ResponseHabitacionCategoriaDto
+                    Fotos = h.FotosHotel.Select(fh => new ResponseFotoHotelDto
                     {
+                        FotoHotelId = fh.FotoHotelId,
                         ImagenUrl = fh.ImagenUrl,
                         Descripcion = fh.Descripcion
                     }).ToList()
@@ -49,12 +44,12 @@ namespace MicroservicioHotel.AccessData.Queries
             return hoteles;
         }
 
-        public async Task<List<ResponseHotelDto>> GetAllBy(int page, int estrellas, string ciudad)
+        public async Task<List<ResponseHotelSimpleDto>> GetAllBy(int page, int estrellas, string ciudad)
         {
             var hoteles = await _context.Hotel
                 .Where(h =>(estrellas > 0) ? h.Estrellas == estrellas : true)
                 .Where(h => (ciudad != null) ? h.Ciudad == ciudad : true)
-                .Select(h => new ResponseHotelDto
+                .Select(h => new ResponseHotelSimpleDto
                 {
                     HotelId = h.HotelId,
                     Nombre = h.Nombre,
@@ -62,15 +57,10 @@ namespace MicroservicioHotel.AccessData.Queries
                     Ciudad = h.Ciudad,
                     Direccion = h.Direccion,
                     DireccionNum = h.DireccionNum,
-                    DireccionObservaciones = h.DireccionObservaciones,
-                    CodigoPostal = h.CodigoPostal,
                     Estrellas = h.Estrellas,
-                    Telefono = h.Telefono,
-                    Correo = h.Correo,
-                    Latitud = h.Latitud,
-                    Longitud = h.Longitud,
-                    Fotos = h.FotosHotel.Select(fh => new ResponseHabitacionCategoriaDto
+                    Fotos = h.FotosHotel.Select(fh => new ResponseFotoHotelDto
                     {
+                        FotoHotelId = fh.FotoHotelId,
                         ImagenUrl = fh.ImagenUrl,
                         Descripcion = fh.Descripcion
                     }).ToList()
@@ -100,7 +90,7 @@ namespace MicroservicioHotel.AccessData.Queries
                     Correo = h.Correo,
                     Latitud = h.Latitud,
                     Longitud = h.Longitud,
-                    Fotos = h.FotosHotel.Select(fh => new ResponseHabitacionCategoriaDto
+                    Fotos = h.FotosHotel.Select(fh => new ResponseFotoHotelDto
                     {
                         ImagenUrl = fh.ImagenUrl,
                         Descripcion = fh.Descripcion

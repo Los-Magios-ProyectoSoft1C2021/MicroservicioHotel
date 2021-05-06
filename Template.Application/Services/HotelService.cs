@@ -53,7 +53,7 @@ namespace MicroservicioHotel.Application.Services
             modifiedHotel.HotelId = id;
 
             await _repository.Update(modifiedHotel);
-            return _mapper.Map<ResponseHotelDto>(modifiedHotel);
+            return await _query.GetById(id);
         }
 
         public async Task<ResponseHotelDto> GetById(int id)
@@ -61,12 +61,12 @@ namespace MicroservicioHotel.Application.Services
             return await _query.GetById(id);
         }
 
-        public async Task<List<ResponseHotelDto>> GetAll()
+        public async Task<List<ResponseHotelSimpleDto>> GetAll()
         {
             return await _query.GetAll();
         }
 
-        public async Task<List<ResponseHotelDto>> GetAllBy(int page, int estrellas, string ciudad)
+        public async Task<List<ResponseHotelSimpleDto>> GetAllBy(int page, int estrellas, string ciudad)
         {
             return await _query.GetAllBy(page, estrellas, ciudad);
         }

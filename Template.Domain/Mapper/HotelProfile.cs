@@ -19,6 +19,9 @@ namespace MicroservicioHotel.Domain.Mapper
 
             CreateMap<ResponseHotelDto, Hotel>();
             CreateMap<Hotel, ResponseHotelDto>();
+
+            CreateMap<ResponseHotelSimpleDto, Hotel>();
+            CreateMap<Hotel, ResponseHotelSimpleDto>();
         }
     }
 }

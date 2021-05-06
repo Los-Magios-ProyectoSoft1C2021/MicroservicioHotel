@@ -9,8 +9,8 @@ namespace MicroservicioHotel.Domain.Queries
     public interface IHotelQuery
     {
         Task<ResponseHotelDto> GetById(int id);
-        Task<List<ResponseHotelDto>> GetAllBy(int page, int estrellas, string ciudad);
-        Task<List<ResponseHotelDto>> GetAll();
+        Task<List<ResponseHotelSimpleDto>> GetAllBy(int page, int estrellas, string ciudad);
+        Task<List<ResponseHotelSimpleDto>> GetAll();
         Task<bool> CheckHotelExistsById(int id);
         Task<int> GetHotelsCount();
     }
