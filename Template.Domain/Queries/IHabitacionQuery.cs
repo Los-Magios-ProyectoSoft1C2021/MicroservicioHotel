@@ -11,6 +11,7 @@ namespace MicroservicioHotel.Domain.Queries
         //Consultas.....
         Task<List<ResponseHabitacionDto>> GetAllHabitaciones(int hotelId, int categoriaId);
         Task<ResponseHabitacionDto> GetHabitacionById(int habitacionId, int hotelId);
+        Task<ResponseHabitacionDto> GetHabitacionDataById(int habitacionId, int hotelId);
         Task<bool> CheckHabitacionExistById(int habitacionId, int hotelId);
     }
 }

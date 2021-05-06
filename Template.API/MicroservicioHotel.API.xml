@@ -100,6 +100,25 @@
             <response code="200">Retorna la información de la habitacion modificada</response>
             <response code="204">Si no se encuentra la habitacion a modificar</response> 
         </member>
+        <member name="M:MicroservicioHotel.API.Controllers.HabitacionController.PatchHabitacion(System.Int32,System.Int32,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{MicroservicioHotel.Domain.DTOs.Request.RequestHabitacionDto})">
+            <summary>
+            Modifica los datos de una habitación ya existente.
+            </summary>
+            <remarks>
+            Ejemplo de body:
+                [
+                    {
+                        "value": "A10",
+                        "path": "/Nombre",
+                        "op": "replace"
+                    }
+                ]
+            </remarks>
+            <param name="hotelId">La ID del hotel a la cual pertenece la habitación.</param>
+            <param name="habitacionId">La ID de la habitación que se quiere modificar.</param>
+            <param name="entityPatchDto">El body que contiene los parámetros que se pueden modificar.</param>
+            <returns>La habitación modificada.</returns>
+        </member>
         <member name="M:MicroservicioHotel.API.Controllers.HotelController.GetHotelById(System.Int32)">
             <summary>
             Retorna la información de un hotel según su ID.
@@ -181,7 +200,7 @@
                 [
                     {
                         "value": "Hotel Primavera",
-                        "path": "/Nombre"
+                        "path": "/Nombre",
                         "op": "replace"
                     }
                 ]

@@ -63,6 +63,21 @@ namespace MicroservicioHotel.AccessData.Queries
 
             return habitacion;
         }
+
+        public async Task<ResponseHabitacionDto> GetHabitacionDataById(int habitacionId, int hotelId)
+        {
+            var habitacion = await _context.Habitacion
+                .Where(h => h.HotelId == hotelId && h.HabitacionId == habitacionId)
+                .Select(h => new ResponseHabitacionDto
+                {
+                    Nombre = h.Nombre,
+                    HabitacionId = h.HabitacionId,
+                    HotelId = h.HotelId
+                })
+                .FirstOrDefaultAsync();
+
+            return habitacion;
+        }
         
         public async Task<bool> CheckHabitacionExistById(int habitacionId, int hotelId)
         {

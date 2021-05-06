@@ -195,7 +195,7 @@ namespace MicroservicioHotel.API.Controllers
         ///     [
         ///         {
         ///             "value": "Hotel Primavera",
-        ///             "path": "/Nombre"
+        ///             "path": "/Nombre",
         ///             "op": "replace"
         ///         }
         ///     ]
@@ -212,8 +212,8 @@ namespace MicroservicioHotel.API.Controllers
             if (!exists)
                 return NotFound();
 
-            var newHotel = await _hotelService.Patch(id, entityPatchDto);
-            return Ok(newHotel);
+            var modifiedHotel = await _hotelService.Patch(id, entityPatchDto);
+            return Ok(modifiedHotel);
         }
 
     }

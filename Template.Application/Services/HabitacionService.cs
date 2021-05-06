@@ -4,9 +4,8 @@ using MicroservicioHotel.Domain.DTOs.Request;
 using MicroservicioHotel.Domain.DTOs.Response;
 using MicroservicioHotel.Domain.Entities;
 using MicroservicioHotel.Domain.Queries;
-using System;
+using Microsoft.AspNetCore.JsonPatch;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MicroservicioHotel.Application.Services
@@ -57,6 +56,20 @@ namespace MicroservicioHotel.Application.Services
             return await _query.GetHabitacionById(habitacionId, hotelId);
         }
 
+        public async Task<ResponseHabitacionDto> Patch(int habitacionId, int hotelId, JsonPatchDocument<RequestHabitacionDto> entityPatchDto)
+        {
+            var oldHabitacion = await _query.GetHabitacionDataById(habitacionId, hotelId);
+            var entityPatch = _mapper.Map<JsonPatchDocument<Habitacion>>(entityPatchDto);
+
+            var modifiedHabitacion = _mapper.Map<Habitacion>(oldHabitacion);
+            entityPatch.ApplyTo(modifiedHabitacion);
+            modifiedHabitacion.HotelId = hotelId;
+            modifiedHabitacion.HabitacionId = habitacionId;
+
+            await _repository.Update(modifiedHabitacion);
+            return await _query.GetHabitacionById(habitacionId, hotelId);
+        }
+        
         public async Task<bool> CheckHabitacionExistById(int habitacionId, int hotelId)
         {
             return await _query.CheckHabitacionExistById(habitacionId, hotelId);

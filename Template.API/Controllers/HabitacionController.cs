@@ -2,6 +2,7 @@
 using MicroservicioHotel.Domain.DTOs.Request;
 using MicroservicioHotel.Domain.DTOs.Response;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -117,6 +118,37 @@ namespace MicroservicioHotel.API.Controllers
                 throw new Exception();
 
             return Ok(updatedHabitacion);
+        }
+
+        /// <summary>
+        /// Modifica los datos de una habitación ya existente.
+        /// </summary>
+        /// <remarks>
+        /// Ejemplo de body:
+        ///     [
+        ///         {
+        ///             "value": "A10",
+        ///             "path": "/Nombre",
+        ///             "op": "replace"
+        ///         }
+        ///     ]
+        /// </remarks>
+        /// <param name="hotelId">La ID del hotel a la cual pertenece la habitación.</param>
+        /// <param name="habitacionId">La ID de la habitación que se quiere modificar.</param>
+        /// <param name="entityPatchDto">El body que contiene los parámetros que se pueden modificar.</param>
+        /// <returns>La habitación modificada.</returns>
+        [HttpPatch("{hotelId:int}/habitacion/{habitacionId:int}")]
+        public async Task<ActionResult<ResponseHotelDto>> PatchHabitacion(
+            int hotelId, 
+            int habitacionId, 
+            [FromBody] JsonPatchDocument<RequestHabitacionDto> entityPatchDto)
+        {
+            var exists = await _habitacionService.CheckHabitacionExistById(habitacionId, hotelId);
+            if (!exists)
+                return NotFound();
+
+            var updateHabitacion = await _habitacionService.Patch(habitacionId, hotelId, entityPatchDto);
+            return Ok(updateHabitacion);
         }
     }
 }
