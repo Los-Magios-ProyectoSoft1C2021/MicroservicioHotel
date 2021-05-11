@@ -40,7 +40,7 @@ namespace MicroservicioHotel.Application.Services
 
             await _repository.Update(h);
 
-            return _mapper.Map<ResponseHotelDto>(h);
+            return await _query.GetById(id);
         }
 
         public async Task<ResponseHotelDto> Patch(int id, JsonPatchDocument<RequestHotelDto> entityPatchDto)
