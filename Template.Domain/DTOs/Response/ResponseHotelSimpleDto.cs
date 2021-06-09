@@ -13,7 +13,7 @@ namespace MicroservicioHotel.Domain.DTOs.Response
         public string Direccion { get; set; }
         public string DireccionNum { get; set; }
         public int Estrellas { get; set; }
-        
         public string Foto { get; set; }
+        public string Telefono { get; set; }
     }
 }

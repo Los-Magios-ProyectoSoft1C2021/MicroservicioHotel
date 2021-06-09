@@ -33,7 +33,8 @@ namespace MicroservicioHotel.AccessData.Queries
                     Direccion = h.Direccion,
                     DireccionNum = h.DireccionNum,
                     Estrellas= h.Estrellas,
-                    Foto = h.FotosHotel.FirstOrDefault().ImagenUrl
+                    Foto = h.FotosHotel.FirstOrDefault().ImagenUrl,
+                    Telefono = h.Telefono
                 }).ToListAsync();
 
             return hoteles;
@@ -53,7 +54,8 @@ namespace MicroservicioHotel.AccessData.Queries
                     Direccion = h.Direccion,
                     DireccionNum = h.DireccionNum,
                     Estrellas = h.Estrellas,
-                    Foto = h.FotosHotel.FirstOrDefault().ImagenUrl
+                    Foto = h.FotosHotel.FirstOrDefault().ImagenUrl,
+                    Telefono = h.Telefono
                 })
                 .Skip((page - 1) * _pageSize)
                 .Take(_pageSize)
