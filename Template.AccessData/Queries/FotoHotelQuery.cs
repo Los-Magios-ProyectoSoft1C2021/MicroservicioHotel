@@ -26,7 +26,7 @@ namespace MicroservicioHotel.AccessData.Queries
             return exists;
         }
 
-        public async Task<ResponseFotoHotelDto> GetAll(int hotelId)
+        public async Task<List<ResponseFotoHotelDto>> GetAll(int hotelId)
         {
             var fotos = await _context.FotoHotel
                 .Where(fh => fh.HotelId == hotelId)
