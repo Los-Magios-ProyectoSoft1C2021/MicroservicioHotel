@@ -14,6 +14,6 @@ namespace MicroservicioHotel.Domain.DTOs.Response
         public string DireccionNum { get; set; }
         public int Estrellas { get; set; }
         
-        public List<ResponseFotoHotelDto> Fotos { get; set; }
+        public string Foto { get; set; }
     }
 }
