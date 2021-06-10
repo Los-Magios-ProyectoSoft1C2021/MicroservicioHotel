@@ -20,7 +20,7 @@ namespace MicroservicioHotel.Application.Services
         {
             _repository = repository;
             _query = query;
-            _mapper  = mapper; 
+            _mapper = mapper;
         }
 
         public async Task<List<ResponseHabitacionDto>> GetAllHabitaciones(int hotelId, int categoriaId)
@@ -35,7 +35,7 @@ namespace MicroservicioHotel.Application.Services
 
         public async Task<ResponseHabitacionDto> Create(int hotelId, RequestHabitacionDto request)
         {
-            var h =  _mapper.Map<Habitacion>(request);
+            var h = _mapper.Map<Habitacion>(request);
             h.HotelId = hotelId;
 
             await _repository.Add(h);
@@ -69,7 +69,7 @@ namespace MicroservicioHotel.Application.Services
             await _repository.Update(modifiedHabitacion);
             return await _query.GetHabitacionById(habitacionId, hotelId);
         }
-        
+
         public async Task<bool> CheckHabitacionExistById(int habitacionId, int hotelId)
         {
             return await _query.CheckHabitacionExistById(habitacionId, hotelId);

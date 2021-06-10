@@ -5,9 +5,7 @@ using MicroservicioHotel.Domain.DTOs.Response;
 using MicroservicioHotel.Domain.Entities;
 using MicroservicioHotel.Domain.Queries;
 using Microsoft.AspNetCore.JsonPatch;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MicroservicioHotel.Application.Services
@@ -76,9 +74,9 @@ namespace MicroservicioHotel.Application.Services
             return await _query.CheckHotelExistsById(id);
         }
 
-        public async Task<int> GetHotelsCount()
+        public async Task<int> GetHotelsCount(int estrellas, string ciudad)
         {
-            return await _query.GetHotelsCount();
+            return await _query.GetHotelsCount(estrellas, ciudad);
         }
 
     }

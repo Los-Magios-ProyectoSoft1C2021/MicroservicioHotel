@@ -1,9 +1,7 @@
 ﻿using MicroservicioHotel.Domain.DTOs.Request;
 using MicroservicioHotel.Domain.DTOs.Response;
 using Microsoft.AspNetCore.JsonPatch;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MicroservicioHotel.Application.Services
@@ -17,6 +15,6 @@ namespace MicroservicioHotel.Application.Services
         Task<List<ResponseHotelSimpleDto>> GetAllBy(int page, int estrellas, string ciudad);
         Task<ResponseHotelDto> GetById(int id);
         Task<bool> CheckHotelExistsById(int id);
-        Task<int> GetHotelsCount();
+        Task<int> GetHotelsCount(int estrellas, string ciudad);
     }
 }

@@ -1,10 +1,8 @@
 ﻿using MicroservicioHotel.Domain.DTOs.Response;
 using MicroservicioHotel.Domain.Queries;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MicroservicioHotel.AccessData.Queries
@@ -22,7 +20,7 @@ namespace MicroservicioHotel.AccessData.Queries
         {
             var categorias = await _context.Categoria
                 .Select(c => new ResponseCategoriaDto
-                { 
+                {
                     CategoriaId = c.CategoriaId,
                     Nombre = c.Nombre,
                     Descripcion = c.Descripcion

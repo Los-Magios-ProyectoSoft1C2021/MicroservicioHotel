@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\MicroservicioHotel.API.xml</DocumentationFile>
-    <OutputPath>bin\</OutputPath>
+    <DocumentationFile>A:\Documents\UNAJ\Proyecto Software\Proyecto\MicroservicioHotel\Template.API\MicroservicioHotel.API.xml</DocumentationFile>
+    <OutputPath></OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

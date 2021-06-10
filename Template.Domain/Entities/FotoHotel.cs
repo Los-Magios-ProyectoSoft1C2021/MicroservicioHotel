@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MicroservicioHotel.Domain.Entities
+﻿namespace MicroservicioHotel.Domain.Entities
 {
     public class FotoHotel
     {

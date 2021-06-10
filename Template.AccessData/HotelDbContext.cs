@@ -1,8 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
+﻿using MicroservicioHotel.AccessData.Configuration;
 using MicroservicioHotel.Domain.Entities;
-using MicroservicioHotel.AccessData.Configuration;
+using Microsoft.EntityFrameworkCore;
 
 namespace MicroservicioHotel.AccessData
 {

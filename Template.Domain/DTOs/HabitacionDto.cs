@@ -1,7 +1,5 @@
 ﻿using MicroservicioHotel.Domain.Entities;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MicroservicioHotel.Domain.DTOs
 {
@@ -17,7 +15,7 @@ namespace MicroservicioHotel.Domain.DTOs
 
 
         // Relación con la tabla Hotel
-       //public Hotel Hotel { get; set; }----------------------------------
+        //public Hotel Hotel { get; set; }----------------------------------
 
         // Relación con la tabla Categoria
         public Categoria Categoria { get; set; }

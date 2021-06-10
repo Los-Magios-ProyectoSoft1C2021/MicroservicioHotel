@@ -4,9 +4,7 @@ using MicroservicioHotel.Domain.DTOs.Request;
 using MicroservicioHotel.Domain.DTOs.Response;
 using MicroservicioHotel.Domain.Entities;
 using MicroservicioHotel.Domain.Queries;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MicroservicioHotel.Application.Services

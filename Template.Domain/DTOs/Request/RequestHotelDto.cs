@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MicroservicioHotel.Domain.DTOs.Request
+﻿namespace MicroservicioHotel.Domain.DTOs.Request
 {
     public class RequestHotelDto
 

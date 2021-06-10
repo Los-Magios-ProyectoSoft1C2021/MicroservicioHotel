@@ -1,7 +1,6 @@
 ﻿using MicroservicioHotel.Domain.Entities;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace MicroservicioHotel.Domain.DTOs
 {
@@ -20,7 +19,7 @@ namespace MicroservicioHotel.Domain.DTOs
         public int Estrellas { get; set; }
         public string Telefono { get; set; }
         public string Correo { get; set; }
-        
+
         // Relación con la tabla Habitacion
         public List<Habitacion> Habitaciones { get; set; }
 

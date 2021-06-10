@@ -1,11 +1,9 @@
-﻿using MicroservicioHotel.Domain.Queries;
-using System;
+﻿using MicroservicioHotel.Domain.DTOs.Response;
+using MicroservicioHotel.Domain.Queries;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Collections;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using MicroservicioHotel.Domain.DTOs.Response;
 
 namespace MicroservicioHotel.AccessData.Queries
 {
@@ -15,7 +13,7 @@ namespace MicroservicioHotel.AccessData.Queries
 
         public HabitacionQuery(HotelDbContext context)
         {
-            _context  = context;
+            _context = context;
         }
 
         public async Task<List<ResponseHabitacionDto>> GetAllHabitaciones(int hotelId, int categoriaId)
@@ -26,9 +24,9 @@ namespace MicroservicioHotel.AccessData.Queries
                 .Where(h => h.HotelId == hotelId)
                 .Select(h => new ResponseHabitacionDto
                 {
-                    HabitacionId  = h.HabitacionId,
-                    Nombre  = h.Nombre,
-                    HotelId  = h.HotelId,
+                    HabitacionId = h.HabitacionId,
+                    Nombre = h.Nombre,
+                    HotelId = h.HotelId,
                     Categoria = new ResponseCategoriaDto
                     {
                         CategoriaId = h.CategoriaId,
@@ -39,7 +37,7 @@ namespace MicroservicioHotel.AccessData.Queries
                 .ToListAsync();
 
             return habitaciones;
-                
+
         }
 
         public async Task<ResponseHabitacionDto> GetHabitacionById(int habitacionId, int hotelId)
@@ -51,7 +49,7 @@ namespace MicroservicioHotel.AccessData.Queries
                 {
                     Nombre = h.Nombre,
                     HabitacionId = h.HabitacionId,
-                    HotelId  = h.HotelId,
+                    HotelId = h.HotelId,
                     Categoria = new ResponseCategoriaDto
                     {
                         CategoriaId = h.CategoriaId,
@@ -78,7 +76,7 @@ namespace MicroservicioHotel.AccessData.Queries
 
             return habitacion;
         }
-        
+
         public async Task<bool> CheckHabitacionExistById(int habitacionId, int hotelId)
         {
             var exists = await _context.Habitacion

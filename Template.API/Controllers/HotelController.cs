@@ -1,15 +1,10 @@
 ﻿using MicroservicioHotel.Application.Services;
 using MicroservicioHotel.Domain.DTOs.Request;
 using MicroservicioHotel.Domain.DTOs.Response;
-using MicroservicioHotel.Domain.Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -65,8 +60,8 @@ namespace MicroservicioHotel.API.Controllers
         /// <response code="400">Si no se encuentra el hotel</response>  
         [HttpGet]
         public async Task<ActionResult<ResponsePageHotels>> GetHotelBy(
-            [FromQuery(Name = "page")] int page, 
-            [FromQuery(Name = "estrellas")] int estrellas, 
+            [FromQuery(Name = "page")] int page,
+            [FromQuery(Name = "estrellas")] int estrellas,
             [FromQuery(Name = "ciudad")] string ciudad)
         {
             if (page == 0)
@@ -80,10 +75,11 @@ namespace MicroservicioHotel.API.Controllers
             var hoteles = await _hotelService.GetAllBy(page, estrellas, ciudad);
 
             int pageSize = int.Parse(_configuration.GetSection("PageSize").Value);
-            int hotelesCount = await _hotelService.GetHotelsCount();
+            int hotelesCount = await _hotelService.GetHotelsCount(estrellas, ciudad);
             int pageCount = (hotelesCount / pageSize) + 1;
 
-            var response = new ResponsePageHotels {
+            var response = new ResponsePageHotels
+            {
                 Data = hoteles,
                 ItemsCount = hoteles.Count,
                 PageCount = pageCount,

@@ -1,8 +1,5 @@
 ﻿using MicroservicioHotel.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MicroservicioHotel.AccessData.Configuration
 {
@@ -26,15 +23,18 @@ namespace MicroservicioHotel.AccessData.Configuration
 
             builder.Property(h => h.Provincia)
                 .IsRequired(true)
-                .HasMaxLength(64);
+                .HasMaxLength(64)
+                .UseCollation("SQL_Latin1_General_CP1_CI_AS");
 
             builder.Property(h => h.Ciudad)
                 .IsRequired(true)
-                .HasMaxLength(128);
+                .HasMaxLength(128)
+                .UseCollation("SQL_Latin1_General_CP1_CI_AS");
 
             builder.Property(h => h.Direccion)
                 .IsRequired(true)
-                .HasMaxLength(128);
+                .HasMaxLength(128)
+                .UseCollation("SQL_Latin1_General_CP1_CI_AS");
 
             builder.Property(h => h.DireccionNum)
                 .IsRequired(true)

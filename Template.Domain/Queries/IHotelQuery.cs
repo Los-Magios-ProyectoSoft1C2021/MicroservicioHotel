@@ -1,7 +1,5 @@
 ﻿using MicroservicioHotel.Domain.DTOs.Response;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MicroservicioHotel.Domain.Queries
@@ -12,6 +10,6 @@ namespace MicroservicioHotel.Domain.Queries
         Task<List<ResponseHotelSimpleDto>> GetAllBy(int page, int estrellas, string ciudad);
         Task<List<ResponseHotelSimpleDto>> GetAll();
         Task<bool> CheckHotelExistsById(int id);
-        Task<int> GetHotelsCount();
+        Task<int> GetHotelsCount(int estrellas, string ciudad);
     }
 }

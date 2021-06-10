@@ -8,19 +8,14 @@ using MicroservicioHotel.Domain.Mapper;
 using MicroservicioHotel.Domain.Queries;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 
 namespace Template.API
 {
@@ -67,11 +62,13 @@ namespace Template.API
             services.AddTransient<IHabitacionQuery, HabitacionQuery>();
             services.AddTransient<IFotoHotelQuery, FotoHotelQuery>();
             services.AddTransient<ICategoriaQuery, CategoriaQuery>();
+            services.AddTransient<IDestinoQuery, DestinoQuery>();
 
             services.AddTransient<IHotelService, HotelService>();
             services.AddTransient<IHabitacionService, HabitacionService>();
             services.AddTransient<IFotosService, FotosService>();
             services.AddTransient<ICategoriaService, CategoriaService>();
+            services.AddTransient<IDestinoService, DestinoService>();
 
             services.AddSwaggerGen(options =>
             {
@@ -119,7 +116,7 @@ namespace Template.API
                 endpoints.MapControllers();
             });
 
-            
+
         }
     }
 }

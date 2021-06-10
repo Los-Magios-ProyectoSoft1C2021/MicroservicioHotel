@@ -1,7 +1,5 @@
 ﻿using MicroservicioHotel.Domain.Entities;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MicroservicioHotel.Domain.DTOs
 {

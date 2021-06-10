@@ -1,15 +1,13 @@
 ﻿using MicroservicioHotel.Application.Services;
 using MicroservicioHotel.Domain.DTOs.Response;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MicroservicioHotel.API.Controllers
 {
     [Route("api/hotel/categorias")]
+    [ApiController]
     public class CategoriaController : ControllerBase
     {
         private readonly ICategoriaService _categoriaService;

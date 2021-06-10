@@ -1,10 +1,7 @@
 ﻿using MicroservicioHotel.Application.Services;
-using MicroservicioHotel.Domain.DTOs;
 using MicroservicioHotel.Domain.DTOs.Request;
 using MicroservicioHotel.Domain.DTOs.Response;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 

@@ -1,10 +1,8 @@
 ﻿using MicroservicioHotel.Domain.DTOs.Response;
 using MicroservicioHotel.Domain.Queries;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MicroservicioHotel.AccessData.Queries
@@ -42,13 +40,13 @@ namespace MicroservicioHotel.AccessData.Queries
             return fotos;
         }
 
-        
+
         public async Task<ResponseFotoHotelDto> GetById(int fotoHotelId, int hotelId)
         {
             var foto = await _context.FotoHotel
                 .Where(fh => fh.FotoHotelId == fotoHotelId && fh.HotelId == hotelId)
                 .Select(fh => new ResponseFotoHotelDto
-                { 
+                {
                     FotoHotelId = fh.FotoHotelId,
                     HotelId = fh.HotelId,
                     ImagenUrl = fh.ImagenUrl,
@@ -58,6 +56,6 @@ namespace MicroservicioHotel.AccessData.Queries
 
             return foto;
         }
-        
+
     }
 }

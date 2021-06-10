@@ -1,14 +1,11 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using MicroservicioHotel.Domain.Entities;
-using MicroservicioHotel.Domain.DTOs.Response;
 using MicroservicioHotel.Domain.DTOs.Request;
+using MicroservicioHotel.Domain.DTOs.Response;
+using MicroservicioHotel.Domain.Entities;
 
 namespace MicroservicioHotel.Domain.Mapper
 {
-    public class HabitacionProfile: Profile
+    public class HabitacionProfile : Profile
     {
         public HabitacionProfile()
         {

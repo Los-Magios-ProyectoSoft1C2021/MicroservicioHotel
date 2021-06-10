@@ -2,10 +2,8 @@
 using MicroservicioHotel.Domain.Queries;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MicroservicioHotel.AccessData.Queries
@@ -32,7 +30,7 @@ namespace MicroservicioHotel.AccessData.Queries
                     Ciudad = h.Ciudad,
                     Direccion = h.Direccion,
                     DireccionNum = h.DireccionNum,
-                    Estrellas= h.Estrellas,
+                    Estrellas = h.Estrellas,
                     Foto = h.FotosHotel.FirstOrDefault().ImagenUrl,
                     Telefono = h.Telefono
                 }).ToListAsync();
@@ -43,7 +41,7 @@ namespace MicroservicioHotel.AccessData.Queries
         public async Task<List<ResponseHotelSimpleDto>> GetAllBy(int page, int estrellas, string ciudad)
         {
             var hoteles = await _context.Hotel
-                .Where(h =>(estrellas > 0) ? h.Estrellas == estrellas : true)
+                .Where(h => (estrellas > 0) ? h.Estrellas == estrellas : true)
                 .Where(h => (ciudad != null) ? h.Ciudad == ciudad : true)
                 .Select(h => new ResponseHotelSimpleDto
                 {
@@ -68,7 +66,7 @@ namespace MicroservicioHotel.AccessData.Queries
         {
             var hotel = await _context.Hotel
                 .Select(h => new ResponseHotelDto()
-                { 
+                {
                     HotelId = id,
                     Nombre = h.Nombre,
                     Provincia = h.Provincia,
@@ -102,9 +100,12 @@ namespace MicroservicioHotel.AccessData.Queries
             return exists;
         }
 
-        public async Task<int> GetHotelsCount()
+        public async Task<int> GetHotelsCount(int estrellas, string ciudad)
         {
-            return await _context.Hotel.CountAsync();
+            return await _context.Hotel
+                .Where(h => (estrellas > 0) ? h.Estrellas == estrellas : true)
+                .Where(h => (ciudad != null) ? h.Ciudad == ciudad : true)
+                .CountAsync();
         }
     }
 }

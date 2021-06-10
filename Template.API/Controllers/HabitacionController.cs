@@ -1,10 +1,8 @@
 ﻿using MicroservicioHotel.Application.Services;
 using MicroservicioHotel.Domain.DTOs.Request;
 using MicroservicioHotel.Domain.DTOs.Response;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -34,7 +32,7 @@ namespace MicroservicioHotel.API.Controllers
         /// <response code="204">Si no se encuentran habitaciones en dicho hotel</response>  
         [HttpGet("{hotelId:int}/habitacion/")]
         public async Task<ActionResult<List<ResponseHabitacionDto>>> GetAll(
-            [FromQuery(Name = "categoria")] int categoriaId, 
+            [FromQuery(Name = "categoria")] int categoriaId,
             int hotelId)
         {
             if (categoriaId < 0 || categoriaId > 3)
@@ -139,8 +137,8 @@ namespace MicroservicioHotel.API.Controllers
         /// <returns>La habitación modificada.</returns>
         [HttpPatch("{hotelId:int}/habitacion/{habitacionId:int}")]
         public async Task<ActionResult<ResponseHotelDto>> PatchHabitacion(
-            int hotelId, 
-            int habitacionId, 
+            int hotelId,
+            int habitacionId,
             [FromBody] JsonPatchDocument<RequestHabitacionDto> entityPatchDto)
         {
             var exists = await _habitacionService.CheckHabitacionExistById(habitacionId, hotelId);

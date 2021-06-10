@@ -5,18 +5,18 @@ using System.Threading.Tasks;
 
 namespace MicroservicioHotel.Application.Services
 {
-    public class CategoriaService : ICategoriaService
+    public class DestinoService : IDestinoService
     {
-        private readonly ICategoriaQuery _query;
+        private readonly IDestinoQuery _query;
 
-        public CategoriaService(ICategoriaQuery query)
+        public DestinoService(IDestinoQuery query)
         {
             _query = query;
         }
 
-        public Task<List<ResponseCategoriaDto>> GetAll()
+        public async Task<List<ResponseDestinoDto>> GetDestinos(string query)
         {
-            return _query.GetAll();
+            return await _query.GetDestinos(query);
         }
     }
 }

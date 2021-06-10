@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 
 namespace MicroservicioHotel.Domain.Queries
 {
-    public interface ICategoriaQuery
+    public interface IDestinoQuery
     {
-        Task<List<ResponseCategoriaDto>> GetAll();
+        Task<List<ResponseDestinoDto>> GetDestinos(string query);
     }
 }
