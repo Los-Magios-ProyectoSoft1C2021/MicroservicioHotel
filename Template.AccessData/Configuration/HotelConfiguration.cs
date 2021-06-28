@@ -48,7 +48,7 @@ namespace MicroservicioHotel.AccessData.Configuration
                 .IsRequired(true)
                 .HasMaxLength(24);
 
-            builder.Property(h => h.Estrellas)
+            builder.Property(h => h.EstrellasId)
                 .IsRequired(true);
 
             builder.Property(h => h.Telefono)

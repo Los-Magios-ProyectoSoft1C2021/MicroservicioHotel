@@ -20,6 +20,9 @@ namespace MicroservicioHotel.AccessData
             modelBuilder.ApplyConfiguration<Categoria>(new CategoriaConfiguration());
             modelBuilder.ApplyConfiguration<FotoHotel>(new FotoHotelConfiguration());
             modelBuilder.ApplyConfiguration<Habitacion>(new HabitacionConfiguration());
+            modelBuilder.ApplyConfiguration<Estrellas>(new EstrellasConfiguration());
+            modelBuilder.ApplyConfiguration<Servicio>(new ServicioConfiguration());
+            modelBuilder.ApplyConfiguration<ServicioEstrellas>(new ServicioEstrellasConfiguration());
             modelBuilder.ApplyConfiguration<Hotel>(new HotelConfiguration());
         }
     }

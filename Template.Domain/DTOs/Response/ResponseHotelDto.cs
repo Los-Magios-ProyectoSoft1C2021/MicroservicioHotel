@@ -19,5 +19,6 @@ namespace MicroservicioHotel.Domain.DTOs.Response
         public decimal Latitud { get; set; }
 
         public List<ResponseFotoHotelDto> Fotos { get; set; }
+        public List<string> Servicios { get; set; }
     }
 }

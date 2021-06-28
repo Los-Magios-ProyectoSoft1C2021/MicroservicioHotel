@@ -30,7 +30,7 @@ namespace MicroservicioHotel.AccessData.Queries
                     Ciudad = h.Ciudad,
                     Direccion = h.Direccion,
                     DireccionNum = h.DireccionNum,
-                    Estrellas = h.Estrellas,
+                    Estrellas = h.EstrellasId,
                     Foto = h.FotosHotel.FirstOrDefault().ImagenUrl,
                     Telefono = h.Telefono
                 }).ToListAsync();
@@ -41,7 +41,7 @@ namespace MicroservicioHotel.AccessData.Queries
         public async Task<List<ResponseHotelSimpleDto>> GetAllBy(int page, int estrellas, string ciudad)
         {
             var hoteles = await _context.Hotel
-                .Where(h => (estrellas > 0) ? h.Estrellas == estrellas : true)
+                .Where(h => (estrellas > 0) ? h.EstrellasId == estrellas : true)
                 .Where(h => (ciudad != null) ? h.Ciudad == ciudad : true)
                 .Select(h => new ResponseHotelSimpleDto
                 {
@@ -51,7 +51,7 @@ namespace MicroservicioHotel.AccessData.Queries
                     Ciudad = h.Ciudad,
                     Direccion = h.Direccion,
                     DireccionNum = h.DireccionNum,
-                    Estrellas = h.Estrellas,
+                    Estrellas = h.EstrellasId,
                     Foto = h.FotosHotel.FirstOrDefault().ImagenUrl,
                     Telefono = h.Telefono
                 })
@@ -75,7 +75,7 @@ namespace MicroservicioHotel.AccessData.Queries
                     DireccionNum = h.DireccionNum,
                     DireccionObservaciones = h.DireccionObservaciones,
                     CodigoPostal = h.CodigoPostal,
-                    Estrellas = h.Estrellas,
+                    Estrellas = h.EstrellasId,
                     Telefono = h.Telefono,
                     Correo = h.Correo,
                     Latitud = h.Latitud,
@@ -84,7 +84,8 @@ namespace MicroservicioHotel.AccessData.Queries
                     {
                         ImagenUrl = fh.ImagenUrl,
                         Descripcion = fh.Descripcion
-                    }).ToList()
+                    }).ToList(),
+                    Servicios = h.Estrellas.Servicios.Select(se => se.Servicio.Descripcion).ToList()
                 })
                 .Where(h => h.HotelId == id)
                 .FirstOrDefaultAsync();
@@ -103,7 +104,7 @@ namespace MicroservicioHotel.AccessData.Queries
         public async Task<int> GetHotelsCount(int estrellas, string ciudad)
         {
             return await _context.Hotel
-                .Where(h => (estrellas > 0) ? h.Estrellas == estrellas : true)
+                .Where(h => (estrellas > 0) ? h.EstrellasId == estrellas : true)
                 .Where(h => (ciudad != null) ? h.Ciudad == ciudad : true)
                 .CountAsync();
         }
