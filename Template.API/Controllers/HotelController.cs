@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MicroservicioHotel.API.Controllers
