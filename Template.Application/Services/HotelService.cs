@@ -79,9 +79,10 @@ namespace MicroservicioHotel.Application.Services
             return await _query.CheckHotelExistsById(id);
         }
 
-        public async Task<int> GetHotelsCount(int estrellas, string ciudad)
+        public async Task<int> GetHotelsCount(int estrellas, string ciudad, int categoria, DateTime fechaInicio, DateTime fechaFin)
         {
-            return await _query.GetHotelsCount(estrellas, ciudad);
+            var reservas = await _reservaService.GetHabitacionesReservadasEntre(fechaInicio, fechaFin);
+            return await _query.GetHotelsCount(estrellas, ciudad, categoria, reservas);
         }
 
     }

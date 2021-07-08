@@ -56,7 +56,7 @@ namespace MicroservicioHotel.API.Controllers
         /// <response code="400">Si no se encuentra el hotel</response>
         [AllowAnonymous]
         [HttpGet]
-        public async Task<ActionResult<ResponsePageHotels>> GetHotelBy(
+        public async Task<ActionResult<ResponsePageHotelsDto>> GetHotelBy(
             [FromQuery(Name = "page")] int page,
             [FromQuery(Name = "estrellas")] int estrellas,
             [FromQuery(Name = "ciudad")] string ciudad,
@@ -75,40 +75,18 @@ namespace MicroservicioHotel.API.Controllers
             var hoteles = await _hotelService.GetAllBy(page, estrellas, ciudad, categoria, fechaInicio, fechaFin);
 
             int pageSize = int.Parse(_configuration.GetSection("PageSize").Value);
-            int hotelesCount = await _hotelService.GetHotelsCount(estrellas, ciudad);
+            int hotelesCount = await _hotelService.GetHotelsCount(estrellas, ciudad, categoria, fechaInicio, fechaFin);
             int pageCount = (hotelesCount / pageSize) + 1;
 
-            var response = new ResponsePageHotels
+            var response = new ResponsePageHotelsDto
             {
                 Data = hoteles,
                 ItemsCount = hoteles.Count,
                 PageCount = pageCount,
-                CurrentPage = page,
-                PreviousPage = CrearUriPaginacion(page - 1, estrellas, ciudad, pageCount),
-                NextPage = CrearUriPaginacion(page + 1, estrellas, ciudad, pageCount)
+                CurrentPage = page
             };
 
             return Ok(response);
-        }
-
-        private string CrearUriPaginacion(int page, int estrellas, string ciudad, int pageCount)
-        {
-            if (page <= 0)
-                return null;
-
-            if (page > pageCount)
-                return null;
-
-            StringBuilder builder = new StringBuilder();
-            builder.Append($"/api/hotel/?page={page}");
-
-            if (estrellas > 0)
-                builder.Append($"&estrellas={estrellas}");
-
-            if (ciudad != null)
-                builder.Append($"&ciudad={ciudad}");
-
-            return builder.ToString();
         }
 
         /// <summary>

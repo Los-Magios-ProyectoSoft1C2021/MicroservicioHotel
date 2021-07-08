@@ -135,6 +135,9 @@
             <param name="page">Número de página.</param>
             <param name="estrellas">Estrellas del hotel.</param>
             <param name="ciudad">Ciudad en donde está ubicado el hotel.</param>
+            <param name="fechaInicio">Fecha de inicio de la reserva que se busca.</param>
+            <param name="categoria">Categoría de la habitación que se está buscando.</param>
+            <param name="fechaFin">Fecha de fin de la reserva que se busca.</param>
             <returns>Retorna un conjunto de hoteles.</returns>
             <response code="200">Retorna la información de los hoteles</response>
             <response code="400">Si no se encuentra el hotel</response>
