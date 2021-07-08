@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using MicroservicioHotel.Application.HttpService;
 using MicroservicioHotel.Domain.Commands;
 using MicroservicioHotel.Domain.DTOs.Request;
 using MicroservicioHotel.Domain.DTOs.Response;
 using MicroservicioHotel.Domain.Entities;
 using MicroservicioHotel.Domain.Queries;
 using Microsoft.AspNetCore.JsonPatch;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -14,12 +16,14 @@ namespace MicroservicioHotel.Application.Services
     {
         private readonly IGenericsRepository _repository;
         private readonly IHotelQuery _query;
+        private readonly MicroservicioReservaService _reservaService;
         private readonly IMapper _mapper;
 
-        public HotelService(IGenericsRepository repository, IHotelQuery query, IMapper mapper)
+        public HotelService(IGenericsRepository repository, IHotelQuery query, MicroservicioReservaService reservaService, IMapper mapper)
         {
             _repository = repository;
             _query = query;
+            _reservaService = reservaService;
             _mapper = mapper;
         }
 
@@ -64,9 +68,10 @@ namespace MicroservicioHotel.Application.Services
             return await _query.GetAll();
         }
 
-        public async Task<List<ResponseHotelSimpleDto>> GetAllBy(int page, int estrellas, string ciudad)
+        public async Task<List<ResponseHotelSimpleDto>> GetAllBy(int page, int estrellas, string ciudad, int categoria, DateTime fechaInicio, DateTime fechaFin)
         {
-            return await _query.GetAllBy(page, estrellas, ciudad);
+            var reservas = await _reservaService.GetHabitacionesReservadasEntre(fechaInicio, fechaFin);
+            return await _query.GetAllBy(page, estrellas, ciudad, categoria, reservas);
         }
 
         public async Task<bool> CheckHotelExistsById(int id)

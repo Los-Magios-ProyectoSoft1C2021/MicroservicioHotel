@@ -1,6 +1,7 @@
 ﻿using MicroservicioHotel.Application.Services;
 using MicroservicioHotel.Domain.DTOs.Request;
 using MicroservicioHotel.Domain.DTOs.Response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -30,6 +31,7 @@ namespace MicroservicioHotel.API.Controllers
         /// <returns>Retorna todas las habitaciones de un hotel.</returns>
         /// /// <response code="200">Retorna la información de las habitaciónes</response>
         /// <response code="204">Si no se encuentran habitaciones en dicho hotel</response>  
+        [AllowAnonymous]
         [HttpGet("{hotelId:int}/habitacion/")]
         public async Task<ActionResult<List<ResponseHabitacionDto>>> GetAll(
             [FromQuery(Name = "categoria")] int categoriaId,
@@ -53,6 +55,7 @@ namespace MicroservicioHotel.API.Controllers
         /// <returns>Retorna las habitaciones por Id.</returns>
         /// <response code="200">Retorna la información de la habitación</response>
         /// <response code="404">Si no se encuentra la habitacion correspondiente a dicho hotel</response>  
+        [AllowAnonymous]
         [HttpGet("{hotelId:int}/habitacion/{habitacionId:int}")]
         public async Task<ActionResult<ResponseHabitacionDto>> GetById(int hotelId, int habitacionId)
         {
@@ -79,6 +82,7 @@ namespace MicroservicioHotel.API.Controllers
         /// <returns>Carga una habitacion al servidor.</returns>
         /// <response code="201">Retorna la creacion de la habitacion</response>
         /// <response code="400">Si no se encuentra la habitacion</response>  
+        [Authorize(Policy = "AdminOnly")]
         [HttpPost("{hotelId:int}/habitacion")]
         public async Task<ActionResult> PostHabitacion(int hotelId, RequestHabitacionDto habitacion)
         {
@@ -104,6 +108,7 @@ namespace MicroservicioHotel.API.Controllers
         /// <returns>Carga una habitacion al servidor.</returns>
         /// <response code="200">Retorna la información de la habitacion modificada</response>
         /// <response code="204">Si no se encuentra la habitacion a modificar</response> 
+        [Authorize(Policy = "AdminOnly")]
         [HttpPut("{hotelId:int}/habitacion/{habitacionId:int}")]
         public async Task<ActionResult> PutHabitacion(int hotelId, int habitacionId, RequestHabitacionDto habitacion)
         {
@@ -135,6 +140,7 @@ namespace MicroservicioHotel.API.Controllers
         /// <param name="habitacionId">La ID de la habitación que se quiere modificar.</param>
         /// <param name="entityPatchDto">El body que contiene los parámetros que se pueden modificar.</param>
         /// <returns>La habitación modificada.</returns>
+        [Authorize(Policy = "AdminOnly")]
         [HttpPatch("{hotelId:int}/habitacion/{habitacionId:int}")]
         public async Task<ActionResult<ResponseHotelDto>> PatchHabitacion(
             int hotelId,

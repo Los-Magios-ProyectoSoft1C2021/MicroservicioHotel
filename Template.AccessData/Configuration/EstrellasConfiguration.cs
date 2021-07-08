@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace MicroservicioHotel.AccessData.Configuration
 {
-    public class EstrellasConfiguration : IEntityTypeConfiguration<Estrellas>   
+    public class EstrellasConfiguration : IEntityTypeConfiguration<Estrellas>
     {
         public void Configure(EntityTypeBuilder<Estrellas> builder)
         {

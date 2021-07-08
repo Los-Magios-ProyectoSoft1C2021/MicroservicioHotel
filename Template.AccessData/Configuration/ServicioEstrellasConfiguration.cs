@@ -12,7 +12,7 @@ namespace MicroservicioHotel.AccessData.Configuration
 
             builder.Property(se => se.ServicioEstrellaId)
                 .ValueGeneratedOnAdd();
-                
+
             builder.HasOne(se => se.Servicio)
                 .WithMany()
                 .HasForeignKey(se => se.ServicioId);
@@ -44,7 +44,7 @@ namespace MicroservicioHotel.AccessData.Configuration
                 new ServicioEstrellas { ServicioEstrellaId = 19, EstrellasId = 5, ServicioId = 19 },
                 new ServicioEstrellas { ServicioEstrellaId = 20, EstrellasId = 5, ServicioId = 20 },
                 new ServicioEstrellas { ServicioEstrellaId = 21, EstrellasId = 5, ServicioId = 21 },
-                new ServicioEstrellas { ServicioEstrellaId = 22, EstrellasId = 5, ServicioId = 22 }, 
+                new ServicioEstrellas { ServicioEstrellaId = 22, EstrellasId = 5, ServicioId = 22 },
                 new ServicioEstrellas { ServicioEstrellaId = 23, EstrellasId = 5, ServicioId = 23 },
 
                 new ServicioEstrellas { ServicioEstrellaId = 24, EstrellasId = 4, ServicioId = 1 },

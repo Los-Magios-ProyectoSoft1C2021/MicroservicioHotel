@@ -1,6 +1,7 @@
 ﻿using MicroservicioHotel.Application.Services;
 using MicroservicioHotel.Domain.DTOs.Request;
 using MicroservicioHotel.Domain.DTOs.Response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -26,6 +27,7 @@ namespace MicroservicioHotel.API.Controllers
         /// <param name="hotelId">La ID del hotel.</param>
         /// <returns>Retorna todas las fotos de un hotel.</returns>
         /// <response code="200">Retorna todas las fotos del hotel</response>
+        [AllowAnonymous]
         [HttpGet("{hotelId:int}/fotos")]
         public async Task<ActionResult<ResponseFotoHotelDto>> GetAllFotos(int hotelId)
         {
@@ -41,6 +43,7 @@ namespace MicroservicioHotel.API.Controllers
         /// <returns>Retorna la información de la foto.</returns>
         /// <response code="200">Retorna la información de la foto</response>
         /// <response code="404">Si no se encuentra la foto</response>   
+        [AllowAnonymous]
         [HttpGet("{hotelId:int}/fotos/{fotoHotelId:int}")]
         public async Task<ActionResult<ResponseFotoHotelDto>> GetFotoById(int fotoHotelId, int hotelId)
         {
@@ -66,6 +69,7 @@ namespace MicroservicioHotel.API.Controllers
         /// <returns>Sube una nueva foto al servidor.</returns>
         /// <response code="200">Retorna la información de la foto subida</response>
         /// <response code="400">Si no se encuentra el hotel al que se le quiere cargar la foto</response>  
+        [Authorize(Policy = "AdminOnly")]
         [HttpPost("{hotelId:int}/fotos")]
         public async Task<ActionResult<ResponseFotoHotelDto>> PostFoto(int hotelId, RequestFotoHotelDto request)
         {

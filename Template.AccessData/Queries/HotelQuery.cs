@@ -1,4 +1,5 @@
-﻿using MicroservicioHotel.Domain.DTOs.Response;
+﻿using MicroservicioHotel.Domain.DTOs;
+using MicroservicioHotel.Domain.DTOs.Response;
 using MicroservicioHotel.Domain.Queries;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -38,11 +39,21 @@ namespace MicroservicioHotel.AccessData.Queries
             return hoteles;
         }
 
-        public async Task<List<ResponseHotelSimpleDto>> GetAllBy(int page, int estrellas, string ciudad)
+        public async Task<List<ResponseHotelSimpleDto>> GetAllBy(int page, int estrellas, string ciudad, int categoria, List<ResponseHabitacionesReservadasByHotelId> reservas)
         {
-            var hoteles = await _context.Hotel
-                .Where(h => (estrellas > 0) ? h.EstrellasId == estrellas : true)
-                .Where(h => (ciudad != null) ? h.Ciudad == ciudad : true)
+            var dictionaryReservas = new Dictionary<int, List<int>>();
+            foreach (var reserva in reservas)
+            {
+                dictionaryReservas[reserva.HotelId] = reserva.Habitaciones;
+            }
+
+            int skip = 0;
+            var resultHoteles = new List<ResponseHotelSimpleDto>();
+            while (resultHoteles.Count < _pageSize)
+            {
+                var hoteles = await _context.Hotel
+                .Where(h => estrellas <= 0 || h.EstrellasId == estrellas)
+                .Where(h => ciudad == null || h.Ciudad == ciudad)
                 .Select(h => new ResponseHotelSimpleDto
                 {
                     HotelId = h.HotelId,
@@ -55,11 +66,25 @@ namespace MicroservicioHotel.AccessData.Queries
                     Foto = h.FotosHotel.FirstOrDefault().ImagenUrl,
                     Telefono = h.Telefono
                 })
-                .Skip((page - 1) * _pageSize)
-                .Take(_pageSize)
+                .Skip((page - 1) * _pageSize + skip)
+                .Take(_pageSize - resultHoteles.Count)
                 .ToListAsync();
 
-            return hoteles;
+                skip += hoteles.Count;
+
+                foreach (var hotel in hoteles)
+                {
+                    bool add = await _context.Habitacion
+                        .Where(x => (x.HotelId == hotel.HotelId) && (categoria <= 0 || x.CategoriaId == categoria))
+                        .Where(x => (dictionaryReservas.ContainsKey(hotel.HotelId)) ? !dictionaryReservas[hotel.HotelId].Contains(x.HabitacionId) : true)
+                        .AnyAsync();
+
+                    if (add)
+                        resultHoteles.Add(hotel);
+                }
+            }
+
+            return resultHoteles;
         }
 
         public async Task<ResponseHotelDto> GetById(int id)
@@ -104,8 +129,8 @@ namespace MicroservicioHotel.AccessData.Queries
         public async Task<int> GetHotelsCount(int estrellas, string ciudad)
         {
             return await _context.Hotel
-                .Where(h => (estrellas > 0) ? h.EstrellasId == estrellas : true)
-                .Where(h => (ciudad != null) ? h.Ciudad == ciudad : true)
+                .Where(h => estrellas <= 0 || h.EstrellasId == estrellas)
+                .Where(h => ciudad == null || h.Ciudad == ciudad)
                 .CountAsync();
         }
     }

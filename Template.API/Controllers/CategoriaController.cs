@@ -1,5 +1,6 @@
 ﻿using MicroservicioHotel.Application.Services;
 using MicroservicioHotel.Domain.DTOs.Response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -21,7 +22,8 @@ namespace MicroservicioHotel.API.Controllers
         /// Retorna todas las categorías de habitaciones disponibles.
         /// </summary>
         /// <returns>Todas las categorías de habitaciones.</returns>
-        /// <response code="200">Retorna todas las categorías</response> 
+        /// <response code="200">Retorna todas las categorías</response>
+        [AllowAnonymous]
         [HttpGet]
         //[ProducesResponseType(StatusCodes.Status200OK)]
         //[ProducesResponseType(StatusCodes.Status500InternalServerError)]

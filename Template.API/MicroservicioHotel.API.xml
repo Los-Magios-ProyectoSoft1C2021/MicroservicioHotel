@@ -9,7 +9,7 @@
             Retorna todas las categorías de habitaciones disponibles.
             </summary>
             <returns>Todas las categorías de habitaciones.</returns>
-            <response code="200">Retorna todas las categorías</response> 
+            <response code="200">Retorna todas las categorías</response>
         </member>
         <member name="M:MicroservicioHotel.API.Controllers.FotosHotelController.GetAllFotos(System.Int32)">
             <summary>
@@ -128,7 +128,7 @@
             <response code="200">Retorna la información del hotel</response>
             <response code="404">Si no se encuentra el hotel</response>  
         </member>
-        <member name="M:MicroservicioHotel.API.Controllers.HotelController.GetHotelBy(System.Int32,System.Int32,System.String)">
+        <member name="M:MicroservicioHotel.API.Controllers.HotelController.GetHotelBy(System.Int32,System.Int32,System.String,System.Int32,System.DateTime,System.DateTime)">
             <summary>
             Retorna una página de hoteles según el número de página, estrellas y ciudad.
             </summary>
@@ -137,7 +137,7 @@
             <param name="ciudad">Ciudad en donde está ubicado el hotel.</param>
             <returns>Retorna un conjunto de hoteles.</returns>
             <response code="200">Retorna la información de los hoteles</response>
-            <response code="400">Si no se encuentra el hotel</response>  
+            <response code="400">Si no se encuentra el hotel</response>
         </member>
         <member name="M:MicroservicioHotel.API.Controllers.HotelController.PostHotel(MicroservicioHotel.Domain.DTOs.Request.RequestHotelDto)">
             <summary>
@@ -189,7 +189,7 @@
             <param name="hotel">Body que contiene los datos del hotel a modificar.</param>
             <returns>El hotel modificado.</returns>
             <response code="200">Retorna la información del hotel modificado</response>
-            <response code="204">Si no se encuentra el hotel a modificar</response>  
+            <response code="204">Si no se encuentra el hotel a modificar</response>
         </member>
         <member name="M:MicroservicioHotel.API.Controllers.HotelController.PatchHotel(System.Int32,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{MicroservicioHotel.Domain.DTOs.Request.RequestHotelDto})">
             <summary>

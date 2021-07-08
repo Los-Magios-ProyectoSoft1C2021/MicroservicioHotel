@@ -26,7 +26,7 @@ namespace MicroservicioHotel.AccessData.Configuration
                 new Servicio { ServicioId = 7, Descripcion = "Recepción de paquetes gratis" },
                 new Servicio { ServicioId = 8, Descripcion = "Servicio a la habitación" },
 
-                new Servicio { ServicioId = 9, Descripcion = "Servicio de traslado en los alrededores (con costo adicional)" },                
+                new Servicio { ServicioId = 9, Descripcion = "Servicio de traslado en los alrededores (con costo adicional)" },
                 new Servicio { ServicioId = 10, Descripcion = "Servicio de planchado" },
                 new Servicio { ServicioId = 11, Descripcion = "Servicio de lavandería (con costo adicional)" },
                 new Servicio { ServicioId = 12, Descripcion = "Servicio de tintorería (con costo adicional)" },
@@ -40,7 +40,7 @@ namespace MicroservicioHotel.AccessData.Configuration
                 new Servicio { ServicioId = 20, Descripcion = "Sauna" },
                 new Servicio { ServicioId = 21, Descripcion = "TV en zonas comunes" },
 
-                new Servicio { ServicioId = 22, Descripcion = "Aire acondicionado en zonas comunes"},
+                new Servicio { ServicioId = 22, Descripcion = "Aire acondicionado en zonas comunes" },
                 new Servicio { ServicioId = 23, Descripcion = "Calefacción en zonas comunes" }
                 );
         }

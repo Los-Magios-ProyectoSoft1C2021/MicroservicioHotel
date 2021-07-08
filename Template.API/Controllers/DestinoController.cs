@@ -1,5 +1,6 @@
 ﻿using MicroservicioHotel.Application.Services;
 using MicroservicioHotel.Domain.DTOs.Response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -17,13 +18,14 @@ namespace MicroservicioHotel.API.Controllers
             _service = service;
         }
 
+        [AllowAnonymous]
         [HttpGet]
-        public async Task<ActionResult<List<ResponseDestinoDto>>> GetDestinos([FromQuery] string q)
+        public async Task<ActionResult<List<ResponseDestinoDto>>> GetDestinos([FromQuery] string query)
         {
-            if (q.Length == 0)
+            if (query.Length == 0)
                 return Problem(detail: "La query no puede estar vacía", statusCode: 404);
 
-            var destinos = await _service.GetDestinos(q);
+            var destinos = await _service.GetDestinos(query);
             return Ok(destinos);
         }
     }
