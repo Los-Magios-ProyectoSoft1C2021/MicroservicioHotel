@@ -11,6 +11,10 @@ namespace MicroservicioHotel.AccessData.Configuration
             builder.Property(h => h.HotelId)
                 .ValueGeneratedOnAdd();
 
+            builder.Property(h => h.Nombre)
+                .IsRequired(true)
+                .HasMaxLength(128);
+
             builder.Property(h => h.Longitud)
                 .IsRequired(true)
                 .HasDefaultValue(0)

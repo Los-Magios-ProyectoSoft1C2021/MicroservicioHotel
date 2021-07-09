@@ -7,5 +7,6 @@ namespace MicroservicioHotel.Application.Services
     public interface ICategoriaService
     {
         Task<List<ResponseCategoriaDto>> GetAll();
+        Task<bool> CheckIfExists(int categoriaId);
     }
 }

@@ -14,9 +14,14 @@ namespace MicroservicioHotel.Application.Services
             _query = query;
         }
 
-        public Task<List<ResponseCategoriaDto>> GetAll()
+        public async Task<List<ResponseCategoriaDto>> GetAll()
         {
-            return _query.GetAll();
+            return await _query.GetAll();
+        }
+
+        public async Task<bool> CheckIfExists(int categoriaId)
+        {
+            return await _query.CheckIfExists(categoriaId);
         }
     }
 }

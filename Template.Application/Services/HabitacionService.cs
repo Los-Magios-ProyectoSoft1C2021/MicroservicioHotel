@@ -70,7 +70,7 @@ namespace MicroservicioHotel.Application.Services
             return await _query.GetHabitacionById(habitacionId, hotelId);
         }
 
-        public async Task<bool> CheckHabitacionExistById(int habitacionId, int hotelId)
+        public async Task<bool> CheckIfExistsById(int habitacionId, int hotelId)
         {
             return await _query.CheckHabitacionExistById(habitacionId, hotelId);
         }

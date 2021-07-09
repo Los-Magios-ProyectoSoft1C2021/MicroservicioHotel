@@ -16,11 +16,13 @@ namespace MicroservicioHotel.API.Controllers
     {
         private readonly IHabitacionService _habitacionService;
         private readonly IHotelService _hotelService;
+        private readonly ICategoriaService _categoriaService;
 
-        public HabitacionController(IHabitacionService habitacionService, IHotelService hotelService)
+        public HabitacionController(IHabitacionService habitacionService, IHotelService hotelService, ICategoriaService categoriaService)
         {
             _habitacionService = habitacionService;
             _hotelService = hotelService;
+            _categoriaService = categoriaService;
         }
 
         /// <summary>
@@ -37,13 +39,11 @@ namespace MicroservicioHotel.API.Controllers
             [FromQuery(Name = "categoria")] int categoriaId,
             int hotelId)
         {
-            if (categoriaId < 0 || categoriaId > 3)
-                return BadRequest();
+            var exists = await _categoriaService.CheckIfExists(categoriaId);
+            if (!exists)
+                return Problem(statusCode: 400, detail: "No se ha ingresado una ID de categoría válida");
 
             var habitaciones = await _habitacionService.GetAllHabitaciones(hotelId, categoriaId);
-            if (habitaciones.Count <= 0)
-                return StatusCode(204, null);
-
             return Ok(habitaciones);
         }
 
@@ -61,7 +61,7 @@ namespace MicroservicioHotel.API.Controllers
         {
             var habitacion = await _habitacionService.GetHabitacionById(habitacionId, hotelId);
             if (habitacion == null)
-                return NotFound();
+                return Problem(statusCode: 404, detail: "No se pudo encontrar la habitación");
 
             return Ok(habitacion);
         }
@@ -86,9 +86,9 @@ namespace MicroservicioHotel.API.Controllers
         [HttpPost("{hotelId:int}/habitacion")]
         public async Task<ActionResult> PostHabitacion(int hotelId, RequestHabitacionDto habitacion)
         {
-            var exists = await _hotelService.CheckHotelExistsById(hotelId);
+            var exists = await _hotelService.CheckIfExistsById(hotelId);
             if (!exists)
-                return BadRequest();
+                return Problem(statusCode: 400, detail: "La ID del hotel ingresada no es válida");
 
             var createHabitacion = await _habitacionService.Create(hotelId, habitacion);
             return Created(uri: $"api/hotel/{createHabitacion.HotelId}/habitacion/{createHabitacion.HabitacionId}", createHabitacion);
@@ -112,13 +112,13 @@ namespace MicroservicioHotel.API.Controllers
         [HttpPut("{hotelId:int}/habitacion/{habitacionId:int}")]
         public async Task<ActionResult> PutHabitacion(int hotelId, int habitacionId, RequestHabitacionDto habitacion)
         {
-            var habitacionExists = await _habitacionService.CheckHabitacionExistById(habitacionId, hotelId);
+            var habitacionExists = await _habitacionService.CheckIfExistsById(habitacionId, hotelId);
             if (!habitacionExists)
                 return StatusCode(204, null); // 204: Recurso no encontrado
 
             var updatedHabitacion = await _habitacionService.Update(habitacionId, hotelId, habitacion);
             if (updatedHabitacion == null)
-                throw new Exception();
+                return Problem(statusCode: 500, detail: "Ocurrió un problema al intentar actualizar la habitación");
 
             return Ok(updatedHabitacion);
         }
@@ -147,7 +147,7 @@ namespace MicroservicioHotel.API.Controllers
             int habitacionId,
             [FromBody] JsonPatchDocument<RequestHabitacionDto> entityPatchDto)
         {
-            var exists = await _habitacionService.CheckHabitacionExistById(habitacionId, hotelId);
+            var exists = await _habitacionService.CheckIfExistsById(habitacionId, hotelId);
             if (!exists)
                 return NotFound();
 

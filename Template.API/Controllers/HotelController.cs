@@ -151,7 +151,7 @@ namespace MicroservicioHotel.API.Controllers
         [HttpPut("{id:int}")]
         public async Task<ActionResult<ResponseHotelDto>> PutHotel(int id, RequestHotelDto hotel)
         {
-            var exists = await _hotelService.CheckHotelExistsById(id);
+            var exists = await _hotelService.CheckIfExistsById(id);
             if (!exists)
                 return StatusCode(204, null); // 204: Recurso no encontrado
 
@@ -184,7 +184,7 @@ namespace MicroservicioHotel.API.Controllers
         [HttpPatch("{id:int}")]
         public async Task<ActionResult<ResponseHotelDto>> PatchHotel(int id, [FromBody] JsonPatchDocument<RequestHotelDto> entityPatchDto)
         {
-            var exists = await _hotelService.CheckHotelExistsById(id);
+            var exists = await _hotelService.CheckIfExistsById(id);
             if (!exists)
                 return NotFound();
 

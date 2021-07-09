@@ -73,15 +73,15 @@ namespace MicroservicioHotel.API.Controllers
         [HttpPost("{hotelId:int}/fotos")]
         public async Task<ActionResult<ResponseFotoHotelDto>> PostFoto(int hotelId, RequestFotoHotelDto request)
         {
-            var exists = await _hotelService.CheckHotelExistsById(hotelId);
+            var exists = await _hotelService.CheckIfExistsById(hotelId);
             if (!exists)
-                return BadRequest();
+                return Problem(statusCode: 400, detail: "La ID del hotel ingresada no es válida");
 
             var createdFotoHotel = await _fotosService.Add(hotelId, request);
             if (createdFotoHotel == null)
-                throw new Exception();
+                return Problem(statusCode: 500, detail: "Ha ocurrido un error al intentar guardar la foto");
 
-            return Created(uri: $"{createdFotoHotel.HotelId}/Fotos/{createdFotoHotel.FotoHotelId}", createdFotoHotel);
+            return Created(uri: $"{createdFotoHotel.HotelId}/fotos/{createdFotoHotel.FotoHotelId}", createdFotoHotel);
         }
 
     }

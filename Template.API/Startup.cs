@@ -1,4 +1,5 @@
 using AutoMapper;
+using FluentValidation.AspNetCore;
 using MicroservicioHotel.AccessData;
 using MicroservicioHotel.AccessData.Commands;
 using MicroservicioHotel.AccessData.Queries;
@@ -37,7 +38,8 @@ namespace Template.API
         {
             services
                 .AddControllers()
-                .AddNewtonsoftJson();
+                .AddNewtonsoftJson()
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                .AddJwtBearer(options =>

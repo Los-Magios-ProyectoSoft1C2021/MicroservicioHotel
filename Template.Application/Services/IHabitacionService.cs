@@ -13,6 +13,6 @@ namespace MicroservicioHotel.Application.Services
         Task<ResponseHabitacionDto> Patch(int habitacionId, int hotelId, JsonPatchDocument<RequestHabitacionDto> entityPatchDto);
         Task<ResponseHabitacionDto> GetHabitacionById(int habitacionId, int hotelId);
         Task<List<ResponseHabitacionDto>> GetAllHabitaciones(int hotelId, int categoriaId);
-        Task<bool> CheckHabitacionExistById(int habitacionId, int hotelId);
+        Task<bool> CheckIfExistsById(int habitacionId, int hotelId);
     }
 }

@@ -74,7 +74,7 @@ namespace MicroservicioHotel.Application.Services
             return await _query.GetAllBy(page, estrellas, ciudad, categoria, reservas);
         }
 
-        public async Task<bool> CheckHotelExistsById(int id)
+        public async Task<bool> CheckIfExistsById(int id)
         {
             return await _query.CheckHotelExistsById(id);
         }

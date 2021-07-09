@@ -29,5 +29,13 @@ namespace MicroservicioHotel.AccessData.Queries
 
             return categorias;
         }
+
+        public async Task<bool> CheckIfExists(int categoriaId)
+        {
+            var exists = await _context.Categoria
+                .AnyAsync(c => c.CategoriaId == categoriaId);
+
+            return exists;
+        }
     }
 }
