@@ -8,8 +8,8 @@ namespace MicroservicioHotel.Domain.Mapper
     {
         public CategoriaProfile()
         {
-            CreateMap<Categoria, ResponseCategoriaDto>();
-            CreateMap<ResponseCategoriaDto, Categoria>();
+            CreateMap<Categoria, ResponseCategoriaDto>()
+                .ReverseMap();
         }
     }
 }

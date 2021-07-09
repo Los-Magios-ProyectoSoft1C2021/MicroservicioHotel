@@ -9,14 +9,16 @@ namespace MicroservicioHotel.Domain.Mapper
     {
         public HotelProfile()
         {
-            CreateMap<Hotel, RequestHotelDto>();
-            CreateMap<RequestHotelDto, Hotel>();
+            CreateMap<RequestHotelDto, Hotel>()
+                .ForMember(m => m.EstrellasId, mapper => mapper.MapFrom(x => x.Estrellas))
+                .ForMember(m => m.Estrellas, mapper => mapper.Ignore())
+                .ReverseMap();
 
-            CreateMap<ResponseHotelDto, Hotel>();
-            CreateMap<Hotel, ResponseHotelDto>();
+            CreateMap<Hotel, ResponseHotelDto>()
+                .ReverseMap();
 
-            CreateMap<ResponseHotelSimpleDto, Hotel>();
-            CreateMap<Hotel, ResponseHotelSimpleDto>();
+            CreateMap<Hotel, ResponseHotelSimpleDto>()
+                .ReverseMap();
         }
     }
 }

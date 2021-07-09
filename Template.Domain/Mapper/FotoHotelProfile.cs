@@ -9,11 +9,11 @@ namespace MicroservicioHotel.Domain.Mapper
     {
         public FotoHotelProfile()
         {
-            CreateMap<FotoHotel, ResponseFotoHotelDto>();
-            CreateMap<ResponseFotoHotelDto, FotoHotel>();
+            CreateMap<FotoHotel, ResponseFotoHotelDto>()
+                .ReverseMap();
 
-            CreateMap<FotoHotel, RequestFotoHotelDto>();
-            CreateMap<RequestFotoHotelDto, FotoHotel>();
+            CreateMap<RequestFotoHotelDto, FotoHotel>()
+                .ReverseMap();
         }
 
     }

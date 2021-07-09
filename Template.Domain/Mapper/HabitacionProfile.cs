@@ -9,8 +9,8 @@ namespace MicroservicioHotel.Domain.Mapper
     {
         public HabitacionProfile()
         {
-            CreateMap<Habitacion, RequestHabitacionDto>();
-            CreateMap<RequestHabitacionDto, Habitacion>();
+            CreateMap<RequestHabitacionDto, Habitacion>()
+                .ReverseMap();
 
             CreateMap<Habitacion, ResponseHabitacionDto>()
                 .ForMember(rh => rh.Categoria, m => m.MapFrom(h => new ResponseCategoriaDto
@@ -18,8 +18,8 @@ namespace MicroservicioHotel.Domain.Mapper
                     CategoriaId = h.Categoria.CategoriaId,
                     Nombre = h.Categoria.Nombre,
                     Descripcion = h.Categoria.Descripcion
-                }));
-            CreateMap<ResponseHabitacionDto, Habitacion>();
+                }))
+                .ReverseMap();
         }
     }
 }
