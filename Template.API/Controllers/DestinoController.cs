@@ -20,12 +20,12 @@ namespace MicroservicioHotel.API.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<ActionResult<List<ResponseDestinoDto>>> GetDestinos([FromQuery] string query)
+        public async Task<ActionResult<List<ResponseDestinoDto>>> GetDestinos([FromQuery] string q)
         {
-            if (query.Length == 0)
+            if (q == null || q.Length == 0)
                 return Problem(detail: "La query no puede estar vacía", statusCode: 404);
 
-            var destinos = await _service.GetDestinos(query);
+            var destinos = await _service.GetDestinos(q);
             return Ok(destinos);
         }
     }
