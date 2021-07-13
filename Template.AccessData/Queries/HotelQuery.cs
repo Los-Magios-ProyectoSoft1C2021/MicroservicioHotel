@@ -126,6 +126,7 @@ namespace MicroservicioHotel.AccessData.Queries
         public async Task<ResponseHotelDto> GetById(int id)
         {
             var hotel = await _context.Hotel
+                .Where(h => h.HotelId == id)
                 .Select(h => new ResponseHotelDto()
                 {
                     HotelId = id,
@@ -148,7 +149,6 @@ namespace MicroservicioHotel.AccessData.Queries
                     }).ToList(),
                     Servicios = h.Estrellas.Servicios.Select(se => se.Servicio.Descripcion).ToList()
                 })
-                .Where(h => h.HotelId == id)
                 .FirstOrDefaultAsync();
 
             return hotel;
