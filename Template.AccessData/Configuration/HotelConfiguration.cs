@@ -27,18 +27,15 @@ namespace MicroservicioHotel.AccessData.Configuration
 
             builder.Property(h => h.Provincia)
                 .IsRequired(true)
-                .HasMaxLength(64)
-                .UseCollation("SQL_Latin1_General_CP1_CI_AS");
+                .HasMaxLength(64);
 
             builder.Property(h => h.Ciudad)
                 .IsRequired(true)
-                .HasMaxLength(128)
-                .UseCollation("SQL_Latin1_General_CP1_CI_AS");
+                .HasMaxLength(128);
 
             builder.Property(h => h.Direccion)
                 .IsRequired(true)
-                .HasMaxLength(128)
-                .UseCollation("SQL_Latin1_General_CP1_CI_AS");
+                .HasMaxLength(128);
 
             builder.Property(h => h.DireccionNum)
                 .IsRequired(true)

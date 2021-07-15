@@ -9,7 +9,7 @@ namespace MicroservicioHotel.API.Validation
         public HabitacionValidator(ICategoriaService categoriaService)
         {
             RuleFor(h => h.CategoriaId)
-                .MustAsync(async (x, cancellation) => { return await categoriaService.CheckIfExists(x); })
+                .MustAsync(async (x, cancellation) => { return (await categoriaService.CheckIfExists(x)); })
                 .WithMessage("No se ha ingresado un ID de categoria válido");
 
             RuleFor(h => h.Nombre)

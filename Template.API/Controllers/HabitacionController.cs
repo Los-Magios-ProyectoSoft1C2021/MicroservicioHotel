@@ -38,7 +38,7 @@ namespace MicroservicioHotel.API.Controllers
             [FromQuery(Name = "categoria")] int categoriaId,
             int hotelId)
         {
-            var exists = await _categoriaService.CheckIfExists(categoriaId);
+            var exists = categoriaId == 0 || await _categoriaService.CheckIfExists(categoriaId);
             if (!exists)
                 return Problem(statusCode: 400, detail: "No se ha ingresado una ID de categoría válida");
 
