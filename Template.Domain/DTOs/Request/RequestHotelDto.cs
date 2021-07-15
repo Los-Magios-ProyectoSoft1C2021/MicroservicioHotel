@@ -1,7 +1,6 @@
 ﻿namespace MicroservicioHotel.Domain.DTOs.Request
 {
     public class RequestHotelDto
-
     {
         public string Nombre { get; set; }
         public decimal Longitud { get; set; }
